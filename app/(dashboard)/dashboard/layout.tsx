@@ -4,11 +4,11 @@ import SideNavBar from "@/components/SideNavBar";
 
 export default async function DashboardLayout({ children }: any) {
   return (
-    <div className="flex h-screen w-full overflow-x-hidden overflow-y-scroll">
+    <div className="flex h-screen w-full overflow-x-hidden">
       <SideNavBar />
-      <div className="flex flex-col w-full relative bg-brand-ash">
+      <div className="flex flex-col w-full relative h-screen bg-brand-ash  overflow-y-scroll">
         <NavBar />
-        <div className="mt-[80px] w-full p-4 h-[calc(100vh-80px)]">
+        <div className="mt-[80px] w-full p-4 h-[calc(100vh-80px)] ">
           {children}
         </div>
       </div>

@@ -12,7 +12,7 @@ export const GeneralContext = createContext({});
 
 const GeneralProvider = (props: any) => {
   const router = useRouter();
-  // Misc
+  // MISC
   const [name, setName] = useState<String>("EDDY");
   const [token, setToken] = useState() as any;
 
@@ -20,7 +20,7 @@ const GeneralProvider = (props: any) => {
   const [userId, setUserId] = useState() as any;
   const [user, setUser] = useState();
 
-  // Auth
+  // AUTH
   const [authToken, setAuthToken] = useState<String>("") as any;
   const [authLoading, setAuthLoading] = useState(false);
   const [signupDetails, setSignupDetails] = useState({
@@ -45,6 +45,12 @@ const GeneralProvider = (props: any) => {
     newPassword: "",
     confirmPassword: "",
   });
+
+  // VOUCHERS
+  const [allUserVouchers, setAllUserVouchers] = useState();
+  const [oneVoucherId, setOneVoucherId] = useState();
+  const [oneVoucher, setOneVoucher] = useState();
+  const [oneVoucherStatus, setOneVoucherStatus] = useState("");
 
   //*******/
   //************/
@@ -275,6 +281,56 @@ const GeneralProvider = (props: any) => {
   };
 
   // VOUCHER
+  const getAllVouchersByUser = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/user/vouchers/all?userId=${userId}`,
+        {
+          headers: {
+            "content-type": "application/json",
+            "x-access-token": token,
+          },
+        }
+      );
+      console.log("🚀 ~ getAllVouchersByUser ~ response:", response);
+      if (response.status === 200) {
+        setAllUserVouchers(response.data.data.vouchers);
+      }
+    } catch (err: any) {
+      console.log("🚀 ~ getAllVouchersByUser ~ err:", err);
+      error(
+        err.response?.data?.message
+          ? err.response.data.message
+          : err.response?.data?.error
+      );
+    }
+  };
+
+  const getVoucherById = async () => {
+    try {
+      console.log("🚀 ~ getVoucherById ~ oneVoucherId:", oneVoucherId);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/user/vouchers/one?status=${oneVoucherStatus}&voucherId=${oneVoucherId}`,
+        {
+          headers: {
+            "content-type": "application/json",
+            "x-access-token": token,
+          },
+        }
+      );
+      console.log("🚀 ~ getVoucherById ~ response:", response);
+      if (response.status === 200) {
+        setOneVoucher(response.data.data.voucher);
+      }
+    } catch (err: any) {
+      console.log("🚀 ~ getVoucherById ~ err:", err);
+      error(
+        err.response?.data?.message
+          ? err.response.data.message
+          : err.response?.data?.error
+      );
+    }
+  };
 
   useEffect(() => {
     console.log("__3d1k4N.init");
@@ -285,8 +341,16 @@ const GeneralProvider = (props: any) => {
   }, []);
 
   useEffect(() => {
-    if (userId) getOneUser();
+    if (userId) {
+      getOneUser();
+      getAllVouchersByUser();
+    }
   }, [userId]);
+
+  useEffect(() => {
+    console.log("🚀 ~ useEffect ~ oneVoucherId:", oneVoucherId);
+    if (oneVoucherId) getVoucherById();
+  }, [oneVoucherId]);
 
   return (
     <GeneralContext.Provider
@@ -294,10 +358,9 @@ const GeneralProvider = (props: any) => {
         // Misc
         name,
         user,
+        token,
         setName,
         setUser,
-        // checkToken,
-        // getAuthCookie,
 
         // Auth
         authLoading,
@@ -315,6 +378,15 @@ const GeneralProvider = (props: any) => {
         handleForgotPassword,
         setVerifyEmailDetails,
         setResetPasswordDetails,
+
+        // Vouchers
+        oneVoucher,
+        oneVoucherId,
+        allUserVouchers,
+        oneVoucherStatus,
+        setOneVoucher,
+        setOneVoucherId,
+        setOneVoucherStatus,
       }}
     >
       {props.children}
