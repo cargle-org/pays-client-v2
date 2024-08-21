@@ -51,6 +51,9 @@ const GeneralProvider = (props: any) => {
   const [oneVoucherId, setOneVoucherId] = useState();
   const [oneVoucher, setOneVoucher] = useState();
   const [oneVoucherStatus, setOneVoucherStatus] = useState("");
+  const [createVoucherLoading, setCreateVoucherLoading] = useState(false);
+  const [recipients, setRecipients] = useState([]);
+  const [voucherSpecialKey, setVoucherSpecialKey] = useState();
 
   //*******/
   //************/
@@ -332,6 +335,38 @@ const GeneralProvider = (props: any) => {
     }
   };
 
+  const updateVoucherRecipients = async () => {
+    try {
+      setCreateVoucherLoading(true);
+      console.log("🚀 ~ updateVoucherRecipients ~ recipients:", recipients);
+      console.log("Token: ", token);
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/voucher/update?specialKey=${voucherSpecialKey}`,
+        {
+          headers: {
+            "content-type": "application/json",
+            "x-access-token": localStorage.getItem("auth_token"),
+          },
+        }
+      );
+      console.log("🚀 ~ updateVoucherRecipients ~ response:", response);
+      setCreateVoucherLoading(false);
+      if (response.status === 200) {
+        setOneVoucher(response.data.data.voucher);
+        success("Voucher updated successfully.");
+        router.push(`/dashboard/vouchers/${response.data.data.voucher._id}`);
+      }
+    } catch (err: any) {
+      setCreateVoucherLoading(false);
+      console.log("🚀 ~ updateVoucherRecipients ~ err:", err);
+      error(
+        err.response?.data?.message
+          ? err.response.data.message
+          : err.response?.data?.error
+      );
+    }
+  };
+
   useEffect(() => {
     console.log("__3d1k4N.init");
     const cachedUserId = localStorage.getItem("userId");
@@ -381,12 +416,19 @@ const GeneralProvider = (props: any) => {
 
         // Vouchers
         oneVoucher,
+        recipients,
         oneVoucherId,
         allUserVouchers,
         oneVoucherStatus,
+        voucherSpecialKey,
+        createVoucherLoading,
         setOneVoucher,
+        setRecipients,
         setOneVoucherId,
         setOneVoucherStatus,
+        setVoucherSpecialKey,
+        updateVoucherRecipients,
+        setCreateVoucherLoading,
       }}
     >
       {props.children}
