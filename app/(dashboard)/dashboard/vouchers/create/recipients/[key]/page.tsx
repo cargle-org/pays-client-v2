@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "@/assets/imgs/auth/pays_logo.png";
 import login1 from "@/assets/imgs/auth/pays_login_1.png";
 import Spinner from "@/components/spinner/Spinner";
@@ -19,9 +19,14 @@ const Recipients = ({ params }: { params: { key: string } }) => {
     oneVoucherId,
     setOneVoucherId,
     createVoucherLoading,
+    setVoucherSpecialKey,
     setCreateVoucherLoading,
   }: any = useGeneralContext();
   const [display, setDisplay] = useState("");
+
+  useEffect(() => {
+    params?.key && setVoucherSpecialKey(params?.key);
+  }, []);
   return (
     <>
       <div className="flex flex-col gap-4 justify-start w-full mx-auto">

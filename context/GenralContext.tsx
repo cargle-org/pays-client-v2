@@ -338,18 +338,17 @@ const GeneralProvider = (props: any) => {
   const updateVoucherRecipients = async () => {
     try {
       setCreateVoucherLoading(true);
-      console.log("🚀 ~ updateVoucherRecipients ~ recipients:", recipients);
-      console.log("Token: ", token);
       const response = await axios.put(
         `${process.env.NEXT_PUBLIC_BASE_URL}/utils/voucher/update?specialKey=${voucherSpecialKey}`,
+        { recipients: recipients },
         {
           headers: {
             "content-type": "application/json",
-            "x-access-token": localStorage.getItem("auth_token"),
+            "x-access-token": token,
           },
         }
       );
-      console.log("🚀 ~ updateVoucherRecipients ~ response:", response);
+      // console.log("🚀 ~ updateVoucherRecipients ~ response:", response);
       setCreateVoucherLoading(false);
       if (response.status === 200) {
         setOneVoucher(response.data.data.voucher);
@@ -383,7 +382,6 @@ const GeneralProvider = (props: any) => {
   }, [userId]);
 
   useEffect(() => {
-    console.log("🚀 ~ useEffect ~ oneVoucherId:", oneVoucherId);
     if (oneVoucherId) getVoucherById();
   }, [oneVoucherId]);
 
