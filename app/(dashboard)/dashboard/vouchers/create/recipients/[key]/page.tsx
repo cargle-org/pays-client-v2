@@ -57,12 +57,11 @@ const Recipients = ({ params }: { params: { key: string } }) => {
         {display === "manual" && (
           <Manual setDisplay={setDisplay} key={params?.key} />
         )}
-        {display === "bulk" && <Bulk />}
+        {display === "bulk" && (
+          <Bulk setDisplay={setDisplay} key={params?.key} />
+        )}
         {display === "" && (
-          <form
-            //   onSubmit={onSubmit}
-            className="flex gap-2 items-start justify-between"
-          >
+          <div className="flex gap-2 items-start justify-between">
             {/* left */}
             <div className="flex flex-col w-max lg:w-[50%]">
               <div className="rounded-xl bg-brand-white p-4 flex flex-col gap-4 justify-start min-h-[80vh]">
@@ -145,7 +144,7 @@ const Recipients = ({ params }: { params: { key: string } }) => {
                 </div>
               </div>
             </div>
-          </form>
+          </div>
         )}
       </div>
     </>
