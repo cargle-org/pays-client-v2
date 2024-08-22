@@ -12,7 +12,7 @@ const Manual = ({ setDisplay }: any) => {
     createVoucherLoading,
     updateVoucherRecipients,
   }: any = useGeneralContext();
-  console.log("🚀 ~ Manual ~ token:", token);
+
   const [newRecipient, setNewRecipient] = useState({
     recipient_name: "",
     recipient_email: "",

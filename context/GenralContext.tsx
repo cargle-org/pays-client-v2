@@ -52,6 +52,7 @@ const GeneralProvider = (props: any) => {
   const [oneVoucher, setOneVoucher] = useState();
   const [oneVoucherStatus, setOneVoucherStatus] = useState("");
   const [createVoucherLoading, setCreateVoucherLoading] = useState(false);
+  const [fetchVouchersLoading, setFetchVouchersLoading] = useState(false);
   const [recipients, setRecipients] = useState([]);
   const [voucherSpecialKey, setVoucherSpecialKey] = useState();
 
@@ -286,6 +287,7 @@ const GeneralProvider = (props: any) => {
   // VOUCHER
   const getAllVouchersByUser = async () => {
     try {
+      setFetchVouchersLoading(true);
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/user/vouchers/all?userId=${userId}`,
         {
@@ -296,10 +298,12 @@ const GeneralProvider = (props: any) => {
         }
       );
       console.log("🚀 ~ getAllVouchersByUser ~ response:", response);
+      setFetchVouchersLoading(false);
       if (response.status === 200) {
         setAllUserVouchers(response.data.data.vouchers);
       }
     } catch (err: any) {
+      setFetchVouchersLoading(false);
       console.log("🚀 ~ getAllVouchersByUser ~ err:", err);
       error(
         err.response?.data?.message
@@ -420,6 +424,7 @@ const GeneralProvider = (props: any) => {
         oneVoucherStatus,
         voucherSpecialKey,
         createVoucherLoading,
+        fetchVouchersLoading,
         setOneVoucher,
         setRecipients,
         setOneVoucherId,
@@ -427,6 +432,7 @@ const GeneralProvider = (props: any) => {
         setVoucherSpecialKey,
         updateVoucherRecipients,
         setCreateVoucherLoading,
+        setFetchVouchersLoading,
       }}
     >
       {props.children}
