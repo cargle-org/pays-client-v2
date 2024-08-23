@@ -6,6 +6,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const Page = ({ params }: { params: { id: string } }) => {
+  console.log("🚀 ~ Page ~ params:", params?.id);
   const { oneVoucher, setOneVoucherId }: any = useGeneralContext();
   console.log("🚀 ~ Page ~ oneVoucher:", oneVoucher);
   const [display, setDisplay] = useState("vouchers");
@@ -14,7 +15,13 @@ const Page = ({ params }: { params: { id: string } }) => {
     if (params?.id) {
       setOneVoucherId(params?.id);
     }
-  }, [params]);
+  }, [params?.id]);
+
+  useEffect(() => {
+    if (params?.id) {
+      setOneVoucherId(params?.id);
+    }
+  }, []);
 
   return (
     <>
