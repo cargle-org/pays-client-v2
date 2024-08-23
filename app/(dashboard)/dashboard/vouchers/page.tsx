@@ -161,7 +161,7 @@ const Page = () => {
                   {/* right */}
                   <Link
                     href={`/dashboard/vouchers/${item._id}`}
-                    className="transition-fx p-4 rounded-full flex items-center justify-center bg-brand-grayish cursor-pointer hover:bg-brand-main"
+                    className="transition-fx p-4 px-6 rounded-lg flex items-center justify-center bg-brand-grayish cursor-pointer hover:bg-brand-main"
                   >
                     <svg
                       width="8"

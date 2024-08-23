@@ -6,9 +6,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const Page = ({ params }: { params: { id: string } }) => {
-  console.log("🚀 ~ Page ~ params:", params?.id);
   const { oneVoucher, setOneVoucherId }: any = useGeneralContext();
-  console.log("🚀 ~ Page ~ oneVoucher:", oneVoucher);
   const [display, setDisplay] = useState("vouchers");
 
   useEffect(() => {
@@ -16,12 +14,6 @@ const Page = ({ params }: { params: { id: string } }) => {
       setOneVoucherId(params?.id);
     }
   }, [params?.id]);
-
-  useEffect(() => {
-    if (params?.id) {
-      setOneVoucherId(params?.id);
-    }
-  }, []);
 
   return (
     <>
@@ -259,16 +251,6 @@ const Page = ({ params }: { params: { id: string } }) => {
                         {oneVoucher?.description}
                       </span>
                     )}
-                    {/* <table className="text-center p-2 rounded-lg w-full overflow-y-auto">
-                      <thead className="divide-y divide-gray-200 font-bold text-sm text-brand-grayish p-4 mb-2">
-                        <tr className="rounded-lg">
-                          <th className="py-2">S/N</th>
-                          <th className="py-2">Name</th>
-                          <th className="py-2">Number</th>
-                          <th className="py-2">Email Address</th>
-                        </tr>
-                      </thead>
-                    </table> */}
                   </div>
                 </div>
               </div>
