@@ -31,15 +31,14 @@ export const navItemsSuperAdmin = [
     icon: <Link />,
   },
   {
+    title: "Transactions",
+    link: "/dashboard/transactions",
+    icon: <ArrowRightLeft />,
+  },
+  {
     title: "FAQ",
     link: "/dashboard/faqs",
     icon: <CircleHelp />,
-  },
-
-  {
-    title: "Transaction History",
-    link: "/dashboard/transactions",
-    icon: <ArrowRightLeft />,
   },
 ];
 
@@ -60,15 +59,14 @@ export const navItemsMdaAdmin = [
     icon: <Link />,
   },
   {
+    title: "Transactions",
+    link: "/dashboard/transactions",
+    icon: <ArrowRightLeft />,
+  },
+  {
     title: "FAQ",
     link: "/dashboard/faqs",
     icon: <CircleHelp />,
-  },
-
-  {
-    title: "Transaction History",
-    link: "/dashboard/transactions",
-    icon: <ArrowRightLeft />,
   },
 ];
 

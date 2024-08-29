@@ -56,6 +56,13 @@ const GeneralProvider = (props: any) => {
   const [recipients, setRecipients] = useState([]);
   const [voucherSpecialKey, setVoucherSpecialKey] = useState();
 
+  // TRANSACTIONS
+  const [allUserTransactions, setAllUserTransactions] = useState();
+  const [createTransactionLoading, setCreateTransactionLoading] =
+    useState(false);
+  const [fetchTransactionsLoading, setFetchTransactionsLoading] =
+    useState(false);
+
   //*******/
   //************/
   // FUNCTIONS
@@ -370,6 +377,36 @@ const GeneralProvider = (props: any) => {
     }
   };
 
+  // TRANSACTION
+  const getAllTransactionsByUser = async () => {
+    console.log("FETCHING TRANSACTIONS...");
+    try {
+      setFetchTransactionsLoading(true);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/transactions/all?userId=${userId}`,
+        {
+          headers: {
+            "content-type": "application/json",
+            "x-access-token": token,
+          },
+        }
+      );
+      console.log("🚀 ~ getAllTransactionsByUser ~ response:", response);
+      setFetchTransactionsLoading(false);
+      if (response.status === 200) {
+        setAllUserTransactions(response.data.data);
+      }
+    } catch (err: any) {
+      setFetchTransactionsLoading(false);
+      console.log("🚀 ~ getAllTransactionsByUser ~ err:", err);
+      error(
+        err.response?.data?.message
+          ? err.response.data.message
+          : err.response?.data?.error
+      );
+    }
+  };
+
   useEffect(() => {
     console.log("__3d1k4N.init");
     const cachedUserId = localStorage.getItem("userId");
@@ -382,6 +419,7 @@ const GeneralProvider = (props: any) => {
     if (userId) {
       getOneUser();
       getAllVouchersByUser();
+      getAllTransactionsByUser();
     }
   }, [userId]);
 
@@ -433,6 +471,14 @@ const GeneralProvider = (props: any) => {
         updateVoucherRecipients,
         setCreateVoucherLoading,
         setFetchVouchersLoading,
+
+        // Transactions
+        allUserTransactions,
+        createTransactionLoading,
+        fetchTransactionsLoading,
+        setAllUserTransactions,
+        setCreateTransactionLoading,
+        setFetchTransactionsLoading,
       }}
     >
       {props.children}
