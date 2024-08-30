@@ -4,7 +4,7 @@ import MainLayout from "@/app/(main)/layout";
 import DashboardLayout from "@/app/(dashboard)/dashboard/layout";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { success, error } from "@/helpers/Alert";
+import { success, error, info } from "@/helpers/Alert";
 import { createContext, useContext, useEffect, useState } from "react";
 import { setCookie, getCookie } from "cookies-next";
 
@@ -379,7 +379,6 @@ const GeneralProvider = (props: any) => {
 
   // TRANSACTION
   const getAllTransactionsByUser = async () => {
-    console.log("FETCHING TRANSACTIONS...");
     try {
       setFetchTransactionsLoading(true);
       const response = await axios.get(
@@ -391,7 +390,7 @@ const GeneralProvider = (props: any) => {
           },
         }
       );
-      console.log("🚀 ~ getAllTransactionsByUser ~ response:", response);
+      // console.log("🚀 ~ getAllTransactionsByUser ~ response:", response);
       setFetchTransactionsLoading(false);
       if (response.status === 200) {
         setAllUserTransactions(response.data.data);
@@ -403,6 +402,44 @@ const GeneralProvider = (props: any) => {
         err.response?.data?.message
           ? err.response.data.message
           : err.response?.data?.error
+      );
+    }
+  };
+
+  const handleFundWallet = async (amount: any) => {
+    setCreateTransactionLoading(true);
+    console.log("🚀 ~ handleFundWal ~ amount:", amount);
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/wallet/fund`,
+        { amount: amount },
+        {
+          headers: {
+            "content-type": "application/json",
+            "x-access-token": token,
+          },
+        }
+      );
+      console.log("🚀 ~ handleFundWal ~ response:", response);
+      setCreateTransactionLoading(false);
+      if (response.status === 200) {
+        info("Funding wallet...");
+        const newWindow = window.open(
+          response.data.data.response,
+          "_blank",
+          "noopener,noreferrer"
+        );
+        if (newWindow) newWindow.opener = null;
+        getAllTransactionsByUser();
+        router.push(`/dashboard/transactions`);
+      }
+    } catch (err: any) {
+      setCreateTransactionLoading(false);
+      console.log("🚀 ~ handleFundWal ~ err:", err);
+      error(
+        err.response.data.message
+          ? err.response.data.message
+          : err.response.data.error
       );
     }
   };
@@ -473,6 +510,7 @@ const GeneralProvider = (props: any) => {
         setFetchVouchersLoading,
 
         // Transactions
+        handleFundWallet,
         allUserTransactions,
         createTransactionLoading,
         fetchTransactionsLoading,
