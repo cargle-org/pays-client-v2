@@ -62,6 +62,10 @@ const GeneralProvider = (props: any) => {
     useState(false);
   const [fetchTransactionsLoading, setFetchTransactionsLoading] =
     useState(false);
+  const [transactionDetails, setTransactionDetails] = useState({
+    tx_ref: "",
+    transaction_id: "",
+  });
 
   //*******/
   //************/
@@ -444,6 +448,38 @@ const GeneralProvider = (props: any) => {
     }
   };
 
+  const verifyFundWallet = async () => {
+    // console.log(
+    //   "🚀 ~ verifyFundWal ~ transactionDetails: ",
+    //   transactionDetails
+    // );
+    try {
+      setFetchTransactionsLoading(true);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/wallet/verifyTrx?tx_ref=${transactionDetails?.tx_ref}&transaction_id=${transactionDetails?.transaction_id}`,
+        {
+          headers: {
+            "content-type": "application/json",
+            "x-access-token": localStorage.getItem("auth_token"),
+          },
+        }
+      );
+      // console.log("🚀 ~ verifyFundWal ~ response:", response);
+      setFetchTransactionsLoading(false);
+      if (response.status === 200) {
+        getAllTransactionsByUser();
+      }
+    } catch (err: any) {
+      console.log("🚀 ~ verifyFundWal ~ err:", err);
+      setFetchTransactionsLoading(false);
+      error(
+        err.response?.data?.message
+          ? err.response.data.message
+          : err.response?.data?.error
+      );
+    }
+  };
+
   useEffect(() => {
     console.log("__3d1k4N.init");
     const cachedUserId = localStorage.getItem("userId");
@@ -463,6 +499,11 @@ const GeneralProvider = (props: any) => {
   useEffect(() => {
     if (oneVoucherId) getVoucherById();
   }, [oneVoucherId]);
+
+  useEffect(() => {
+    if (transactionDetails?.tx_ref && transactionDetails?.transaction_id)
+      verifyFundWallet();
+  }, [transactionDetails]);
 
   return (
     <GeneralContext.Provider
@@ -510,10 +551,13 @@ const GeneralProvider = (props: any) => {
         setFetchVouchersLoading,
 
         // Transactions
-        handleFundWallet,
+        transactionDetails,
         allUserTransactions,
         createTransactionLoading,
         fetchTransactionsLoading,
+        verifyFundWallet,
+        handleFundWallet,
+        setTransactionDetails,
         setAllUserTransactions,
         setCreateTransactionLoading,
         setFetchTransactionsLoading,

@@ -10,9 +10,11 @@ import Link from "next/link";
 import Spinner from "@/components/spinner/Spinner";
 
 const Page = () => {
-  const { allUserVouchers, allUserTransactions, fetchVouchersLoading }: any =
-    useGeneralContext();
-  console.log("🚀 ~ Page ~ allUserTransactions:", allUserTransactions);
+  const {
+    allUserTransactions,
+    fetchVouchersLoading,
+    setTransactionDetails,
+  }: any = useGeneralContext();
   const router = useRouter();
   const checkToken = async () => {
     const token = localStorage.getItem("auth_token");
@@ -25,6 +27,20 @@ const Page = () => {
 
   useEffect(() => {
     checkToken();
+  }, []);
+
+  useEffect(() => {
+    // Extract query parameters from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const tx_ref = urlParams.get("tx_ref") as any;
+    const transaction_id = urlParams.get("transaction_id") as any;
+    if (tx_ref && transaction_id) {
+      setTransactionDetails((item: any) => ({
+        ...item,
+        tx_ref: tx_ref,
+        transaction_id: transaction_id,
+      }));
+    }
   }, []);
 
   return (
