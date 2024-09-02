@@ -368,6 +368,7 @@ const GeneralProvider = (props: any) => {
       if (response.status === 200) {
         setOneVoucher(response.data.data.voucher);
         success("Voucher updated successfully.");
+        getAllVouchersByUser();
         router.push(`/dashboard/vouchers/${response.data.data.voucher._id}`);
       }
     } catch (err: any) {
