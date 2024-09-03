@@ -58,6 +58,7 @@ const GeneralProvider = (props: any) => {
 
   // TRANSACTIONS
   const [allUserTransactions, setAllUserTransactions] = useState();
+  const [allBanks, setAllBanks] = useState() as any;
   const [createTransactionLoading, setCreateTransactionLoading] =
     useState(false);
   const [fetchTransactionsLoading, setFetchTransactionsLoading] =
@@ -72,18 +73,8 @@ const GeneralProvider = (props: any) => {
   // FUNCTIONS
   //************/
   //*******/
-  // const checkToken = async () => {
-  //   const token = localStorage.getItem("auth_token");
-  //   // const token = getAuthCookie("auth_token");
-  //   console.log("🚀 ~ checkToken ~ token:", token);
 
-  //   if (!token) {
-  //     router.push(`/`);
-  //     return <MainLayout />;
-  //   }
-  //   router.push(`/dashboard`);
-  //   return <DashboardLayout />;
-  // };
+  // MISC
 
   // AUTH
   // const setAuthCookie = (token: string, name: string) => {
@@ -481,12 +472,78 @@ const GeneralProvider = (props: any) => {
     }
   };
 
+  const getAllBanks = async () => {
+    try {
+      // setFetchVouchersLoading(true);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/banks/all`,
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
+      // console.log("🚀 ~ getAllBanks ~ response:", response);
+      // setFetchVouchersLoading(false);
+      if (response.status === 200) {
+        setAllBanks(response.data.data.banks);
+      }
+    } catch (err: any) {
+      setFetchVouchersLoading(false);
+      console.log("🚀 ~ getAllBanks ~ err:", err);
+      error(
+        err.response?.data?.message
+          ? err.response.data.message
+          : err.response?.data?.error
+      );
+    }
+  };
+
+  const handleWithdrawFromWallet = async (payload: any) => {
+    // console.log("🚀 ~ handleWithdrawFromWal ~ payload:", payload);
+    setCreateTransactionLoading(true);
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/wallet/withdraw`,
+        { ...payload },
+        {
+          headers: {
+            "content-type": "application/json",
+            "x-access-token": token,
+          },
+        }
+      );
+      // console.log("🚀 ~ handleWithdrawFromWallet ~ response:", response);
+      setCreateTransactionLoading(false);
+      if (response.status === 200) {
+        info("Withdrawing from wallet...");
+        // const newWindow = window.open(
+        //   response.data.data.response,
+        //   "_blank",
+        //   "noopener,noreferrer"
+        // );
+        // if (newWindow) newWindow.opener = null;
+        getAllTransactionsByUser();
+        router.push(`/dashboard/transactions`);
+      }
+    } catch (err: any) {
+      setCreateTransactionLoading(false);
+      console.log("🚀 ~ handleWithdrawFromWallet ~ err:", err);
+      error(
+        err.response.data.message
+          ? err.response.data.message
+          : err.response.data.error
+      );
+    }
+  };
+
   useEffect(() => {
     console.log("__3d1k4N.init");
     const cachedUserId = localStorage.getItem("userId");
     const cachedToken = localStorage.getItem("auth_token");
     if (cachedUserId) setUserId(cachedUserId);
     if (cachedToken) setToken(cachedToken);
+    getAllBanks();
   }, []);
 
   useEffect(() => {
@@ -552,14 +609,19 @@ const GeneralProvider = (props: any) => {
         setFetchVouchersLoading,
 
         // Transactions
+        allBanks,
         transactionDetails,
         allUserTransactions,
+        // newWithdrawTransaction,
         createTransactionLoading,
         fetchTransactionsLoading,
+        setAllBanks,
         verifyFundWallet,
         handleFundWallet,
         setTransactionDetails,
         setAllUserTransactions,
+        handleWithdrawFromWallet,
+        // setNewWithdrawTransaction,
         setCreateTransactionLoading,
         setFetchTransactionsLoading,
       }}

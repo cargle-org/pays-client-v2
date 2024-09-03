@@ -17,7 +17,7 @@ const NavBar = () => {
         </div>
         <div className="flex items-center gap-3">
           <div className="flex gap-2 items-end p-2 px-4 font-geistsans font-normal text-base rounded-3xl bg-brand-white text-brand-main">
-            <Wallet />₦{user?.walletBalance}
+            <Wallet />₦{(user?.walletBalance || 0).toLocaleString("en-NG")}
           </div>
           <div className="flex gap-2 items-end p-2 px-4 font-geistsans font-normal text-base rounded-3xl bg-brand-white text-brand-main">
             <User />

@@ -6,18 +6,19 @@ import getAccountBanks from "@/components/getBanks";
 import { useGeneralContext } from "@/context/GenralContext";
 
 const Withdraw = () => {
-  const { handleFundWallet, createTransactionLoading }: any =
+  const { allBanks, handleWithdrawFromWallet, createTransactionLoading }: any =
     useGeneralContext();
 
-  const [bankName, setBankName] = useState([]);
-  const [suggestedBanks, setSuggestedBanks] = useState([]);
-  const [accountNumber, setAccountNumber] = useState("");
+  const [suggestedBanks, setSuggestedBanks] = useState<any>([]);
+  // const [accountNumber, setAccountNumber] = useState("");
+  const [showOtherBanks, setShowOtherBanks] = useState(false);
+  const [error, setError] = useState("");
 
   const [newTransaction, setNewTransaction] = useState({
     amount: 0,
-    account_number: "",
+    bankCode: "",
+    accountNumber: "",
   });
-  const [error, setError] = useState("");
 
   const onchangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewTransaction((prev) => ({
@@ -26,51 +27,64 @@ const Withdraw = () => {
     }));
   };
 
-  const fetchBanks = (accountNumber: any) => {
-    const fetchedSuggestedBanks = getAccountBanks(
-      accountNumber,
-      bankName && bankName
-    );
-    console.log("SUGGESTED BANKS: ", fetchedSuggestedBanks);
-    //  setSuggestedBanks([...suggestedBanks]);
-    setSuggestedBanks((prev) => ({
-      ...prev,
-      fetchedSuggestedBanks,
-    }));
+  const fetchBanks = async (accountNumber: string) => {
+    try {
+      const fetchedSuggestedBanks = await getAccountBanks(
+        accountNumber,
+        allBanks
+      );
+      setSuggestedBanks(fetchedSuggestedBanks);
+    } catch (error) {
+      console.error("Error fetching suggested banks:", error);
+    }
   };
 
-  const getAccountNumber = (e: any) => {
-    const { value } = e.target;
-    setAccountNumber(value);
+  const getAccountNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    // setAccountNumber(value);
+
     if (value.length === 10) {
       fetchBanks(value);
-      //  openAccountDetailsModal();
+      setNewTransaction((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value, name } = event.target;
+
+    if (value === "other") {
+      setShowOtherBanks(true);
+    } else {
+      setShowOtherBanks(false);
+      setNewTransaction((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
     }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { amount } = newTransaction;
+    const { amount, bankCode, accountNumber } = newTransaction;
 
     // Validate if all fields are filled
-    if (!amount) {
+    if (!amount || !bankCode || !accountNumber) {
       setError("All fields are required.");
       return;
     }
 
-    setNewTransaction({
-      amount: 0,
-      account_number: "",
-    });
     setError(""); // Clear error message
 
-    handleFundWallet(newTransaction?.amount);
+    // Handle the withdrawal logic here
+    handleWithdrawFromWallet(newTransaction);
   };
 
   return (
     <>
-      {/* left */}
       <form onSubmit={handleSubmit} className="flex flex-col w-max lg:w-[50%]">
         <div className="rounded-xl bg-brand-white p-4 flex flex-col gap-2 justify-start h-[80vh]">
           <div className="flex flex-col gap-2 justify-start w-full pt-4">
@@ -81,16 +95,13 @@ const Withdraw = () => {
               Withdraw From Your Wallet
             </span>
           </div>
-          {/* input fields */}
-          <div
-            // onSubmit={handleSubmit}
-            className="flex flex-col gap-4 justify-start my-8"
-          >
+
+          {/* Input fields */}
+          <div className="flex flex-col gap-4 justify-start my-8">
             {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
             <div className="flex flex-col justify-start">
               <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
-                Amount (Minimum of ₦1,000){" "}
-                <span className="text-red-400">*</span>
+                Amount (Minimum of ₦100) <span className="text-red-400">*</span>
               </span>
               <input
                 type="number"
@@ -98,38 +109,82 @@ const Withdraw = () => {
                 id="amount"
                 placeholder="Enter amount"
                 onChange={onchangeHandler}
-                value={newTransaction.amount}
+                // value={newTransaction.amount}
                 className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
               />
             </div>
+
             <div className="flex flex-col justify-start">
               <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
                 Account Number <span className="text-red-400">*</span>
               </span>
               <input
                 type="text"
-                name="account_number"
-                id="account_number"
+                name="accountNumber"
+                id="accountNumber"
                 placeholder="Enter account number"
-                // onChange={onchangeHandler}
                 onChange={getAccountNumber}
-                // value={newTransaction.account_number}
+                // value={newTransaction.accountNumber}
                 className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
               />
             </div>
+
+            <div className="flex flex-col justify-start">
+              <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
+                Select Bank <span className="text-red-400">*</span>
+              </span>
+              <select
+                name="bankCode"
+                id="bankCode"
+                onChange={handleSelectChange}
+                className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+              >
+                <option value="">Select a bank</option>
+                {!showOtherBanks &&
+                  suggestedBanks?.length > 0 &&
+                  suggestedBanks.map((bank: any, index: number) => (
+                    <option
+                      className="capitalize"
+                      value={bank?.code}
+                      key={index}
+                    >
+                      {bank?.name}
+                    </option>
+                  ))}
+                {suggestedBanks?.length > 0 && (
+                  <>
+                    {!showOtherBanks && (
+                      <option value="other">OTHER BANKS...</option>
+                    )}
+                    {showOtherBanks &&
+                      allBanks?.length > 0 &&
+                      allBanks.map((bank: any, index: number) => (
+                        <option
+                          className="capitalize"
+                          value={bank?.code}
+                          key={index}
+                        >
+                          {bank?.name}
+                        </option>
+                      ))}
+                  </>
+                )}
+              </select>
+            </div>
           </div>
-          {/* bottom buttons */}
+
+          {/* Bottom buttons */}
           <div className="rounded-b-xl bg-brand-white p-4 flex justify-end mt-auto items-center border border-brand-grayish/15">
             {createTransactionLoading ? (
               <span className="w-[150px] p-3 px-8 h-[44px] flex items-center justify-center text-brand-white">
                 <Spinner />
               </span>
             ) : (
-              newTransaction.amount > 0 &&
-              newTransaction.account_number.length == 10 && (
+              newTransaction.amount >= 100 &&
+              newTransaction.accountNumber.length === 10 &&
+              newTransaction.bankCode && (
                 <button
                   type="submit"
-                  // onClick={() => updateVoucherTransactions()}
                   className="p-3 px-8 bg-brand-main text-brand-white font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-brand-main/25"
                 >
                   Continue
