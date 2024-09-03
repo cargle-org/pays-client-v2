@@ -111,14 +111,25 @@ const Page = () => {
                   <div className="flex items-center gap-4 w-[70%]">
                     {/* left */}
                     <div className="flex gap-4 pr-4 w-[50%]">
-                      <Image
-                        src={logo}
-                        alt="Login"
-                        width={80}
-                        height={80}
-                        priority
-                        className="rounded-lg"
-                      />
+                      {item.thumbnail ? (
+                        <Image
+                          src={item?.thumbnail}
+                          alt="Login"
+                          width={80}
+                          height={80}
+                          priority
+                          className="rounded-lg"
+                        />
+                      ) : (
+                        <Image
+                          src={logo}
+                          alt="Login"
+                          width={80}
+                          height={80}
+                          priority
+                          className="rounded-lg"
+                        />
+                      )}
                       <div className="flex flex-col justify-center gap-2">
                         <span className="font-geistsans text-2xl font-medium capitalize">
                           {item.title}

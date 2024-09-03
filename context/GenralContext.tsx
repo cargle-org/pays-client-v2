@@ -68,6 +68,11 @@ const GeneralProvider = (props: any) => {
     transaction_id: "",
   });
 
+  // PAYMENT LINKS
+  const [paymentLInksByUser, setPaymentLinksByUser] = useState();
+  const [fetchPaymentLinksLoading, setFetchPaymentLinksLoading] =
+    useState(false);
+
   //*******/
   //************/
   // FUNCTIONS
@@ -100,7 +105,7 @@ const GeneralProvider = (props: any) => {
 
   const handleSignup = async (e: any) => {
     setAuthLoading(true);
-    console.log("signupDetails", signupDetails);
+    // console.log("signupDetails", signupDetails);
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -110,7 +115,7 @@ const GeneralProvider = (props: any) => {
           headers: { "content-type": "application/json" },
         }
       );
-      console.log("🚀 ~ handleSignup ~ response:", response);
+      // console.log("🚀 ~ handleSignup ~ response:", response);
       setAuthLoading(false);
       if (response.status === 200) {
         success("Signup Successful");
@@ -132,7 +137,7 @@ const GeneralProvider = (props: any) => {
 
   const handleLogin = async (e: any) => {
     setAuthLoading(true);
-    console.log("loginDetails", loginDetails);
+    // console.log("loginDetails", loginDetails);
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -142,7 +147,7 @@ const GeneralProvider = (props: any) => {
           headers: { "content-type": "application/json" },
         }
       );
-      console.log("🚀 ~ handleLogin ~ response:", response);
+      // console.log("🚀 ~ handleLogin ~ response:", response);
       const token = response.data.data.token;
       const userId = response.data.data.user?._id;
       setAuthLoading(false);
@@ -231,7 +236,7 @@ const GeneralProvider = (props: any) => {
 
   const handleResetPassword = async (e: any) => {
     setAuthLoading(true);
-    console.log("resetPasswordDetails", resetPasswordDetails);
+    // console.log("resetPasswordDetails", resetPasswordDetails);
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -272,7 +277,7 @@ const GeneralProvider = (props: any) => {
           },
         }
       );
-      console.log("🚀 ~ getOneUser ~ response:", response);
+      // console.log("🚀 ~ getOneUser ~ response:", response);
       if (response.status === 200) {
         setUser(response.data.data.user);
       }
@@ -299,7 +304,7 @@ const GeneralProvider = (props: any) => {
           },
         }
       );
-      console.log("🚀 ~ getAllVouchersByUser ~ response:", response);
+      // console.log("🚀 ~ getAllVouchersByUser ~ response:", response);
       setFetchVouchersLoading(false);
       if (response.status === 200) {
         setAllUserVouchers(response.data.data.vouchers);
@@ -327,7 +332,7 @@ const GeneralProvider = (props: any) => {
           },
         }
       );
-      console.log("🚀 ~ getVoucherById ~ response:", response);
+      // console.log("🚀 ~ getVoucherById ~ response:", response);
       if (response.status === 200) {
         setOneVoucher(response.data.data.voucher);
       }
@@ -404,7 +409,7 @@ const GeneralProvider = (props: any) => {
 
   const handleFundWallet = async (amount: any) => {
     setCreateTransactionLoading(true);
-    console.log("🚀 ~ handleFundWal ~ amount:", amount);
+    // console.log("🚀 ~ handleFundWal ~ amount:", amount);
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/utils/wallet/fund`,
@@ -416,7 +421,7 @@ const GeneralProvider = (props: any) => {
           },
         }
       );
-      console.log("🚀 ~ handleFundWal ~ response:", response);
+      // console.log("🚀 ~ handleFundWal ~ response:", response);
       setCreateTransactionLoading(false);
       if (response.status === 200) {
         info("Funding wallet...");
@@ -537,6 +542,35 @@ const GeneralProvider = (props: any) => {
     }
   };
 
+  // PAYMENT LINKS
+  const getAllPaymentLinksByUser = async () => {
+    try {
+      setFetchPaymentLinksLoading(true);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/user/links`,
+        {
+          headers: {
+            "content-type": "application/json",
+            "x-access-token": token,
+          },
+        }
+      );
+      console.log("🚀 ~ getAllPaymentLinksByUser ~ response:", response);
+      setFetchPaymentLinksLoading(false);
+      if (response.status === 200) {
+        setPaymentLinksByUser(response.data.links);
+      }
+    } catch (err: any) {
+      setFetchPaymentLinksLoading(false);
+      console.log("🚀 ~ getAllPaymentLinksByUser ~ err:", err);
+      error(
+        err.response?.data?.message
+          ? err.response.data.message
+          : err.response?.data?.error
+      );
+    }
+  };
+
   useEffect(() => {
     console.log("__3d1k4N.init");
     const cachedUserId = localStorage.getItem("userId");
@@ -551,6 +585,7 @@ const GeneralProvider = (props: any) => {
       getOneUser();
       getAllVouchersByUser();
       getAllTransactionsByUser();
+      getAllPaymentLinksByUser();
     }
   }, [userId]);
 
@@ -624,6 +659,10 @@ const GeneralProvider = (props: any) => {
         // setNewWithdrawTransaction,
         setCreateTransactionLoading,
         setFetchTransactionsLoading,
+
+        // Payment Links
+        paymentLInksByUser,
+        setPaymentLinksByUser,
       }}
     >
       {props.children}
