@@ -16,8 +16,10 @@ const Page = () => {
     voucherSpecialKey,
     setVoucherSpecialKey,
     createVoucherLoading,
+    paymentLinkCategories,
     setCreateVoucherLoading,
   }: any = useGeneralContext();
+  console.log("🚀 ~ Page ~ paymentLinkCategories:", paymentLinkCategories);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -143,6 +145,31 @@ const Page = () => {
                     onChange={onchangeHandler}
                     className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
+                </div>
+                <div className="flex flex-col justify-start">
+                  <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
+                    Select Bank <span className="text-red-400">*</span>
+                  </span>
+                  <select
+                    name="bankCode"
+                    id="bankCode"
+                    // onChange={handleSelectChange}
+                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                  >
+                    <option value="">Select a category</option>
+                    {paymentLinkCategories?.length > 0 &&
+                      paymentLinkCategories.map(
+                        (category: any, index: number) => (
+                          <option
+                            className="capitalize"
+                            value={category}
+                            key={index}
+                          >
+                            {category}
+                          </option>
+                        )
+                      )}
+                  </select>
                 </div>
                 <div className="flex flex-col justify-start">
                   <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">

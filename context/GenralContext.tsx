@@ -72,6 +72,7 @@ const GeneralProvider = (props: any) => {
   const [paymentLInksByUser, setPaymentLinksByUser] = useState();
   const [fetchPaymentLinksLoading, setFetchPaymentLinksLoading] =
     useState(false);
+  const [paymentLinkCategories, setPaymentLinkCategories] = useState();
 
   //*******/
   //************/
@@ -555,7 +556,7 @@ const GeneralProvider = (props: any) => {
           },
         }
       );
-      console.log("🚀 ~ getAllPaymentLinksByUser ~ response:", response);
+      // console.log("🚀 ~ getAllPaymentLinksByUser ~ response:", response);
       setFetchPaymentLinksLoading(false);
       if (response.status === 200) {
         setPaymentLinksByUser(response.data.links);
@@ -571,21 +572,50 @@ const GeneralProvider = (props: any) => {
     }
   };
 
+  const getAllPaymentLinkCategories = async () => {
+    try {
+      setFetchPaymentLinksLoading(true);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/links/categories`,
+        {
+          headers: {
+            "content-type": "application/json",
+            "x-access-token": token,
+          },
+        }
+      );
+      console.log("🚀 ~ getAllPaymentLinkCategories ~ response:", response);
+      setFetchPaymentLinksLoading(false);
+      if (response.status === 200) {
+        setPaymentLinkCategories(response.data.categories);
+      }
+    } catch (err: any) {
+      console.log("🚀 ~ getAllPaymentLinkCategories ~ err:", err);
+      setFetchPaymentLinksLoading(false);
+      error(
+        err.response?.data?.message
+          ? err.response.data.message
+          : err.response?.data?.error
+      );
+    }
+  };
+
   useEffect(() => {
     console.log("__3d1k4N.init");
     const cachedUserId = localStorage.getItem("userId");
     const cachedToken = localStorage.getItem("auth_token");
     if (cachedUserId) setUserId(cachedUserId);
     if (cachedToken) setToken(cachedToken);
-    getAllBanks();
   }, []);
 
   useEffect(() => {
     if (userId) {
       getOneUser();
+      getAllBanks();
       getAllVouchersByUser();
       getAllTransactionsByUser();
       getAllPaymentLinksByUser();
+      getAllPaymentLinkCategories();
     }
   }, [userId]);
 
@@ -662,7 +692,9 @@ const GeneralProvider = (props: any) => {
 
         // Payment Links
         paymentLInksByUser,
+        paymentLinkCategories,
         setPaymentLinksByUser,
+        setPaymentLinkCategories,
       }}
     >
       {props.children}
