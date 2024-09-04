@@ -39,7 +39,7 @@ const Page = () => {
             </span>
           </div>
           <Link
-            href={"/dashboard/vouchers/create"}
+            href={"/dashboard/payments/create"}
             className="transition-fx flex items-center gap-2 p-2 px-4 rounded-3xl bg-brand-main text-brand-white font-geistsans text-base font-normal cursor-pointer hover:bg-brand-main/50"
           >
             <svg
@@ -159,9 +159,9 @@ const Page = () => {
                         name="bankCode"
                         id="bankCode"
                         // onChange={handleSelectChange}
-                        className="px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                        className="p-2 border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                       >
-                        <option>...</option>
+                        <option className="text-lg">...</option>
                         <option className="capitalize" value="view">
                           view
                         </option>

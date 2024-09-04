@@ -99,7 +99,7 @@ const Page = () => {
         {/* breadcumb */}
         <div className="flex items-center gap-2 font-geistsans font-normal text-[10px] text-brand-grayish">
           <Link
-            href={"/dashboaard/vouchers"}
+            href={"/dashboard/vouchers"}
             className="transition-fx cursor-pointer hover:text-brand-main"
           >
             Voucher
@@ -184,7 +184,7 @@ const Page = () => {
                 </div>
                 <div className="flex flex-col justify-start">
                   <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
-                    Voucer Title <span className="text-red-400">*</span>
+                    Voucher Title <span className="text-red-400">*</span>
                   </span>
                   <input
                     type="text"
@@ -197,7 +197,7 @@ const Page = () => {
                 </div>
                 <div className="flex flex-col justify-start">
                   <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
-                    Voucer Description <span className="text-red-400">*</span>
+                    Voucher Description <span className="text-red-400">*</span>
                   </span>
                   <textarea
                     name="description"
