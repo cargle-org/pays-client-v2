@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useGeneralContext } from "@/context/GenralContext";
 import Link from "next/link";
 import axios from "axios";
@@ -11,25 +11,26 @@ import Spinner from "@/components/spinner/Spinner";
 const Page = () => {
   const router = useRouter();
   const {
-    token,
-    setOneVoucherId,
-    voucherSpecialKey,
-    setVoucherSpecialKey,
-    createVoucherLoading,
+    user,
     paymentLinkCategories,
-    setCreateVoucherLoading,
+    handleCreatePaymentLink,
+    createPaymentLinkLoading,
+    setCreatePaymentLinkLoading,
   }: any = useGeneralContext();
-  console.log("🚀 ~ Page ~ paymentLinkCategories:", paymentLinkCategories);
-  const [formData, setFormData] = useState({
+
+  const [formatTitle, setFormatTitle] = useState("");
+  const [formatName, setFormatName] = useState("");
+  const [newPaymentLinkDetails, setNewPaymentLinkDetails] = useState({
+    category: "",
     title: "",
     description: "",
-    voucherKey: "",
-    expiry_date: "",
-    amountPerVoucher: "",
-    totalNumberOfVouchers: "",
+    link: "",
+    linkExpiry: "",
+    amount: "",
   });
+
   const onchangeHandler = (e: any) => {
-    setFormData((prev) => ({
+    setNewPaymentLinkDetails((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -37,40 +38,15 @@ const Page = () => {
 
   const onSubmit = async (e: any) => {
     try {
-      e.preventDefault();
-      setCreateVoucherLoading(true);
-      const data = new FormData();
-      data.append("title", formData.title);
-      data.append("description", formData.description);
-      data.append("voucherKey", formData.voucherKey);
-      data.append("expiry_date", formData.expiry_date);
-      data.append("amountPerVoucher", formData.amountPerVoucher);
-      data.append("totalNumberOfVouchers", formData.totalNumberOfVouchers);
-
-      // const response = await axios.post(
-      //   `${process.env.NEXT_PUBLIC_BASE_URL}/utils/voucher/create`,
-      //   data,
-      //   {
-      //     headers: {
-      //       "Content-Type": "multipart/form-data",
-      //       "x-access-token": token,
-      //     },
-      //   }
+      // console.log(
+      //   "🚀 ~ onSubmit ~ newPaymentLinkDetails:",
+      //   newPaymentLinkDetails
       // );
-      // setCreateVoucherLoading(false);
-
-      // console.log("Response:", response.data);
-      // setOneVoucherId(response.data.data.voucher._id);
-      // setOneVoucherId(response.data.data.voucher.specialKey);
-      // if (response.status === 200) {
-      //   success("Voucher created successfully.");
-      //   router.push(
-      //     `/dashboard/vouchers/create/recipients/${response.data.data.voucher.specialKey}`
-      //   );
-      // }
+      e.preventDefault();
+      handleCreatePaymentLink(newPaymentLinkDetails);
     } catch (err: any) {
-      setCreateVoucherLoading(false);
       console.log("🚀 ~ onSubmit ~ err:", err);
+      setCreatePaymentLinkLoading(false);
       error(
         err.response.data.message
           ? err.response.data.message
@@ -78,6 +54,24 @@ const Page = () => {
       );
     }
   };
+
+  useEffect(() => {
+    const formattedTitle = newPaymentLinkDetails?.title.replace(/\s/g, "");
+    setFormatTitle(formattedTitle);
+    setNewPaymentLinkDetails((prev) => ({
+      ...prev,
+      link: `https://www.usepays.co/pay/${formatName}/${formatTitle}`,
+    }));
+  }, [newPaymentLinkDetails?.title]);
+
+  useEffect(() => {
+    const formattedName = user?.name.replace(/\s/g, "");
+    setFormatName(formattedName);
+    setNewPaymentLinkDetails((prev) => ({
+      ...prev,
+      link: `https://www.usepays.co/pay/${formatName}/${formatTitle}`,
+    }));
+  }, [user?.name]);
 
   return (
     <>
@@ -148,12 +142,12 @@ const Page = () => {
                 </div>
                 <div className="flex flex-col justify-start">
                   <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
-                    Select Bank <span className="text-red-400">*</span>
+                    Select Category <span className="text-red-400">*</span>
                   </span>
                   <select
-                    name="bankCode"
-                    id="bankCode"
-                    // onChange={handleSelectChange}
+                    name="category"
+                    id="category"
+                    onChange={onchangeHandler}
                     className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   >
                     <option value="">Select a category</option>
@@ -177,8 +171,8 @@ const Page = () => {
                   </span>
                   <input
                     type="date"
-                    name="expiry_date"
-                    id="expiry_date"
+                    name="linkExpiry"
+                    id="linkExpiry"
                     placeholder="Enter voucher expiry date"
                     onChange={onchangeHandler}
                     className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
@@ -207,7 +201,7 @@ const Page = () => {
               >
                 Back
               </Link>
-              {createVoucherLoading ? (
+              {createPaymentLinkLoading ? (
                 <span className="w-[150px] p-3 px-8 h-[44px] flex items-center justify-center text-brand-white">
                   <Spinner />
                 </span>

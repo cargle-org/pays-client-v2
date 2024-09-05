@@ -72,6 +72,8 @@ const GeneralProvider = (props: any) => {
   const [paymentLInksByUser, setPaymentLinksByUser] = useState();
   const [fetchPaymentLinksLoading, setFetchPaymentLinksLoading] =
     useState(false);
+  const [createPaymentLinkLoading, setCreatePaymentLinkLoading] =
+    useState(false);
   const [paymentLinkCategories, setPaymentLinkCategories] = useState();
 
   //*******/
@@ -584,7 +586,7 @@ const GeneralProvider = (props: any) => {
           },
         }
       );
-      console.log("🚀 ~ getAllPaymentLinkCategories ~ response:", response);
+      // console.log("🚀 ~ getAllPaymentLinkCategories ~ response:", response);
       setFetchPaymentLinksLoading(false);
       if (response.status === 200) {
         setPaymentLinkCategories(response.data.categories);
@@ -596,6 +598,38 @@ const GeneralProvider = (props: any) => {
         err.response?.data?.message
           ? err.response.data.message
           : err.response?.data?.error
+      );
+    }
+  };
+
+  const handleCreatePaymentLink = async (payload: any) => {
+    console.log("🚀 ~ handleCreatePaymentLink ~ payload:", payload);
+    setCreatePaymentLinkLoading(true);
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/links/create`,
+        { ...payload },
+        {
+          headers: {
+            "content-type": "application/json",
+            "x-access-token": token,
+          },
+        }
+      );
+      console.log("🚀 ~ handleCreatePaymentLink ~ response:", response);
+      setCreatePaymentLinkLoading(false);
+      if (response.status === 201) {
+        success("Created Payment Link Successfully");
+        getAllPaymentLinksByUser();
+        router.push(`/dashboard/payments`);
+      }
+    } catch (err: any) {
+      console.log("🚀 ~ handleCreatePaymentLink ~ err:", err);
+      setCreatePaymentLinkLoading(false);
+      error(
+        err.response.data.message
+          ? err.response.data.message
+          : err.response.data.error
       );
     }
   };
@@ -693,8 +727,13 @@ const GeneralProvider = (props: any) => {
         // Payment Links
         paymentLInksByUser,
         paymentLinkCategories,
+        createPaymentLinkLoading,
+        fetchPaymentLinksLoading,
         setPaymentLinksByUser,
+        handleCreatePaymentLink,
         setPaymentLinkCategories,
+        setCreatePaymentLinkLoading,
+        setFetchPaymentLinksLoading,
       }}
     >
       {props.children}

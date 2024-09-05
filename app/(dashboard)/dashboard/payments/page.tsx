@@ -10,9 +10,10 @@ import Link from "next/link";
 import Spinner from "@/components/spinner/Spinner";
 
 const Page = () => {
-  const { paymentLInksByUser, fetchVouchersLoading }: any = useGeneralContext();
-  console.log("🚀 ~ Page ~ paymentLInksByUser:", paymentLInksByUser);
+  const { paymentLInksByUser, setFetchPaymentLinksLoading }: any =
+    useGeneralContext();
   const router = useRouter();
+
   const checkToken = async () => {
     const token = localStorage.getItem("auth_token");
 
@@ -176,7 +177,7 @@ const Page = () => {
             </table>
           ) : (
             <>
-              {fetchVouchersLoading ? (
+              {setFetchPaymentLinksLoading ? (
                 <div className="w-full flex items-center justify-center mx-auto">
                   <span className="w-[150px] p-3 px-8 h-[44px] flex items-center justify-center text-brand-white">
                     <Spinner />
