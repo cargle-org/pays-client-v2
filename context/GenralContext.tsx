@@ -603,7 +603,7 @@ const GeneralProvider = (props: any) => {
   };
 
   const handleCreatePaymentLink = async (payload: any) => {
-    console.log("🚀 ~ handleCreatePaymentLink ~ payload:", payload);
+    // console.log("🚀 ~ handleCreatePaymentLink ~ payload:", payload);
     setCreatePaymentLinkLoading(true);
     try {
       const response = await axios.post(
@@ -616,7 +616,7 @@ const GeneralProvider = (props: any) => {
           },
         }
       );
-      console.log("🚀 ~ handleCreatePaymentLink ~ response:", response);
+      // console.log("🚀 ~ handleCreatePaymentLink ~ response:", response);
       setCreatePaymentLinkLoading(false);
       if (response.status === 201) {
         success("Created Payment Link Successfully");

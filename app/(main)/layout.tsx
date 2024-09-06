@@ -1,10 +1,15 @@
 import "@/app/globals.css";
-// export default async function MainLayout({
-//   children,
-// }: Readonly<{
-//   children: React.ReactNode;
-// }>)
+
+import Header from "./Header";
+import Footer from "./Footer";
 
 export default async function MainLayout({ children }: any) {
-  return <div className="flex flex-col">{children}</div>;
+  return (
+    <div className="flex flex-col">
+      <Header />
+      <div className="bg-brand-ash w-full min-h-screen">{children}</div>
+      <Footer />
+      {/* <ScrollToTopButton /> */}
+    </div>
+  );
 }
