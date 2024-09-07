@@ -129,9 +129,9 @@ const GeneralProvider = (props: any) => {
       console.log("🚀 ~ handleSignup ~ err:", err);
       setAuthLoading(false);
       error(
-        err.response.data.message
-          ? err.response.data.message
-          : err.response.data.error
+        err?.response?.data?.message
+          ? err?.response?.data?.message
+          : err?.response?.data?.error || err?.message
       );
       // error(err.response?.data?.message);
       // error(err.message);
@@ -167,9 +167,9 @@ const GeneralProvider = (props: any) => {
       setAuthLoading(false);
       console.log("🚀 ~ handleLogin ~ err:", err);
       error(
-        err.response.data.message
-          ? err.response.data.message
-          : err.response.data.error
+        err?.response?.data?.message
+          ? err?.response?.data?.message
+          : err?.response?.data?.error || err?.message
       );
       // error(err.response?.data?.message);
       // error(err.message);
@@ -198,11 +198,11 @@ const GeneralProvider = (props: any) => {
       console.log("🚀 ~ handleVerifyEmail ~ err:", err);
       setAuthLoading(false);
       error(
-        err.response.data.message
-          ? err.response.data.message
-          : err.response.data.error
+        err?.response?.data?.message
+          ? err?.response?.data?.message
+          : err?.response?.data?.error || err?.message
       );
-      // error(err.response.data.message);
+      // error(err?.response?.data?.message);
       // error(err.message);
     }
   };
@@ -228,11 +228,11 @@ const GeneralProvider = (props: any) => {
       console.log("🚀 ~ handleForgotPassword ~ err:", err);
       setAuthLoading(false);
       error(
-        err.response.data.message
-          ? err.response.data.message
-          : err.response.data.error
+        err?.response?.data?.message
+          ? err?.response?.data?.message
+          : err?.response?.data?.error || err?.message
       );
-      // error(err.response.data.message);
+      // error(err?.response?.data?.message);
       // error(err.message);
     }
   };
@@ -260,9 +260,9 @@ const GeneralProvider = (props: any) => {
       console.log("🚀 ~ handleResetPassword ~ err:", err);
       setAuthLoading(false);
       error(
-        err.response.data.message
-          ? err.response.data.message
-          : err.response.data.error
+        err?.response?.data?.message
+          ? err?.response?.data?.message
+          : err?.response?.data?.error || err?.message
       );
       // error(err.message);
     }
@@ -288,7 +288,7 @@ const GeneralProvider = (props: any) => {
       console.log("🚀 ~ getOneUser ~ err:", err);
       error(
         err.response?.data?.message
-          ? err.response.data.message
+          ? err?.response?.data?.message
           : err.response?.data?.error
       );
     }
@@ -317,7 +317,7 @@ const GeneralProvider = (props: any) => {
       console.log("🚀 ~ getAllVouchersByUser ~ err:", err);
       error(
         err.response?.data?.message
-          ? err.response.data.message
+          ? err?.response?.data?.message
           : err.response?.data?.error
       );
     }
@@ -343,7 +343,7 @@ const GeneralProvider = (props: any) => {
       console.log("🚀 ~ getVoucherById ~ err:", err);
       error(
         err.response?.data?.message
-          ? err.response.data.message
+          ? err?.response?.data?.message
           : err.response?.data?.error
       );
     }
@@ -375,7 +375,7 @@ const GeneralProvider = (props: any) => {
       console.log("🚀 ~ updateVoucherRecipients ~ err:", err);
       error(
         err.response?.data?.message
-          ? err.response.data.message
+          ? err?.response?.data?.message
           : err.response?.data?.error
       );
     }
@@ -404,7 +404,7 @@ const GeneralProvider = (props: any) => {
       console.log("🚀 ~ getAllTransactionsByUser ~ err:", err);
       error(
         err.response?.data?.message
-          ? err.response.data.message
+          ? err?.response?.data?.message
           : err.response?.data?.error
       );
     }
@@ -441,9 +441,9 @@ const GeneralProvider = (props: any) => {
       setCreateTransactionLoading(false);
       console.log("🚀 ~ handleFundWal ~ err:", err);
       error(
-        err.response.data.message
-          ? err.response.data.message
-          : err.response.data.error
+        err?.response?.data?.message
+          ? err?.response?.data?.message
+          : err?.response?.data?.error || err?.message
       );
     }
   };
@@ -474,7 +474,7 @@ const GeneralProvider = (props: any) => {
       setFetchTransactionsLoading(false);
       error(
         err.response?.data?.message
-          ? err.response.data.message
+          ? err?.response?.data?.message
           : err.response?.data?.error
       );
     }
@@ -501,7 +501,7 @@ const GeneralProvider = (props: any) => {
       console.log("🚀 ~ getAllBanks ~ err:", err);
       error(
         err.response?.data?.message
-          ? err.response.data.message
+          ? err?.response?.data?.message
           : err.response?.data?.error
       );
     }
@@ -538,9 +538,9 @@ const GeneralProvider = (props: any) => {
       setCreateTransactionLoading(false);
       console.log("🚀 ~ handleWithdrawFromWallet ~ err:", err);
       error(
-        err.response.data.message
-          ? err.response.data.message
-          : err.response.data.error
+        err?.response?.data?.message
+          ? err?.response?.data?.message
+          : err?.response?.data?.error || err?.message
       );
     }
   };
@@ -568,7 +568,7 @@ const GeneralProvider = (props: any) => {
       console.log("🚀 ~ getAllPaymentLinksByUser ~ err:", err);
       error(
         err.response?.data?.message
-          ? err.response.data.message
+          ? err?.response?.data?.message
           : err.response?.data?.error
       );
     }
@@ -596,7 +596,7 @@ const GeneralProvider = (props: any) => {
       setFetchPaymentLinksLoading(false);
       error(
         err.response?.data?.message
-          ? err.response.data.message
+          ? err?.response?.data?.message
           : err.response?.data?.error
       );
     }
@@ -627,9 +627,9 @@ const GeneralProvider = (props: any) => {
       console.log("🚀 ~ handleCreatePaymentLink ~ err:", err);
       setCreatePaymentLinkLoading(false);
       error(
-        err.response.data.message
-          ? err.response.data.message
-          : err.response.data.error
+        err?.response?.data?.message
+          ? err?.response?.data?.message
+          : err?.response?.data?.error || err?.message
       );
     }
   };

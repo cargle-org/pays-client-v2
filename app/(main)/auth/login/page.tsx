@@ -29,7 +29,7 @@ lg:pt-32"
         {/* content */}
         <div className="min-h-[60%] w-[80%] flex flex-col items-center lg:min-h-[80%]">
           {/* divider */}
-          <div className="w-full h-[0.1px] mt-4 bg-brand-grayish lg:w-[95%]"></div>
+          <div className="w-[95%] h-[0.1px] mb-8 bg-brand-grayish/30"></div>
           <div className="w-full flex flex-col-reverse justify-between items-start gap-6 h-[100%] lg:flex-row">
             {/* left */}
             <form

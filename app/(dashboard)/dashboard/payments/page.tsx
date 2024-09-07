@@ -122,7 +122,7 @@ const Page = () => {
           </div>
         </div>
         <div className="bg-brand-white rounded-lg p-8 flex flex-col gap-6 justify-start mb-8">
-          {/* voucher */}
+          {/* links */}
           {paymentLInksByUser?.length > 0 ? (
             <table className="text-center p-2 rounded-lg w-full overflow-y-auto">
               <thead className="divide-y divide-gray-200 font-bold text-sm text-brand-grayish py-2 px-4 mb-2">

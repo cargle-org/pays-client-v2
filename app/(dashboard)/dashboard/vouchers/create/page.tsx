@@ -86,9 +86,9 @@ const Page = () => {
       setCreateVoucherLoading(false);
       console.log("🚀 ~ onSubmit ~ err:", err);
       error(
-        err.response.data.message
-          ? err.response.data.message
-          : err.response.data.error
+        err?.response?.data?.message
+          ? err?.response?.data?.message
+          : err?.response?.data?.error || err?.message
       );
     }
   };

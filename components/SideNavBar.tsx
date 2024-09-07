@@ -35,11 +35,11 @@ export const navItemsSuperAdmin = [
     link: "/dashboard/transactions",
     icon: <ArrowRightLeft />,
   },
-  {
-    title: "FAQ",
-    link: "/dashboard/faqs",
-    icon: <CircleHelp />,
-  },
+  // {
+  //   title: "FAQ",
+  //   link: "/dashboard/faqs",
+  //   icon: <CircleHelp />,
+  // },
 ];
 
 export const navItemsMdaAdmin = [
@@ -63,11 +63,11 @@ export const navItemsMdaAdmin = [
     link: "/dashboard/transactions",
     icon: <ArrowRightLeft />,
   },
-  {
-    title: "FAQ",
-    link: "/dashboard/faqs",
-    icon: <CircleHelp />,
-  },
+  // {
+  //   title: "FAQ",
+  //   link: "/dashboard/faqs",
+  //   icon: <CircleHelp />,
+  // },
 ];
 
 const SideNavBar = () => {
