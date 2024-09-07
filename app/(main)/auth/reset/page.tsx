@@ -57,7 +57,7 @@ const Page = () => {
             {/* left */}
             <form
               onSubmit={handleResetPassword}
-              className="w-[50%] h-[100%] flex flex-col justify-between gap-4 lg:h-[600px]"
+              className="w-full h-[100%] flex flex-col justify-between gap-4 lg:h-[600px] lg:w-[50%]"
             >
               {/* left top */}
               <div className="flex flex-col gap-6 justify-start">
@@ -156,7 +156,7 @@ const Page = () => {
                 )}
                 {/* divider */}
                 <div className="w-[90%] h-[0.1px] mt-4 bg-brand-grayish"></div>
-                <span className="font-geistsans text-base font-normal flex items-center gap-2 w-full">
+                <span className="font-geistsans text-sm font-normal flex items-center gap-2 w-full lg:text-base">
                   If you already have an account{" "}
                   <Link
                     href={"/auth/login"}
@@ -184,7 +184,7 @@ const Page = () => {
               </div>
             </form>
             {/* right */}
-            <div className="w-[50%] flex justify-end gap-4 lg:lg:h-[600px]">
+            <div className="hidden w-[50%] justify-end gap-4 lg:lg:h-[600px] lg:flex">
               <div className="relative rounded-lg w-[508px] h-[600px]">
                 <Image src={login1} alt="Login" priority />
                 <div className="glass-fx absolute w-[90%] bottom-6 left-6 rounded-lg p-4 font-medium text-xl font-geistsans">

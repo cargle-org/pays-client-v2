@@ -67,7 +67,7 @@ const Page = () => {
               </Link>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center gap-2 lg:flex-row lg:items-end">
+          <div className="w-full flex flex-col items-center justify-center gap-2 lg:flex-row lg:items-end lg:mt-8 lg:mb-8">
             {/* left */}
             <Image src={left} alt="left" width={320} height={380} priority />
 

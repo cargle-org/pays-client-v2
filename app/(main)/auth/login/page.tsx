@@ -22,16 +22,19 @@ const Login = () => {
 
   return (
     <>
-      <div className="max-w-[2560px] mx-auto w-full h-screen flex items-center justify-center">
+      <div
+        className="max-w-[2560px] mx-auto w-full min-h-screen flex items-center justify-center py-16
+lg:pt-32"
+      >
         {/* content */}
         <div className="min-h-[60%] w-[80%] flex flex-col items-center lg:min-h-[80%]">
           {/* divider */}
-          <div className="w-[95%] h-[0.1px] mb-8 bg-brand-grayish/30"></div>
-          <div className="w-full flex justify-between items-start h-[100%]">
+          <div className="w-full h-[0.1px] mt-4 bg-brand-grayish lg:w-[95%]"></div>
+          <div className="w-full flex flex-col-reverse justify-between items-start gap-6 h-[100%] lg:flex-row">
             {/* left */}
             <form
               onSubmit={handleLogin}
-              className="w-[50%] h-[100%] flex flex-col justify-between gap-4 lg:h-[600px]"
+              className="w-full h-[100%] flex flex-col justify-between gap-4 lg:h-[600px] lg:w-[50%]"
             >
               {/* left top */}
               <div className="flex flex-col gap-6 justify-start">
@@ -113,7 +116,7 @@ const Login = () => {
                   </button>
                 )}
                 {/* divider */}
-                <div className="w-[90%] h-[0.1px] mt-4 bg-brand-grayish"></div>
+                <div className="w-full h-[0.1px] mt-4 bg-brand-grayish lg:w-[90%]"></div>
                 <span className="font-geistsans text-base font-normal flex items-center gap-2 w-full">
                   If you don&apos;t have an account{" "}
                   <Link
@@ -142,10 +145,10 @@ const Login = () => {
               </div>
             </form>
             {/* right */}
-            <div className="w-[50%] flex justify-end gap-4 lg:h-[600px]">
-              <div className="relative rounded-lg w-[508px] h-[600px]">
+            <div className="flex w-full justify-end gap-4 lg:h-[600px] lg:w-[50%]">
+              <div className="relative rounded-lg w-[508px] lg:h-[600px]">
                 <Image src={login1} alt="Login" priority />
-                <div className="glass-fx absolute w-[90%] bottom-6 left-6 rounded-lg p-4 font-medium text-xl font-geistsans">
+                <div className="glass-fx hidden absolute w-[90%] bottom-6 left-6 rounded-lg p-4 font-medium text-xl font-geistsans lg:block">
                   Send gifts, Pay anyone, create Voucher, create rewards with
                   Pays
                 </div>
