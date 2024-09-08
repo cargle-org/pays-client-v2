@@ -79,6 +79,7 @@ const SideNavBar = () => {
     // deleteCookie("auth_token");
     push("/");
     localStorage.removeItem("auth_token");
+    localStorage.removeItem("userId");
     // dispatch(logout());
     // window.location.reload();
   };

@@ -17,11 +17,10 @@ const GeneralProvider = (props: any) => {
   const [token, setToken] = useState() as any;
 
   // USER
-  const [userId, setUserId] = useState() as any;
+  const [userId, setUserId] = useState("");
   const [user, setUser] = useState();
 
   // AUTH
-  const [authToken, setAuthToken] = useState<String>("") as any;
   const [authLoading, setAuthLoading] = useState(false);
   const [signupDetails, setSignupDetails] = useState({
     name: "",
@@ -297,6 +296,7 @@ const GeneralProvider = (props: any) => {
   // VOUCHER
   const getAllVouchersByUser = async () => {
     try {
+      console.log("🚀 ~ getAllVouchersByUser ~ userId:", userId, token);
       setFetchVouchersLoading(true);
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/user/vouchers/all?userId=${userId}`,
@@ -307,7 +307,7 @@ const GeneralProvider = (props: any) => {
           },
         }
       );
-      // console.log("🚀 ~ getAllVouchersByUser ~ response:", response);
+      console.log("🚀 ~ getAllVouchersByUser ~ response:", response);
       setFetchVouchersLoading(false);
       if (response.status === 200) {
         setAllUserVouchers(response.data.data.vouchers);
