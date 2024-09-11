@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useGeneralContext } from "@/context/GenralContext";
 import Link from "next/link";
 import axios from "axios";
@@ -16,8 +16,6 @@ const Page = () => {
   const {
     token,
     setOneVoucherId,
-    voucherSpecialKey,
-    setVoucherSpecialKey,
     createVoucherLoading,
     setCreateVoucherLoading,
   }: any = useGeneralContext();
@@ -26,10 +24,13 @@ const Page = () => {
     title: "",
     description: "",
     voucherKey: "",
-    expiry_date: "",
+    // expiry_date: "",
     amountPerVoucher: "",
     totalNumberOfVouchers: "",
   });
+  const [newAmount, setNewAmount] = useState(0);
+  console.log("🚀 ~ Page ~ newAmount:", newAmount);
+  const [paysFee, setPaysFee] = useState(100);
   // const [createVoucherLoading, setCreateVoucherLoading] = useState(false);
 
   const onchangeHandler = (e: any) => {
@@ -53,7 +54,7 @@ const Page = () => {
       data.append("title", formData.title);
       data.append("description", formData.description);
       data.append("voucherKey", formData.voucherKey);
-      data.append("expiry_date", formData.expiry_date);
+      // data.append("expiry_date", formData.expiry_date);
       data.append("amountPerVoucher", formData.amountPerVoucher);
       data.append("totalNumberOfVouchers", formData.totalNumberOfVouchers);
 
@@ -92,6 +93,33 @@ const Page = () => {
       );
     }
   };
+
+  const onAmountChange = async (e: any) => {
+    setFormData((prev) => ({
+      ...prev,
+      amount: e.target.value,
+    }));
+  };
+
+  useEffect(() => {
+    if (formData.amountPerVoucher) {
+      setNewAmount(
+        parseInt(formData.amountPerVoucher) *
+          parseInt(formData.totalNumberOfVouchers) +
+          paysFee
+      );
+    }
+  }, [formData.totalNumberOfVouchers]);
+
+  useEffect(() => {
+    if (formData.totalNumberOfVouchers) {
+      setNewAmount(
+        parseInt(formData.amountPerVoucher) *
+          parseInt(formData.totalNumberOfVouchers) +
+          paysFee
+      );
+    }
+  }, [formData.amountPerVoucher]);
 
   return (
     <>
@@ -221,9 +249,10 @@ const Page = () => {
                     className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
-                <div className="flex flex-col justify-start">
+                {/* <div className="flex flex-col justify-start">
                   <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
-                    Expiry Date <span className="text-red-400">*</span>
+                    Expiry Date
+                    <span className="text-red-400">*</span>
                   </span>
                   <input
                     type="date"
@@ -233,7 +262,7 @@ const Page = () => {
                     onChange={onchangeHandler}
                     className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -284,7 +313,10 @@ const Page = () => {
                     Sub Total
                   </span>
                   <span className="font-bold text-base text-brand-dark/70">
-                    ₦ 27,000
+                    ₦{" "}
+                    {parseInt(formData.amountPerVoucher).toLocaleString(
+                      "en-NG"
+                    )}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
@@ -292,7 +324,7 @@ const Page = () => {
                     Pays Fee
                   </span>
                   <span className="font-bold text-base text-brand-dark/70">
-                    ₦ 100
+                    ₦ {paysFee.toLocaleString("en-NG")}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
@@ -300,7 +332,7 @@ const Page = () => {
                     Total Amount
                   </span>
                   <span className="font-bold text-base text-brand-dark/70">
-                    ₦ 27,100
+                    ₦ {newAmount.toLocaleString("en-NG")}
                   </span>
                 </div>
               </div>

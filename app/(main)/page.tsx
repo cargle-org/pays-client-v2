@@ -46,7 +46,7 @@ const Page = () => {
                 </svg>
               </Link>
               <Link
-                href={"#"}
+                href={"/redeem"}
                 className="transition-fx shadow-lg rounded-3xl cursor-pointer font-medium text-xl uppercase py-2 px-4 bg-brand-main flex items-center justify-center gap-4 text-brand-white hover:bg-brand-white hover:text-brand-main"
               >
                 REDEEM VOUCHER{" "}

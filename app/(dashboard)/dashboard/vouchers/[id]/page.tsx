@@ -186,9 +186,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                               (item: any, i: number) => (
                                 <tr key={i} className="mb-4 rounded-lg">
                                   <td className="py-2">{i + 1}</td>
-                                  <td className="py-2 capitalize">
-                                    {item.couponCode}
-                                  </td>
+                                  <td className="py-2">{item.couponCode}</td>
                                   <td className="py-2 capitalize">
                                     {item.status}
                                   </td>

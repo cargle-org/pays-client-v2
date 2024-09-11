@@ -84,27 +84,6 @@ const GeneralProvider = (props: any) => {
   // MISC
 
   // AUTH
-  // const setAuthCookie = (token: string, name: string) => {
-  //   const toBase64 = Buffer.from(token).toString("base64");
-
-  //   setCookie(name, toBase64, {
-  //     maxAge: 60 * 60,
-  //     path: "/",
-  //     // more security options here
-  //     // sameSite: 'strict',
-  //     // httpOnly: true,
-  //     // secure: process.env.NODE_ENV === 'production',
-  //   });
-  // };
-
-  // const getAuthCookie = (name: string) => {
-  //   const cookie = getCookie(name);
-
-  //   if (!cookie) return undefined;
-
-  //   return Buffer.from(cookie, "base64").toString("ascii");
-  // };
-
   const handleSignup = async (e: any) => {
     setAuthLoading(true);
     // console.log("signupDetails", signupDetails);
@@ -338,9 +317,44 @@ const GeneralProvider = (props: any) => {
       // console.log("🚀 ~ getVoucherById ~ response:", response);
       if (response.status === 200) {
         setOneVoucher(response.data.data.voucher);
+        return response;
       }
     } catch (err: any) {
       console.log("🚀 ~ getVoucherById ~ err:", err);
+      error(
+        err.response?.data?.message
+          ? err?.response?.data?.message
+          : err.response?.data?.error
+      );
+    }
+  };
+
+  const getVoucherByKey = async (payload: any) => {
+    try {
+      setFetchVouchersLoading(true);
+      console.log("🚀 ~ getVoucherByKey ~ payload:", payload);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/voucher/one`,
+        { voucherCode: payload },
+        {
+          headers: {
+            "content-type": "application/json",
+            "x-access-token": token,
+          },
+        }
+      );
+      setFetchVouchersLoading(false);
+      console.log("🚀 ~ getVoucherByKey ~ response:", response);
+      if (response.status === 200) {
+        // setOneVoucher(response.data.data.voucher);
+        // return response;
+        router.push(
+          `/redeem/${response?.data?.data?.voucher?.coupon?.couponCode}`
+        );
+      }
+    } catch (err: any) {
+      console.log("🚀 ~ getVoucherByKey ~ err:", err);
+      setFetchVouchersLoading(false);
       error(
         err.response?.data?.message
           ? err?.response?.data?.message
@@ -700,7 +714,9 @@ const GeneralProvider = (props: any) => {
         fetchVouchersLoading,
         setOneVoucher,
         setRecipients,
+        getVoucherById,
         setOneVoucherId,
+        getVoucherByKey,
         setOneVoucherStatus,
         setVoucherSpecialKey,
         updateVoucherRecipients,
