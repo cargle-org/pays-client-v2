@@ -6,27 +6,30 @@ import right_img from "@/assets/imgs/redeem/redeem_img.png";
 import { useGeneralContext } from "@/context/GenralContext";
 import Spinner from "@/components/spinner/Spinner";
 import getAccountBanks from "@/components/getBanks";
+import { error } from "@/helpers/Alert";
 
-const Cash = ({ setDisplay }: any) => {
+const Cash = ({ setDisplay, voucherCode }: any) => {
   const [suggestedBanks, setSuggestedBanks] = useState<any>([]);
+  const [showOtherBanks, setShowOtherBanks] = useState(false);
 
-  const { handleSignup, setSignupDetails, authLoading, allBanks }: any =
+  const { allBanks, cashoutVoucherLoading, handleRedeemVoucherAsCash }: any =
     useGeneralContext();
+
+  const [newTransaction, setNewTransaction] = useState({
+    bankCode: "",
+    accountNumber: "",
+    fullName: "",
+    email: "",
+    voucherCode: voucherCode,
+  });
 
   const onchangeHandler = async (e: any) => {
     e.persist();
-    setSignupDetails((item: any) => ({
+    setNewTransaction((item: any) => ({
       ...item,
       [e.target.name]: e.target.value,
     }));
   };
-
-  useEffect(() => {
-    setSignupDetails((item: any) => ({
-      ...item,
-      isCompany: false,
-    }));
-  }, []);
 
   const fetchBanks = async (accountNumber: string) => {
     try {
@@ -40,6 +43,49 @@ const Cash = ({ setDisplay }: any) => {
     }
   };
 
+  const getAccountNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    // setAccountNumber(value);
+
+    if (value.length === 10) {
+      fetchBanks(value);
+      setNewTransaction((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value, name } = event.target;
+
+    if (value === "other") {
+      setShowOtherBanks(true);
+    } else {
+      setShowOtherBanks(false);
+      setNewTransaction((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const { fullName, email, voucherCode, bankCode, accountNumber } =
+      newTransaction;
+
+    // Validate if all fields are filled
+    if (!fullName || !email || !voucherCode || !bankCode || !accountNumber) {
+      error("All fields are required.");
+      return;
+    }
+
+    // Handle the withdrawal logic here
+    handleRedeemVoucherAsCash(newTransaction);
+  };
+
   return (
     <>
       <div className="max-w-[2560px] mx-auto w-full h-screen flex items-center justify-center">
@@ -50,7 +96,7 @@ const Cash = ({ setDisplay }: any) => {
           <div className="w-full flex justify-between items-start h-[100%]">
             {/* left */}
             <form
-              onSubmit={handleSignup}
+              onSubmit={handleSubmit}
               className="w-full h-[100%] flex flex-col justify-between gap-4 lg:h-[600px] lg:w-[50%]"
             >
               {/* left top */}
@@ -67,20 +113,20 @@ const Cash = ({ setDisplay }: any) => {
                 </div>
                 {/* input fields */}
                 <div className="flex flex-col justify-start">
-                  <span className="font-medium text-sm text-gray-500 font-geistsans mb-2">
+                  <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
                     Full Name
                   </span>
                   <input
                     type="text"
-                    name="name"
-                    id="name"
+                    name="fullName"
+                    id="fullName"
                     placeholder="Enter Full Name"
                     onChange={onchangeHandler}
-                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-dark/70 bg-transparent"
+                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-dark/70 bg-transparent text-xs"
                   />
                 </div>
                 <div className="flex flex-col justify-start">
-                  <span className="font-medium text-sm text-gray-500 font-geistsans mb-2">
+                  <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
                     Email Address
                   </span>
                   <input
@@ -89,26 +135,69 @@ const Cash = ({ setDisplay }: any) => {
                     id="email"
                     placeholder="Enter Email Address"
                     onChange={onchangeHandler}
-                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-dark/70 bg-transparent"
+                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-dark/70 bg-transparent text-xs"
                   />
                 </div>
                 <div className="flex flex-col justify-start">
-                  <span className="font-medium text-sm text-gray-500 font-geistsans mb-2">
-                    Phone Number
+                  <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
+                    Account Number <span className="text-red-400">*</span>
                   </span>
                   <input
                     type="text"
-                    name="phone"
-                    id="phone"
-                    placeholder="Enter Phone Number"
-                    onChange={onchangeHandler}
-                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-dark/70 bg-transparent"
+                    name="accountNumber"
+                    id="accountNumber"
+                    placeholder="Enter account number"
+                    onChange={getAccountNumber}
+                    // value={newTransaction.accountNumber}
+                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
+                </div>
+                <div className="flex flex-col justify-start">
+                  <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
+                    Select Bank <span className="text-red-400">*</span>
+                  </span>
+                  <select
+                    name="bankCode"
+                    id="bankCode"
+                    onChange={handleSelectChange}
+                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                  >
+                    <option value="">Select a bank</option>
+                    {!showOtherBanks &&
+                      suggestedBanks?.length > 0 &&
+                      suggestedBanks.map((bank: any, index: number) => (
+                        <option
+                          className="capitalize"
+                          value={bank?.code}
+                          key={index}
+                        >
+                          {bank?.name}
+                        </option>
+                      ))}
+                    {suggestedBanks?.length > 0 && (
+                      <>
+                        {!showOtherBanks && (
+                          <option value="other">OTHER BANKS...</option>
+                        )}
+                        {showOtherBanks &&
+                          allBanks?.length > 0 &&
+                          allBanks.map((bank: any, index: number) => (
+                            <option
+                              className="capitalize"
+                              value={bank?.code}
+                              key={index}
+                            >
+                              {bank?.name}
+                            </option>
+                          ))}
+                      </>
+                    )}
+                  </select>
                 </div>
               </div>
               {/* left bottom */}
               <div className="flex flex-col gap-4 pt-auto justify-start">
-                {authLoading ? (
+                {cashoutVoucherLoading ? (
                   <span className="w-[353px] h-[44px] flex items-center justify-center text-brand-white">
                     <Spinner />
                   </span>

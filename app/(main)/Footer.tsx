@@ -10,9 +10,12 @@ const Footer = () => {
       {/* Main Nav */}
       <div className="bg-brand-main w-full flex flex-col items-center justify-between gap-8 py-8 px-8 lg:py-2 lg:flex-row">
         {/* left */}
-        <div className="flex gap-2 items-center justify-center p-2 bg-brand-white rounded-lg">
+        <Link
+          href={"/"}
+          className="flex gap-2 items-center justify-center p-2 bg-brand-white rounded-lg"
+        >
           <Image src={logo} alt="Login" width={65} height={22} priority />
-        </div>
+        </Link>
         {/* middle */}
         <span className="font-normal text-base text-brand-white font-geistsans">
           © 2024 PayS. All Rights Reserved.

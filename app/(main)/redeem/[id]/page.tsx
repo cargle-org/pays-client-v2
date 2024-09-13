@@ -9,12 +9,16 @@ import Airtime from "./airtime/Airtime";
 import Cash from "./cash/Cash";
 import { Coins, Phone } from "lucide-react";
 
-const Login = () => {
+const Redeem = ({ params }: { params: { id: string } }) => {
   const [display, setDisplay] = useState("");
   return (
     <>
-      {display === "airtime" && <Airtime setDisplay={setDisplay} />}
-      {display === "cash" && <Cash setDisplay={setDisplay} />}
+      {display === "airtime" && (
+        <Airtime voucherCode={params?.id} setDisplay={setDisplay} />
+      )}
+      {display === "cash" && (
+        <Cash voucherCode={params?.id} setDisplay={setDisplay} />
+      )}
       {display === "" && (
         <div
           className="max-w-[2560px] mx-auto w-full min-h-screen flex items-center justify-center py-16
@@ -109,7 +113,7 @@ lg:pt-32"
               {/* right */}
               <div className="flex w-full justify-end gap-4 lg:h-[600px] lg:w-[50%]">
                 <div className="w-full relative rounded-lg lg:w-[508px] lg:h-[600px]">
-                  <Image src={right_img} alt="Login" priority />
+                  <Image src={right_img} alt="Redeem" priority />
                   <div className="glass-fx hidden absolute w-[90%] bottom-6 left-6 rounded-lg p-4 font-medium text-xl font-geistsans lg:block">
                     Claim your vouchers fast and easily with pays.
                   </div>
@@ -123,4 +127,4 @@ lg:pt-32"
   );
 };
 
-export default Login;
+export default Redeem;

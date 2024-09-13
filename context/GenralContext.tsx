@@ -1,12 +1,9 @@
 "use client";
 
-import MainLayout from "@/app/(main)/layout";
-import DashboardLayout from "@/app/(dashboard)/dashboard/layout";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { success, error, info } from "@/helpers/Alert";
 import { createContext, useContext, useEffect, useState } from "react";
-import { setCookie, getCookie } from "cookies-next";
 
 export const GeneralContext = createContext({});
 
@@ -15,6 +12,7 @@ const GeneralProvider = (props: any) => {
   // MISC
   const [name, setName] = useState<String>("EDDY");
   const [token, setToken] = useState() as any;
+  const [airtimeBillers, setAirtimeBillers] = useState();
 
   // USER
   const [userId, setUserId] = useState("");
@@ -51,6 +49,7 @@ const GeneralProvider = (props: any) => {
   const [oneVoucher, setOneVoucher] = useState();
   const [oneVoucherStatus, setOneVoucherStatus] = useState("");
   const [createVoucherLoading, setCreateVoucherLoading] = useState(false);
+  const [cashoutVoucherLoading, setCashoutVoucherLoading] = useState(false);
   const [fetchVouchersLoading, setFetchVouchersLoading] = useState(false);
   const [recipients, setRecipients] = useState([]);
   const [voucherSpecialKey, setVoucherSpecialKey] = useState();
@@ -82,6 +81,87 @@ const GeneralProvider = (props: any) => {
   //*******/
 
   // MISC
+  const getAllBanks = async () => {
+    try {
+      // setFetchVouchersLoading(true);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/banks/all`,
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
+      // console.log("🚀 ~ getAllBanks ~ response:", response);
+      // setFetchVouchersLoading(false);
+      if (response.status === 200) {
+        setAllBanks(response.data.data.banks);
+      }
+    } catch (err: any) {
+      setFetchVouchersLoading(false);
+      console.log("🚀 ~ getAllBanks ~ err:", err);
+      error(
+        err.response?.data?.message
+          ? err?.response?.data?.message
+          : err.response?.data?.error
+      );
+    }
+  };
+
+  const getAirtimeBillers = async () => {
+    try {
+      // setFetchVouchersLoading(true);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/airtime-billers`,
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
+      // console.log("🚀 ~ getAirtimeBillers ~ response:", response);
+      // setFetchVouchersLoading(false);
+      if (response.status === 200) {
+        setAirtimeBillers(response.data.data.billers);
+      }
+    } catch (err: any) {
+      setFetchVouchersLoading(false);
+      console.log("🚀 ~ getAirtimeBillers ~ err:", err);
+      error(
+        err.response?.data?.message
+          ? err?.response?.data?.message
+          : err.response?.data?.error
+      );
+    }
+  };
+
+  const getAirtimeBillerInfo = async (biller_code: any) => {
+    // console.log("🚀 ~ getAirtimeBillerInfo ~ biller_code:", biller_code);
+    try {
+      // setFetchVouchersLoading(true);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/bill-information?biller_code=${biller_code}`,
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
+      // console.log("🚀 ~ getAirtimeBillerInfo ~ response:", response);
+      // setFetchVouchersLoading(false);
+      if (response.status === 200) {
+        return response.data.data.bill?.[0]?.item_code;
+      }
+    } catch (err: any) {
+      setFetchVouchersLoading(false);
+      console.log("🚀 ~ getAirtimeBillerInfo ~ err:", err);
+      error(
+        err.response?.data?.message
+          ? err?.response?.data?.message
+          : err.response?.data?.error
+      );
+    }
+  };
 
   // AUTH
   const handleSignup = async (e: any) => {
@@ -140,6 +220,7 @@ const GeneralProvider = (props: any) => {
         localStorage.setItem("userId", userId);
         setUser(response.data.data.user);
         router.push(`/dashboard`);
+        // window.location.reload();
       }
     } catch (err: any) {
       setAuthLoading(false);
@@ -332,7 +413,6 @@ const GeneralProvider = (props: any) => {
   const getVoucherByKey = async (payload: any) => {
     try {
       setFetchVouchersLoading(true);
-      console.log("🚀 ~ getVoucherByKey ~ payload:", payload);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/utils/voucher/one`,
         { voucherCode: payload },
@@ -344,10 +424,8 @@ const GeneralProvider = (props: any) => {
         }
       );
       setFetchVouchersLoading(false);
-      console.log("🚀 ~ getVoucherByKey ~ response:", response);
+      // console.log("🚀 ~ getVoucherByKey ~ response:", response);
       if (response.status === 200) {
-        // setOneVoucher(response.data.data.voucher);
-        // return response;
         router.push(
           `/redeem/${response?.data?.data?.voucher?.coupon?.couponCode}`
         );
@@ -391,6 +469,83 @@ const GeneralProvider = (props: any) => {
         err.response?.data?.message
           ? err?.response?.data?.message
           : err.response?.data?.error
+      );
+    }
+  };
+
+  const handleRedeemVoucherAsCash = async (payload: any) => {
+    // console.log("🚀 ~ handleWithdrawFromWal ~ payload:", payload);
+    setCashoutVoucherLoading(true);
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/voucher/claim`,
+        { ...payload },
+        {
+          headers: {
+            "content-type": "application/json",
+            "x-access-token": token,
+          },
+        }
+      );
+      // console.log("🚀 ~ handleRedeemVoucherAsCash ~ response:", response);
+      setCashoutVoucherLoading(false);
+      if (response.status === 200) {
+        success("Redeemed Voucher Successfully");
+        router.push(`/redeem`);
+      }
+    } catch (err: any) {
+      console.log("🚀 ~ handleRedeemVoucherAsCash ~ err:", err);
+      setCashoutVoucherLoading(false);
+      error(
+        err?.response?.data?.message
+          ? err?.response?.data?.message
+          : err?.response?.data?.error || err?.message
+      );
+    }
+  };
+
+  const handleRedeemVoucherAsAirtime = async (payload: any) => {
+    // console.log("🚀 ~ handleRedeemVoucherAsAirtime ~ payload:", payload);
+    setCashoutVoucherLoading(true);
+    try {
+      const itemCode = await getAirtimeBillerInfo(payload.biller_code);
+      console.log("🚀 ~ handleRedeemVoucherAsAirtime ~ itemCode:", itemCode);
+      if (!itemCode) {
+        error("Couldn't fetch item code, please try again.");
+        return;
+      }
+      const newPayload = {
+        ...payload,
+        item_code: itemCode,
+      };
+      // console.log(
+      //   "🚀 ~ handleRedeemVoucherAsAirtime ~ newPayload:",
+      //   newPayload
+      // );
+
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/voucher/claim-as-airtime`,
+        { ...newPayload },
+        {
+          headers: {
+            "content-type": "application/json",
+            "x-access-token": token,
+          },
+        }
+      );
+      // console.log("🚀 ~ handleRedeemVoucherAsAirtime ~ response:", response);
+      setCashoutVoucherLoading(false);
+      if (response.status === 200) {
+        success("Redeemed Voucher Successfully");
+        router.push(`/redeem`);
+      }
+    } catch (err: any) {
+      console.log("🚀 ~ handleRedeemVoucherAsAirtime ~ err:", err);
+      setCashoutVoucherLoading(false);
+      error(
+        err?.response?.data?.message
+          ? err?.response?.data?.message
+          : err?.response?.data?.error || err?.message
       );
     }
   };
@@ -486,33 +641,6 @@ const GeneralProvider = (props: any) => {
     } catch (err: any) {
       console.log("🚀 ~ verifyFundWal ~ err:", err);
       setFetchTransactionsLoading(false);
-      error(
-        err.response?.data?.message
-          ? err?.response?.data?.message
-          : err.response?.data?.error
-      );
-    }
-  };
-
-  const getAllBanks = async () => {
-    try {
-      // setFetchVouchersLoading(true);
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/banks/all`,
-        {
-          headers: {
-            "content-type": "application/json",
-          },
-        }
-      );
-      // console.log("🚀 ~ getAllBanks ~ response:", response);
-      // setFetchVouchersLoading(false);
-      if (response.status === 200) {
-        setAllBanks(response.data.data.banks);
-      }
-    } catch (err: any) {
-      setFetchVouchersLoading(false);
-      console.log("🚀 ~ getAllBanks ~ err:", err);
       error(
         err.response?.data?.message
           ? err?.response?.data?.message
@@ -654,12 +782,13 @@ const GeneralProvider = (props: any) => {
     const cachedToken = localStorage.getItem("auth_token");
     if (cachedUserId) setUserId(cachedUserId);
     if (cachedToken) setToken(cachedToken);
+    getAllBanks();
+    getAirtimeBillers();
   }, []);
 
   useEffect(() => {
     if (userId) {
       getOneUser();
-      getAllBanks();
       getAllVouchersByUser();
       getAllTransactionsByUser();
       getAllPaymentLinksByUser();
@@ -683,8 +812,14 @@ const GeneralProvider = (props: any) => {
         name,
         user,
         token,
+        allBanks,
+        airtimeBillers,
+
         setName,
         setUser,
+        setAllBanks,
+        setAirtimeBillers,
+        getAirtimeBillerInfo,
 
         // Auth
         authLoading,
@@ -712,6 +847,7 @@ const GeneralProvider = (props: any) => {
         voucherSpecialKey,
         createVoucherLoading,
         fetchVouchersLoading,
+        cashoutVoucherLoading,
         setOneVoucher,
         setRecipients,
         getVoucherById,
@@ -722,15 +858,16 @@ const GeneralProvider = (props: any) => {
         updateVoucherRecipients,
         setCreateVoucherLoading,
         setFetchVouchersLoading,
+        setCashoutVoucherLoading,
+        handleRedeemVoucherAsCash,
+        handleRedeemVoucherAsAirtime,
 
         // Transactions
-        allBanks,
         transactionDetails,
         allUserTransactions,
         // newWithdrawTransaction,
         createTransactionLoading,
         fetchTransactionsLoading,
-        setAllBanks,
         verifyFundWallet,
         handleFundWallet,
         setTransactionDetails,
