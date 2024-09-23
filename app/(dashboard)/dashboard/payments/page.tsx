@@ -12,6 +12,7 @@ import Spinner from "@/components/spinner/Spinner";
 const Page = () => {
   const { paymentLInksByUser, setFetchPaymentLinksLoading }: any =
     useGeneralContext();
+  console.log("🚀 ~ Page ~ paymentLInksByUser:", paymentLInksByUser);
   const router = useRouter();
 
   const checkToken = async () => {
@@ -140,7 +141,7 @@ const Page = () => {
                   <tr key={i} className="mb-4 rounded-lg">
                     <td className="py-3">{i + 1}</td>
                     <td className="py-3 capitalize">{item.title}</td>
-                    <td className="py-3 capitalize">{item.link}</td>
+                    <td className="py-3">{item.link}</td>
                     <td className="py-3 capitalize">
                       {new Date(item.linkExpiry) < new Date() ? (
                         <span className="p-2 rounded-lg text-red-500 bg-red-200/80">

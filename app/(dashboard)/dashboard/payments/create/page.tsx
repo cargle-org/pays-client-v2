@@ -60,7 +60,8 @@ const Page = () => {
     setFormatTitle(formattedTitle);
     setNewPaymentLinkDetails((prev) => ({
       ...prev,
-      link: `https://www.usepays.co/pay/${formatName}/${formatTitle}`,
+      // link: `https://www.usepays.co/pay/${formatName}/${formatTitle}`,
+      link: `https://www.usepays.co/pay`,
     }));
   }, [newPaymentLinkDetails?.title]);
 
@@ -69,7 +70,8 @@ const Page = () => {
     setFormatName(formattedName);
     setNewPaymentLinkDetails((prev) => ({
       ...prev,
-      link: `https://www.usepays.co/pay/${formatName}/${formatTitle}`,
+      // link: `https://www.usepays.co/pay/${formatName}/${formatTitle}`,
+      link: `https://www.usepays.co/pay`,
     }));
   }, [user?.name]);
 

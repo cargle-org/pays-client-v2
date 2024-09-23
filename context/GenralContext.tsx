@@ -73,6 +73,12 @@ const GeneralProvider = (props: any) => {
   const [createPaymentLinkLoading, setCreatePaymentLinkLoading] =
     useState(false);
   const [paymentLinkCategories, setPaymentLinkCategories] = useState();
+  const [payToLinkDetails, setPayToLinkDetails] = useState({
+    email: "",
+    // amount: "",
+    link: "",
+    name: "",
+  });
 
   //*******/
   //************/
@@ -220,7 +226,7 @@ const GeneralProvider = (props: any) => {
         localStorage.setItem("userId", userId);
         setUser(response.data.data.user);
         router.push(`/dashboard`);
-        // window.location.reload();
+        window.location.reload();
       }
     } catch (err: any) {
       setAuthLoading(false);
@@ -776,6 +782,41 @@ const GeneralProvider = (props: any) => {
     }
   };
 
+  const handlePayToLink = async (e: any) => {
+    setCreatePaymentLinkLoading(true);
+    console.log("payToLinkDetails", payToLinkDetails);
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/links/pay`,
+        payToLinkDetails,
+        {
+          headers: { "content-type": "application/json" },
+        }
+      );
+      console.log("🚀 ~ handlePayToLink ~ response:", response);
+      setCreatePaymentLinkLoading(false);
+      if (response.status === 200) {
+        info("Funding wallet...");
+        const newWindow = window.open(
+          response.data.data,
+          "_blank",
+          "noopener,noreferrer"
+        );
+        if (newWindow) newWindow.opener = null;
+        router.push(`/`);
+      }
+    } catch (err: any) {
+      setCreatePaymentLinkLoading(false);
+      console.log("🚀 ~ handlePayToLink ~ err:", err);
+      error(
+        err?.response?.data?.message
+          ? err?.response?.data?.message
+          : err?.response?.data?.error || err?.message
+      );
+    }
+  };
+
   useEffect(() => {
     console.log("__3d1k4N.init");
     const cachedUserId = localStorage.getItem("userId");
@@ -878,10 +919,13 @@ const GeneralProvider = (props: any) => {
         setFetchTransactionsLoading,
 
         // Payment Links
+        payToLinkDetails,
         paymentLInksByUser,
         paymentLinkCategories,
         createPaymentLinkLoading,
         fetchPaymentLinksLoading,
+        handlePayToLink,
+        setPayToLinkDetails,
         setPaymentLinksByUser,
         handleCreatePaymentLink,
         setPaymentLinkCategories,
