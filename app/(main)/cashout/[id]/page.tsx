@@ -45,7 +45,7 @@ lg:pt-32"
                   {/* title-bytext */}
                   <div className="flex flex-col justify-start font-geistsans mb-4 gap-2">
                     <span className="font-bold text-4xl text-brand-dark">
-                      Redeem Your Voucher
+                      Cashout Your Voucher
                     </span>
                     <span className="font-normal text-xs text-brand-dark">
                       Please select your preferred method of voucher redemption
@@ -86,7 +86,7 @@ lg:pt-32"
                   <span className="font-geistsans text-sm font-normal flex items-center gap-2 w-full lg:text-base">
                     Want to use another coupon instead?{" "}
                     <Link
-                      href={"/redeem"}
+                      href={"/cashout"}
                       className="flex items-center
                   text-blue-700"
                     >

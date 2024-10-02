@@ -35,8 +35,8 @@ const Page = () => {
                     Forgot Password
                   </span>
                   <span className="font-normal text-xs text-brand-dark">
-                    It&apos;s okay fill this up and let&apos;s get you back into
-                    redeeming vouchers
+                    It&apos;s okay, fill this up and let&apos;s get you back
+                    into cashing out vouchers
                   </span>
                 </div>
                 {/* input fields */}

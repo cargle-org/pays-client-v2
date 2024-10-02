@@ -433,7 +433,7 @@ const GeneralProvider = (props: any) => {
       // console.log("🚀 ~ getVoucherByKey ~ response:", response);
       if (response.status === 200) {
         router.push(
-          `/redeem/${response?.data?.data?.voucher?.coupon?.couponCode}`
+          `/cashout/${response?.data?.data?.voucher?.coupon?.couponCode}`
         );
       }
     } catch (err: any) {
@@ -496,8 +496,8 @@ const GeneralProvider = (props: any) => {
       // console.log("🚀 ~ handleRedeemVoucherAsCash ~ response:", response);
       setCashoutVoucherLoading(false);
       if (response.status === 200) {
-        success("Redeemed Voucher Successfully");
-        router.push(`/redeem`);
+        success("Cashed Out Voucher Successfully");
+        router.push(`/cashout`);
       }
     } catch (err: any) {
       console.log("🚀 ~ handleRedeemVoucherAsCash ~ err:", err);
@@ -542,8 +542,8 @@ const GeneralProvider = (props: any) => {
       // console.log("🚀 ~ handleRedeemVoucherAsAirtime ~ response:", response);
       setCashoutVoucherLoading(false);
       if (response.status === 200) {
-        success("Redeemed Voucher Successfully");
-        router.push(`/redeem`);
+        success("Cashed Out Voucher Successfully");
+        router.push(`/cashout`);
       }
     } catch (err: any) {
       console.log("🚀 ~ handleRedeemVoucherAsAirtime ~ err:", err);

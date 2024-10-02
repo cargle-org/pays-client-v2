@@ -44,7 +44,7 @@ lg:pt-32"
                     Welcome Back
                   </span>
                   <span className="font-normal text-xs text-brand-dark">
-                    Let&apos;s redeem more vouchers today
+                    Let&apos;s cashout more vouchers today
                   </span>
                 </div>
                 {/* input fields */}

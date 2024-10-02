@@ -41,7 +41,7 @@ const Page = () => {
               Hello, {user?.name}
             </span>
             <span className="font-normal text-sm text-brand-grayish">
-              Welcome to Pays, Redeem your card vouchers{" "}
+              Welcome to Pays, Cashout your card vouchers{" "}
             </span>
           </div>
         </div>

@@ -21,7 +21,7 @@ const Page = () => {
               exclusive vouchers today.
             </span>
             <span className="font-medium text-center text-base text-brand-dark/70">
-              Easily create and redeem vouchers, bringing smiles to your
+              Easily create and cashout vouchers, bringing smiles to your
               customers&apos; faces{" "}
             </span>
             <div className="flex flex-col items-center gap-4 justify-center lg:flex-row">
@@ -46,10 +46,10 @@ const Page = () => {
                 </svg>
               </Link>
               <Link
-                href={"/redeem"}
+                href={"/cashout"}
                 className="transition-fx shadow-lg rounded-3xl cursor-pointer font-medium text-xl uppercase py-2 px-4 bg-brand-main flex items-center justify-center gap-4 text-brand-white hover:bg-brand-white hover:text-brand-main"
               >
-                REDEEM VOUCHER{" "}
+                CASHOUT VOUCHER{" "}
                 <svg
                   width="12"
                   height="13"

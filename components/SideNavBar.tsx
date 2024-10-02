@@ -7,12 +7,13 @@ import SideBarItem from "./SideBarItem";
 import {
   LayoutDashboard,
   CircleHelp,
-  Link,
+  Link as LinkIcon,
   ArrowRightLeft,
   LogOut,
   TicketPercent,
 } from "lucide-react";
 import { useGeneralContext } from "@/context/GenralContext";
+import Link from "next/link";
 
 export const navItemsSuperAdmin = [
   {
@@ -28,7 +29,7 @@ export const navItemsSuperAdmin = [
   {
     title: "Payment Links",
     link: "/dashboard/payments",
-    icon: <Link />,
+    icon: <LinkIcon />,
   },
   {
     title: "Transactions",
@@ -56,7 +57,7 @@ export const navItemsMdaAdmin = [
   {
     title: "Payment Links",
     link: "/dashboard/payments",
-    icon: <Link />,
+    icon: <LinkIcon />,
   },
   {
     title: "Transactions",
@@ -90,9 +91,9 @@ const SideNavBar = () => {
     <div className=" sticky inset-y-0 w-[240px]  h-full border-r-[1px] ">
       <div className="flex flex-col h-screen py-3 gap-4 justify-between">
         <div className="flex flex-col gap-4">
-          <div className="flex gap-2 items-center justify-center p-4">
+          <Link href="/" className="flex gap-2 items-center justify-center p-4">
             <Image src={logo} alt="Login" width={65} height={22} priority />
-          </div>
+          </Link>
           <div className="flex flex-col h-full w-full py-4 gap-4">
             {navBar.map((nav, index) => (
               <SideBarItem

@@ -20,11 +20,8 @@ const Page = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    await getVoucherByKey(voucherCode);
-    // console.log("🚀 ~ handleSubmit ~ getVoucher:", getVoucher);
-    // if (getVoucher?.status === 200) {
-    //   return <SelectRedeemType />;
-    // }
+    const trimmedVoucherCode = voucherCode.trim(); // Trim the voucher code to remove extra spaces
+    await getVoucherByKey(trimmedVoucherCode);
   };
 
   return (
@@ -40,7 +37,7 @@ const Page = () => {
         >
           <div className="flex flex-col gap-8 items-center justify-center">
             <span className="w-full text-center text-brand dark font-medium text-3xl font-geistsans lg:text-6xl">
-              Redeem your Voucher
+              Cashout your Voucher
             </span>
             <span className="font-medium text-center text-base text-brand-dark/70">
               Enter your unique voucher code to claim your exclusive discount.
