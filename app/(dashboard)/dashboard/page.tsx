@@ -340,7 +340,7 @@ const Page = () => {
                           <div className="flex flex-col justify-center gap-2">
                             <Link
                               href={`/dashboard/vouchers/${item._id}`}
-                              className="font-geistsans text-2xl font-medium capitalize"
+                              className="font-geistsans text-2xl font-medium capitalize hover:animate-bounce"
                             >
                               {item.title}
                             </Link>
@@ -441,7 +441,15 @@ const Page = () => {
                         <tr key={i} className="mb-4 rounded-lg">
                           <td className="py-3">{i + 1}</td>
                           <td className="py-3 capitalize">{item.title}</td>
-                          <td className="py-3 capitalize">{item.link}</td>
+                          <td className="py-3 capitalize">
+                            {" "}
+                            <Link
+                              href={item.link}
+                              className="hover:text-brand-main"
+                            >
+                              {item.link}
+                            </Link>
+                          </td>
                           {/* <td className="py-3 capitalize">
                           <select
                             name="bankCode"
