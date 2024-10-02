@@ -226,7 +226,7 @@ const GeneralProvider = (props: any) => {
         localStorage.setItem("userId", userId);
         setUser(response.data.data.user);
         router.push(`/dashboard`);
-        window.location.reload();
+        // window.location.reload();
       }
     } catch (err: any) {
       setAuthLoading(false);
@@ -624,10 +624,10 @@ const GeneralProvider = (props: any) => {
   };
 
   const verifyFundWallet = async () => {
-    // console.log(
-    //   "🚀 ~ verifyFundWal ~ transactionDetails: ",
-    //   transactionDetails
-    // );
+    console.log(
+      "🚀 ~ verifyFundWal ~ transactionDetails: ",
+      transactionDetails
+    );
     try {
       setFetchTransactionsLoading(true);
       const response = await axios.get(
@@ -639,7 +639,7 @@ const GeneralProvider = (props: any) => {
           },
         }
       );
-      // console.log("🚀 ~ verifyFundWal ~ response:", response);
+      console.log("🚀 ~ verifyFundWal ~ response:", response);
       setFetchTransactionsLoading(false);
       if (response.status === 200) {
         getAllTransactionsByUser();

@@ -69,7 +69,7 @@ const Fund = () => {
                 id="amount"
                 placeholder="Enter amount"
                 onChange={onchangeHandler}
-                value={newTransaction.amount}
+                // value={newTransaction.amount}
                 className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
               />
             </div>
