@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const { oneVoucher, setOneVoucherId }: any = useGeneralContext();
+  console.log("🚀 ~ Page ~ oneVoucher:", oneVoucher);
   const [display, setDisplay] = useState("vouchers");
 
   useEffect(() => {
