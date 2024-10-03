@@ -470,7 +470,7 @@ const GeneralProvider = (props: any) => {
       }
     } catch (err: any) {
       setCreateVoucherLoading(false);
-      console.log("🚀 ~ updateVoucherRecipients ~ err:", err);
+      console.log("🚀 ~ updateVoucherRecipients ~ err: ", err);
       error(
         err.response?.data?.message
           ? err?.response?.data?.message
