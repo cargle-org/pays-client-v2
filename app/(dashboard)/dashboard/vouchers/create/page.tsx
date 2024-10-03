@@ -85,7 +85,7 @@ const Page = () => {
       }
     } catch (err: any) {
       setCreateVoucherLoading(false);
-      console.log("🚀 ~ onSubmit ~ err:", err);
+      console.log("🚀 ~ onSubmit ~ err: ", err);
       error(
         err?.response?.data?.message
           ? err?.response?.data?.message
