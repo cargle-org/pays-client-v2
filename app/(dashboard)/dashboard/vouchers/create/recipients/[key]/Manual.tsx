@@ -14,9 +14,9 @@ const Manual = ({ setDisplay }: any) => {
   }: any = useGeneralContext();
 
   const [newRecipient, setNewRecipient] = useState({
-    recipient_name: "",
+    // recipient_name: "",
     recipient_email: "",
-    recipient_phone: "",
+    // recipient_phone: "",
   });
   const [error, setError] = useState("");
 
@@ -28,19 +28,20 @@ const Manual = ({ setDisplay }: any) => {
   };
 
   const handleAddRecipient = () => {
-    const { recipient_name, recipient_email, recipient_phone } = newRecipient;
+    // const { recipient_name, recipient_email, recipient_phone } = newRecipient;
+    const { recipient_email } = newRecipient;
 
     // Validate if all fields are filled
-    if (!recipient_name || !recipient_email || !recipient_phone) {
+    if (!recipient_email) {
       setError("All fields are required.");
       return;
     }
 
     setRecipients((prev: any) => [...prev, newRecipient]);
     setNewRecipient({
-      recipient_name: "",
+      // recipient_name: "",
       recipient_email: "",
-      recipient_phone: "",
+      // recipient_phone: "",
     }); // Clear the form after adding
     setError(""); // Clear error message
   };
@@ -76,7 +77,7 @@ const Manual = ({ setDisplay }: any) => {
               {error && (
                 <div className="text-red-500 text-sm mb-4">{error}</div>
               )}
-              <div className="flex flex-col justify-start">
+              {/* <div className="flex flex-col justify-start">
                 <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
                   Recipient Name <span className="text-red-400">*</span>
                 </span>
@@ -103,7 +104,7 @@ const Manual = ({ setDisplay }: any) => {
                   value={newRecipient.recipient_phone}
                   className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                 />
-              </div>
+              </div> */}
               <div className="flex flex-col justify-start">
                 <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
                   Recipient Email <span className="text-red-400">*</span>
@@ -160,8 +161,8 @@ const Manual = ({ setDisplay }: any) => {
               <thead className="divide-y divide-gray-200 font-bold text-sm text-brand-grayish p-4 mb-2">
                 <tr className="rounded-lg">
                   <th className="py-2">S/N</th>
-                  <th className="py-2">Name</th>
-                  <th className="py-2">Number</th>
+                  {/* <th className="py-2">Name</th>
+                  <th className="py-2">Number</th> */}
                   <th className="py-2">Email Address</th>
                 </tr>
               </thead>
@@ -170,8 +171,8 @@ const Manual = ({ setDisplay }: any) => {
                   recipients.map((item: any, i: number) => (
                     <tr key={i} className="mb-4 rounded-lg">
                       <td className="py-2">{i + 1}</td>
-                      <td className="py-2">{item.recipient_name}</td>
-                      <td className="py-2">{item.recipient_phone}</td>
+                      {/* <td className="py-2">{item.recipient_name}</td>
+                      <td className="py-2">{item.recipient_phone}</td> */}
                       <td className="py-2">{item.recipient_email}</td>
                     </tr>
                   ))

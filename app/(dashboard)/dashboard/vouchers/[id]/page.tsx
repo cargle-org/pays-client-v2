@@ -212,8 +212,8 @@ const Page = ({ params }: { params: { id: string } }) => {
                         <thead className="divide-y divide-gray-200 font-bold text-sm text-brand-grayish p-4 mb-2">
                           <tr className="rounded-lg">
                             <th className="py-2">S/N</th>
-                            <th className="py-2">Name</th>
-                            <th className="py-2">Number</th>
+                            {/* <th className="py-2">Name</th>
+                            <th className="py-2">Number</th> */}
                             <th className="py-2">Email Address</th>
                           </tr>
                         </thead>
@@ -223,12 +223,12 @@ const Page = ({ params }: { params: { id: string } }) => {
                               (item: any, i: number) => (
                                 <tr key={i} className="mb-4 rounded-lg">
                                   <td className="py-2">{i + 1}</td>
-                                  <td className="py-2 capitalize">
+                                  {/* <td className="py-2 capitalize">
                                     {item.recipient_name}
                                   </td>
                                   <td className="py-2 capitalize">
                                     {item.recipient_phone}
-                                  </td>
+                                  </td> */}
                                   <td className="py-2 capitalize">
                                     {item.recipient_email}
                                   </td>
