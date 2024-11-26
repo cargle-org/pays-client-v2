@@ -30,7 +30,7 @@ const Page = () => {
   });
   const [newAmount, setNewAmount] = useState(0);
   console.log("🚀 ~ Page ~ newAmount:", newAmount);
-  const [paysFee, setPaysFee] = useState(100);
+  const [paysFee, setPaysFee] = useState(0);
   // const [createVoucherLoading, setCreateVoucherLoading] = useState(false);
 
   const onchangeHandler = (e: any) => {
@@ -103,6 +103,21 @@ const Page = () => {
 
   useEffect(() => {
     if (formData.amountPerVoucher) {
+      if (
+        parseInt(formData.totalNumberOfVouchers) > 0 &&
+        parseInt(formData.totalNumberOfVouchers) <= 10
+      ) {
+        setPaysFee(parseInt(formData.totalNumberOfVouchers) * 150);
+      }
+      if (
+        parseInt(formData.totalNumberOfVouchers) > 10 &&
+        parseInt(formData.totalNumberOfVouchers) <= 50
+      ) {
+        setPaysFee(parseInt(formData.totalNumberOfVouchers) * 120);
+      }
+      if (parseInt(formData.totalNumberOfVouchers) > 50) {
+        setPaysFee(parseInt(formData.totalNumberOfVouchers) * 100);
+      }
       setNewAmount(
         parseInt(formData.amountPerVoucher) *
           parseInt(formData.totalNumberOfVouchers) +
@@ -113,6 +128,21 @@ const Page = () => {
 
   useEffect(() => {
     if (formData.totalNumberOfVouchers) {
+      if (
+        parseInt(formData.totalNumberOfVouchers) > 0 &&
+        parseInt(formData.totalNumberOfVouchers) <= 10
+      ) {
+        setPaysFee(parseInt(formData.totalNumberOfVouchers) * 150);
+      }
+      if (
+        parseInt(formData.totalNumberOfVouchers) > 10 &&
+        parseInt(formData.totalNumberOfVouchers) <= 50
+      ) {
+        setPaysFee(parseInt(formData.totalNumberOfVouchers) * 120);
+      }
+      if (parseInt(formData.totalNumberOfVouchers) > 50) {
+        setPaysFee(parseInt(formData.totalNumberOfVouchers) * 100);
+      }
       setNewAmount(
         parseInt(formData.amountPerVoucher) *
           parseInt(formData.totalNumberOfVouchers) +
@@ -314,9 +344,10 @@ const Page = () => {
                   </span>
                   <span className="font-bold text-base text-brand-dark/70">
                     ₦{" "}
-                    {parseInt(formData.amountPerVoucher).toLocaleString(
-                      "en-NG"
-                    )}
+                    {(
+                      parseInt(formData.amountPerVoucher) *
+                      parseInt(formData.totalNumberOfVouchers)
+                    ).toLocaleString("en-NG")}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
@@ -332,7 +363,12 @@ const Page = () => {
                     Total Amount
                   </span>
                   <span className="font-bold text-base text-brand-dark/70">
-                    ₦ {newAmount.toLocaleString("en-NG")}
+                    {/* ₦ {newAmount.toLocaleString("en-NG")} */}₦{" "}
+                    {(
+                      parseInt(formData.amountPerVoucher) *
+                        parseInt(formData.totalNumberOfVouchers) +
+                      paysFee
+                    ).toLocaleString("en-NG")}
                   </span>
                 </div>
               </div>
