@@ -3,10 +3,13 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import left from "@/assets/imgs/landing/hero_left.png";
+import left from "@/assets/imgs/landing/hero_left1.png";
 import right from "@/assets/imgs/landing/hero_right.png";
 import hero_mid_top from "@/assets/imgs/landing/hero_mid_top.png";
 import hero_mid_bottom from "@/assets/imgs/landing/hero_mid_bottom.png";
+import hero_users from "@/assets/imgs/landing/hero_users.png";
+import hero_gift_icon from "@/assets/imgs/landing/hero_gift_icon.png";
+import hero_naira_icon from "@/assets/imgs/landing/hero_naira_icon.png";
 import Image from "next/image";
 
 const Page = () => {
@@ -89,7 +92,68 @@ const Page = () => {
               />
             </div>
             {/* right */}
-            <Image src={right} alt="right" width={320} height={380} priority />
+            {/* <Image src={right} alt="right" width={320} height={380} priority /> */}
+            <div className="flex flex-col gap-2">
+              <div className="w-full rounded-lg border-brand-grayish/15 shadow border-[0.1px] flex flex-col gap-6 p-6 bg-brand-white">
+                <Image
+                  src={hero_users}
+                  alt="hero_users"
+                  width={201}
+                  height={36}
+                  priority
+                />
+                <div className="w-full flex flex-col gap-2 font-geistsans">
+                  <span className="text-sm font-light">Active Users</span>
+                  <span className=" text-4xl font-medium">26k</span>
+                </div>
+              </div>
+              <div className="w-full flex gap-2">
+                <div className="w-1/2 rounded-lg border-brand-grayish/15 shadow border-[0.1px] flex flex-col gap-6 p-6 bg-brand-white">
+                  <Image
+                    src={hero_gift_icon}
+                    alt="hero_gift_icon"
+                    width={40}
+                    height={40}
+                    priority
+                  />
+                  <div className="w-full flex flex-col gap-2 font-geistsans">
+                    <span className="text-base font-light flex flex-col gap-1">
+                      <span>Vouchers</span> Created
+                    </span>
+                    <span className=" text-3xl font-medium">26k</span>
+                  </div>
+                </div>
+                <div className="w-1/2 rounded-lg border-brand-grayish/15 shadow border-[0.1px] flex flex-col gap-6 p-6 bg-brand-white">
+                  <Image
+                    src={hero_naira_icon}
+                    alt="hero_gift_icon"
+                    width={40}
+                    height={40}
+                    priority
+                  />
+                  <div className="w-full flex flex-col gap-2 font-geistsans">
+                    <span className="text-base font-light flex flex-col gap-1">
+                      <span>Amount</span> Cashed
+                    </span>
+                    <span className=" text-3xl font-medium">₦26k</span>
+                  </div>
+                </div>
+              </div>
+              {/* <Image
+                src={hero_mid_top}
+                alt="hero_mid_top"
+                width={320}
+                height={380}
+                priority
+              />{" "}
+              <Image
+                src={hero_mid_bottom}
+                alt="hero_mid_bottom"
+                width={320}
+                height={380}
+                priority
+              /> */}
+            </div>
           </div>
         </div>
       </div>
