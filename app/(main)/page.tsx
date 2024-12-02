@@ -20,10 +20,11 @@ const Page = () => {
 
   function formatNumberToK(number: any) {
     console.log("🚀 ~ formatNumberToK ~ number:", number);
-    if (number >= 1000) {
-      return `${(number / 1000).toFixed(1).replace(/\.0$/, "")}k`;
+    const newNumber = parseInt(number) * 10;
+    if (newNumber >= 1000) {
+      return `${(newNumber / 1000).toFixed(1).replace(/\.0$/, "")}k`;
     }
-    return number.toLocaleString("en-NG");
+    return newNumber.toLocaleString("en-NG");
   }
 
   return (
@@ -105,7 +106,7 @@ const Page = () => {
             </div>
             {/* right */}
             {/* <Image src={right} alt="right" width={320} height={380} priority /> */}
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 w-[320px]">
               <div className="w-full rounded-lg border-brand-grayish/15 shadow border-[0.1px] flex flex-col gap-6 p-6 bg-brand-white">
                 <Image
                   src={hero_users}
@@ -117,7 +118,7 @@ const Page = () => {
                 <div className="w-full flex flex-col gap-2 font-geistsans">
                   <span className="text-sm font-light">Active Users</span>
                   <span className="text-xl font-medium lg:text-3xl">
-                    {formatNumberToK(homepageStats?.users || 0)}
+                    {formatNumberToK(homepageStats?.users || 3200)}
                   </span>
                 </div>
               </div>
@@ -135,7 +136,7 @@ const Page = () => {
                       <span>Vouchers</span> Created
                     </span>
                     <span className="text-xl font-medium lg:text-3xl">
-                      {formatNumberToK(homepageStats?.vouchersCreated || 0)}
+                      {formatNumberToK(homepageStats?.vouchersCreated || 15000)}
                     </span>
                   </div>
                 </div>
@@ -152,7 +153,7 @@ const Page = () => {
                       <span>Amount</span> Cashed
                     </span>
                     <span className="text-xl font-medium lg:text-3xl">
-                      ₦{formatNumberToK(homepageStats?.amountCashed || 0)}
+                      ₦{formatNumberToK(homepageStats?.amountCashed || 73420)}
                     </span>
                   </div>
                 </div>
