@@ -11,9 +11,21 @@ import hero_users from "@/assets/imgs/landing/hero_users.png";
 import hero_gift_icon from "@/assets/imgs/landing/hero_gift_icon.png";
 import hero_naira_icon from "@/assets/imgs/landing/hero_naira_icon.png";
 import Image from "next/image";
+import { useGeneralContext } from "@/context/GenralContext";
 
 const Page = () => {
   const router = useRouter();
+  const { homepageStats }: any = useGeneralContext();
+  console.log("🚀 ~ Page ~ homepageStats:", homepageStats);
+
+  function formatNumberToK(number: any) {
+    console.log("🚀 ~ formatNumberToK ~ number:", number);
+    if (number >= 1000) {
+      return `${(number / 1000).toFixed(1).replace(/\.0$/, "")}k`;
+    }
+    return number.toLocaleString("en-NG");
+  }
+
   return (
     <>
       <div className="w-full min-h-screen pt-16 pb-12 flex items-center justify-center gap-8 lg:pt-32">
@@ -104,7 +116,9 @@ const Page = () => {
                 />
                 <div className="w-full flex flex-col gap-2 font-geistsans">
                   <span className="text-sm font-light">Active Users</span>
-                  <span className=" text-4xl font-medium">26k</span>
+                  <span className="text-xl font-medium lg:text-3xl">
+                    {formatNumberToK(homepageStats?.users || 0)}
+                  </span>
                 </div>
               </div>
               <div className="w-full flex gap-2">
@@ -120,7 +134,9 @@ const Page = () => {
                     <span className="text-base font-light flex flex-col gap-1">
                       <span>Vouchers</span> Created
                     </span>
-                    <span className=" text-3xl font-medium">26k</span>
+                    <span className="text-xl font-medium lg:text-3xl">
+                      {formatNumberToK(homepageStats?.vouchersCreated || 0)}
+                    </span>
                   </div>
                 </div>
                 <div className="w-1/2 rounded-lg border-brand-grayish/15 shadow border-[0.1px] flex flex-col gap-6 p-6 bg-brand-white">
@@ -135,7 +151,9 @@ const Page = () => {
                     <span className="text-base font-light flex flex-col gap-1">
                       <span>Amount</span> Cashed
                     </span>
-                    <span className=" text-3xl font-medium">₦26k</span>
+                    <span className="text-xl font-medium lg:text-3xl">
+                      ₦{formatNumberToK(homepageStats?.amountCashed || 0)}
+                    </span>
                   </div>
                 </div>
               </div>

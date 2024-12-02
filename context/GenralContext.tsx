@@ -13,6 +13,7 @@ const GeneralProvider = (props: any) => {
   const [name, setName] = useState<String>("EDDY");
   const [token, setToken] = useState() as any;
   const [airtimeBillers, setAirtimeBillers] = useState();
+  const [homepageStats, setHomepageStats] = useState();
 
   // USER
   const [userId, setUserId] = useState("");
@@ -161,6 +162,33 @@ const GeneralProvider = (props: any) => {
     } catch (err: any) {
       setFetchVouchersLoading(false);
       console.log("🚀 ~ getAirtimeBillerInfo ~ err:", err);
+      error(
+        err.response?.data?.message
+          ? err?.response?.data?.message
+          : err.response?.data?.error
+      );
+    }
+  };
+
+  const getHomepageStats = async () => {
+    try {
+      // setFetchVouchersLoading(true);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/homepage-stats`,
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
+      // console.log("🚀 ~ getHomepageStats ~ response:", response);
+      // setFetchVouchersLoading(false);
+      if (response.status === 200) {
+        setHomepageStats(response.data.data);
+      }
+    } catch (err: any) {
+      setFetchVouchersLoading(false);
+      console.log("🚀 ~ getAllBanks ~ err:", err);
       error(
         err.response?.data?.message
           ? err?.response?.data?.message
@@ -824,6 +852,7 @@ const GeneralProvider = (props: any) => {
     if (cachedUserId) setUserId(cachedUserId);
     if (cachedToken) setToken(cachedToken);
     getAllBanks();
+    getHomepageStats();
     getAirtimeBillers();
   }, []);
 
@@ -854,11 +883,12 @@ const GeneralProvider = (props: any) => {
         user,
         token,
         allBanks,
+        homepageStats,
         airtimeBillers,
-
         setName,
         setUser,
         setAllBanks,
+        setHomepageStats,
         setAirtimeBillers,
         getAirtimeBillerInfo,
 
