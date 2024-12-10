@@ -19,20 +19,33 @@ const Transactions = () => {
     setFetchTransactionsLoading,
     selectedTransactionStatus,
     setSelectedTransactionStatus,
+    transactionPriceRange,
+    setTransactionPriceRange,
+    transactionDateRange,
+    setTransactionDateRange,
   }: any = useGeneralContext();
-  console.log("🚀 ~ Transactions ~ allUserTransactions:", allUserTransactions);
 
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const [statusOpen, setStatusOpen] = useState(false);
-  // const [selectedStatus, setSelectedStatus] = useState("Status");
-  // console.log("🚀 ~ selectedStatus:", selectedStatus);
+  const [amountOpen, setAmountOpen] = useState(false);
 
-  //  const toggleAmountDropdown = () => setAmountOpen(!amountOpen);
   const toggleStatusDropdown = () => setStatusOpen(!statusOpen);
 
   const statuses = ["successful", "initiated", "cancelled"];
+
+  const toggleAmountDropdown = () => setAmountOpen(!amountOpen);
+
+  const handlePriceChange = (e: any) => {
+    const { name, value } = e.target;
+    setTransactionPriceRange((prev: any) => ({ ...prev, [name]: value }));
+  };
+
+  const handleDateChange = (e: any) => {
+    const { name, value } = e.target;
+    setTransactionDateRange((prev: any) => ({ ...prev, [name]: value }));
+  };
 
   const checkToken = async () => {
     const token = localStorage.getItem("auth_token");
@@ -47,6 +60,7 @@ const Transactions = () => {
     checkToken();
   }, []);
 
+  // verify transactions
   useEffect(() => {
     // Extract query parameters from URL
     const tx_ref = searchParams.get("tx_ref");
@@ -348,43 +362,90 @@ const Transactions = () => {
           <span className="font-geistmono font-normal text-2xl">
             Your Transactions
           </span>
-          <div className="flex items-center gap-4">
-            {/* <div className="flex items-center gap-2 p-2 px-4 font-geistsans font-normal text-sm rounded-3xl bg-brand-white text-brand-main">
-              ₦ Amount{" "}
-              <svg
-                width="9"
-                height="5"
-                viewBox="0 0 9 5"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+          <div className="flex items-end gap-4">
+            {/* Amount Dropdown */}
+            <div className="relative">
+              <button
+                onClick={toggleAmountDropdown}
+                className="flex items-center gap-2 p-2 px-4 font-geistsans font-normal text-sm rounded-3xl bg-brand-white text-brand-main"
               >
-                <path
-                  d="M7.67188 1.00586L4.67187 4.00586L1.67187 1.00586"
-                  stroke="#61666B"
-                  strokeWidth="1.49937"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+                ₦ Amount
+                <svg
+                  width="9"
+                  height="5"
+                  viewBox="0 0 9 5"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.67188 1.00586L4.67187 4.00586L1.67187 1.00586"
+                    stroke="#61666B"
+                    strokeWidth="1.49937"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+              {amountOpen && (
+                <div className="absolute mt-2 bg-white shadow-lg rounded-lg p-4">
+                  <div className="flex flex-col gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Min Price
+                      </label>
+                      <input
+                        type="number"
+                        name="min"
+                        value={transactionPriceRange.min}
+                        onChange={handlePriceChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow focus:border-brand-main focus:ring-brand-main text-sm p-1"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Max Price
+                      </label>
+                      <input
+                        type="number"
+                        name="max"
+                        value={transactionPriceRange.max}
+                        onChange={handlePriceChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow focus:border-brand-main focus:ring-brand-main text-sm p-1"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="flex items-center gap-2 p-2 px-4 font-geistsans font-normal text-sm rounded-3xl bg-brand-white text-brand-main">
-              Status{" "}
-              <svg
-                width="9"
-                height="5"
-                viewBox="0 0 9 5"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M7.67188 1.00586L4.67187 4.00586L1.67187 1.00586"
-                  stroke="#61666B"
-                  strokeWidth="1.49937"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+
+            {/* Date Pickers */}
+            <div className="flex p-2 gap-4 bg-brand-white rounded-xl">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  From Date
+                </label>
+                <input
+                  type="date"
+                  name="from"
+                  value={transactionDateRange.from}
+                  onChange={handleDateChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow focus:border-brand-main focus:ring-brand-main text-sm p-1"
                 />
-              </svg>
-            </div> */}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  To Date
+                </label>
+                <input
+                  type="date"
+                  name="to"
+                  value={transactionDateRange.to}
+                  onChange={handleDateChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow focus:border-brand-main focus:ring-brand-main text-sm p-1"
+                />
+              </div>
+            </div>
+
             {/* Status Dropdown */}
             <div className="relative">
               <button

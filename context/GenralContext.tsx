@@ -64,10 +64,14 @@ const GeneralProvider = (props: any) => {
     useState(false);
   const [selectedTransactionStatus, setSelectedTransactionStatus] =
     useState("status");
-  console.log(
-    "🚀 ~ GeneralProvider ~ selectedTransactionStatus:",
-    selectedTransactionStatus
-  );
+  const [transactionPriceRange, setTransactionPriceRange] = useState({
+    min: "",
+    max: "",
+  });
+  const [transactionDateRange, setTransactionDateRange] = useState({
+    from: "",
+    to: "",
+  });
   const [transactionDetails, setTransactionDetails] = useState({
     tx_ref: "",
     transaction_id: "",
@@ -601,6 +605,17 @@ const GeneralProvider = (props: any) => {
         }/utils/transactions/all?userId=${userId}&${
           selectedTransactionStatus !== "status" &&
           `status=${selectedTransactionStatus}`
+        }&${
+          transactionPriceRange.min !== "" &&
+          `minAmount=${transactionPriceRange.min}`
+        }&${
+          transactionPriceRange.max !== "" &&
+          `maxAmount=${transactionPriceRange.max}`
+        }&${
+          transactionDateRange.from !== "" &&
+          `fromDate=${transactionDateRange.from}`
+        }&${
+          transactionDateRange.to !== "" && `toDate=${transactionDateRange.to}`
         }`,
         {
           headers: {
@@ -622,6 +637,9 @@ const GeneralProvider = (props: any) => {
           ? err?.response?.data?.message
           : err.response?.data?.error
       );
+      if (err?.response?.data?.message === "No transactions found") {
+        setAllUserTransactions(err?.response?.data?.data);
+      }
     }
   };
 
@@ -882,6 +900,7 @@ const GeneralProvider = (props: any) => {
     if (oneVoucherId) getVoucherById();
   }, [oneVoucherId]);
 
+  // TRANSACTION STUFF
   useEffect(() => {
     // if (transactionDetails?.tx_ref && transactionDetails?.transaction_id)
     if (transactionDetails?.tx_ref && transactionDetails?.status)
@@ -891,6 +910,22 @@ const GeneralProvider = (props: any) => {
   useEffect(() => {
     if (selectedTransactionStatus !== "Status") getAllTransactionsByUser();
   }, [selectedTransactionStatus]);
+
+  // prices
+  useEffect(() => {
+    if (transactionPriceRange.min !== "" && transactionPriceRange.max !== "")
+      getAllTransactionsByUser();
+    if (transactionPriceRange.min === "" && transactionPriceRange.max == "")
+      getAllTransactionsByUser();
+  }, [transactionPriceRange]);
+
+  // dates
+  useEffect(() => {
+    if (transactionDateRange.from !== "" && transactionDateRange.to !== "")
+      getAllTransactionsByUser();
+    if (transactionDateRange.from === "" && transactionDateRange.to == "")
+      getAllTransactionsByUser();
+  }, [transactionDateRange]);
 
   return (
     <GeneralContext.Provider
@@ -953,6 +988,8 @@ const GeneralProvider = (props: any) => {
         // Transactions
         transactionDetails,
         allUserTransactions,
+        transactionDateRange,
+        transactionPriceRange,
         // newWithdrawTransaction,
         createTransactionLoading,
         fetchTransactionsLoading,
@@ -961,7 +998,9 @@ const GeneralProvider = (props: any) => {
         handleFundWallet,
         setTransactionDetails,
         setAllUserTransactions,
+        setTransactionDateRange,
         handleWithdrawFromWallet,
+        setTransactionPriceRange,
         // setNewWithdrawTransaction,
         setCreateTransactionLoading,
         setFetchTransactionsLoading,
