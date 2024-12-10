@@ -62,9 +62,16 @@ const GeneralProvider = (props: any) => {
     useState(false);
   const [fetchTransactionsLoading, setFetchTransactionsLoading] =
     useState(false);
+  const [selectedTransactionStatus, setSelectedTransactionStatus] =
+    useState("status");
+  console.log(
+    "🚀 ~ GeneralProvider ~ selectedTransactionStatus:",
+    selectedTransactionStatus
+  );
   const [transactionDetails, setTransactionDetails] = useState({
     tx_ref: "",
     transaction_id: "",
+    status: "",
   });
 
   // PAYMENT LINKS
@@ -589,7 +596,12 @@ const GeneralProvider = (props: any) => {
     try {
       setFetchTransactionsLoading(true);
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/transactions/all?userId=${userId}`,
+        `${
+          process.env.NEXT_PUBLIC_BASE_URL
+        }/utils/transactions/all?userId=${userId}&${
+          selectedTransactionStatus !== "status" &&
+          `status=${selectedTransactionStatus}`
+        }`,
         {
           headers: {
             "content-type": "application/json",
@@ -659,7 +671,7 @@ const GeneralProvider = (props: any) => {
     try {
       setFetchTransactionsLoading(true);
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/wallet/verifyTrx?tx_ref=${transactionDetails?.tx_ref}&transaction_id=${transactionDetails?.transaction_id}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/wallet/verifyTrx?tx_ref=${transactionDetails?.tx_ref}&transaction_id=${transactionDetails?.transaction_id}&status=${transactionDetails?.status}`,
         {
           headers: {
             "content-type": "application/json",
@@ -871,9 +883,14 @@ const GeneralProvider = (props: any) => {
   }, [oneVoucherId]);
 
   useEffect(() => {
-    if (transactionDetails?.tx_ref && transactionDetails?.transaction_id)
+    // if (transactionDetails?.tx_ref && transactionDetails?.transaction_id)
+    if (transactionDetails?.tx_ref && transactionDetails?.status)
       verifyFundWallet();
   }, [transactionDetails]);
+
+  useEffect(() => {
+    if (selectedTransactionStatus !== "Status") getAllTransactionsByUser();
+  }, [selectedTransactionStatus]);
 
   return (
     <GeneralContext.Provider
@@ -939,6 +956,7 @@ const GeneralProvider = (props: any) => {
         // newWithdrawTransaction,
         createTransactionLoading,
         fetchTransactionsLoading,
+        selectedTransactionStatus,
         verifyFundWallet,
         handleFundWallet,
         setTransactionDetails,
@@ -947,6 +965,7 @@ const GeneralProvider = (props: any) => {
         // setNewWithdrawTransaction,
         setCreateTransactionLoading,
         setFetchTransactionsLoading,
+        setSelectedTransactionStatus,
 
         // Payment Links
         payToLinkDetails,

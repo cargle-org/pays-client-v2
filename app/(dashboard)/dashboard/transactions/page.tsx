@@ -1,7 +1,7 @@
 "use client";
 
 import MainLayout from "@/app/(main)/layout";
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import logo from "@/assets/imgs/vouchers/voucher_img.png";
@@ -16,11 +16,23 @@ const Transactions = () => {
     allUserTransactions,
     fetchVouchersLoading,
     setTransactionDetails,
+    setFetchTransactionsLoading,
+    selectedTransactionStatus,
+    setSelectedTransactionStatus,
   }: any = useGeneralContext();
   console.log("🚀 ~ Transactions ~ allUserTransactions:", allUserTransactions);
 
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  const [statusOpen, setStatusOpen] = useState(false);
+  // const [selectedStatus, setSelectedStatus] = useState("Status");
+  // console.log("🚀 ~ selectedStatus:", selectedStatus);
+
+  //  const toggleAmountDropdown = () => setAmountOpen(!amountOpen);
+  const toggleStatusDropdown = () => setStatusOpen(!statusOpen);
+
+  const statuses = ["successful", "initiated", "cancelled"];
 
   const checkToken = async () => {
     const token = localStorage.getItem("auth_token");
@@ -37,19 +49,17 @@ const Transactions = () => {
 
   useEffect(() => {
     // Extract query parameters from URL
-    // const urlParams = new URLSearchParams(window.location.search);
-    // const tx_ref = urlParams.get("tx_ref") as any;
-    // const transaction_id = urlParams.get("transaction_id") as any;
     const tx_ref = searchParams.get("tx_ref");
     const transaction_id = searchParams.get("transaction_id");
-    console.log("🚀 ~ useEffect ~ tx_ref:", tx_ref);
-    console.log("🚀 ~ useEffect ~ transaction_id:", transaction_id);
+    const status = searchParams.get("status");
     setTransactionDetails({});
-    if (tx_ref && transaction_id) {
+    // if (tx_ref && transaction_id) {
+    if (tx_ref && status) {
       setTransactionDetails((item: any) => ({
         ...item,
         tx_ref: tx_ref,
         transaction_id: transaction_id,
+        status: status,
       }));
     }
   }, []);
@@ -334,12 +344,12 @@ const Transactions = () => {
         </div>
       </div>
       <div className="flex flex-col justify-start gap-4 my-6">
-        <div className="w-full flex justify-between items-center">
+        <div className="w-full flex justify-between items-center my-2 mt-4">
           <span className="font-geistmono font-normal text-2xl">
             Your Transactions
           </span>
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 p-2 px-4 font-geistsans font-normal text-sm rounded-3xl bg-brand-white text-brand-main">
+            {/* <div className="flex items-center gap-2 p-2 px-4 font-geistsans font-normal text-sm rounded-3xl bg-brand-white text-brand-main">
               ₦ Amount{" "}
               <svg
                 width="9"
@@ -374,6 +384,46 @@ const Transactions = () => {
                   strokeLinejoin="round"
                 />
               </svg>
+            </div> */}
+            {/* Status Dropdown */}
+            <div className="relative">
+              <button
+                onClick={toggleStatusDropdown}
+                className="flex items-center gap-2 p-2 px-4 font-geistsans font-normal text-sm rounded-3xl bg-brand-white text-brand-main"
+              >
+                {selectedTransactionStatus}
+                <svg
+                  width="9"
+                  height="5"
+                  viewBox="0 0 9 5"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.67188 1.00586L4.67187 4.00586L1.67187 1.00586"
+                    stroke="#61666B"
+                    strokeWidth="1.49937"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+              {statusOpen && (
+                <div className="absolute mt-2 bg-white shadow-lg rounded-lg p-2">
+                  {statuses.map((status) => (
+                    <p
+                      key={status}
+                      onClick={() => {
+                        setSelectedTransactionStatus(status);
+                        setStatusOpen(false);
+                      }}
+                      className="p-2 text-sm hover:bg-gray-100 cursor-pointer"
+                    >
+                      {status}
+                    </p>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -395,9 +445,7 @@ const Transactions = () => {
                 {allUserTransactions.map((item: any, i: number) => (
                   <tr key={i} className="mb-4 rounded-lg">
                     <td className="py-3">{i + 1}</td>
-                    <td className="py-3 capitalize">
-                      {item.transactionReference}
-                    </td>
+                    <td className="py-3 capitalize">{item.tx_ref}</td>
                     <td className="py-3 capitalize">{item.type}</td>
                     <td className="py-3 capitalize">
                       {item.amount} {item.currency}
