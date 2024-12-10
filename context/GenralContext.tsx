@@ -632,11 +632,11 @@ const GeneralProvider = (props: any) => {
     } catch (err: any) {
       setFetchTransactionsLoading(false);
       console.log("🚀 ~ getAllTransactionsByUser ~ err:", err);
-      error(
-        err.response?.data?.message
-          ? err?.response?.data?.message
-          : err.response?.data?.error
-      );
+      // error(
+      //   err.response?.data?.message
+      //     ? err?.response?.data?.message
+      //     : err.response?.data?.error
+      // );
       if (err?.response?.data?.message === "No transactions found") {
         setAllUserTransactions(err?.response?.data?.data);
       }
