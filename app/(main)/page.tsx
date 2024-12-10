@@ -19,12 +19,12 @@ const Page = () => {
   console.log("🚀 ~ Page ~ homepageStats:", homepageStats);
 
   function formatNumberToK(number: any) {
-    console.log("🚀 ~ formatNumberToK ~ number:", number);
-    const newNumber = parseInt(number) * 10;
-    if (newNumber >= 1000) {
-      return `${(newNumber / 1000).toFixed(1).replace(/\.0$/, "")}k`;
+    // console.log("🚀 ~ formatNumberToK ~ number:", number);
+    // const newNumber = parseInt(number) * 10;
+    if (number >= 1000) {
+      return `${(number / 1000).toFixed(1).replace(/\.0$/, "")}k`;
     }
-    return newNumber.toLocaleString("en-NG");
+    return number.toLocaleString("en-NG");
   }
 
   return (

@@ -1,22 +1,27 @@
 "use client";
 
 import MainLayout from "@/app/(main)/layout";
-import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import React, { Suspense, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import logo from "@/assets/imgs/vouchers/voucher_img.png";
 import { useGeneralContext } from "@/context/GenralContext";
 import Link from "next/link";
 import Spinner from "@/components/spinner/Spinner";
+import { RefreshCcw } from "lucide-react";
 
-const Page = () => {
+const Transactions = () => {
   const {
     user,
     allUserTransactions,
     fetchVouchersLoading,
     setTransactionDetails,
   }: any = useGeneralContext();
+  console.log("🚀 ~ Transactions ~ allUserTransactions:", allUserTransactions);
+
   const router = useRouter();
+  const searchParams = useSearchParams();
+
   const checkToken = async () => {
     const token = localStorage.getItem("auth_token");
 
@@ -32,9 +37,14 @@ const Page = () => {
 
   useEffect(() => {
     // Extract query parameters from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const tx_ref = urlParams.get("tx_ref") as any;
-    const transaction_id = urlParams.get("transaction_id") as any;
+    // const urlParams = new URLSearchParams(window.location.search);
+    // const tx_ref = urlParams.get("tx_ref") as any;
+    // const transaction_id = urlParams.get("transaction_id") as any;
+    const tx_ref = searchParams.get("tx_ref");
+    const transaction_id = searchParams.get("transaction_id");
+    console.log("🚀 ~ useEffect ~ tx_ref:", tx_ref);
+    console.log("🚀 ~ useEffect ~ transaction_id:", transaction_id);
+    setTransactionDetails({});
     if (tx_ref && transaction_id) {
       setTransactionDetails((item: any) => ({
         ...item,
@@ -43,6 +53,15 @@ const Page = () => {
       }));
     }
   }, []);
+
+  const verifyTransaction = (tx_ref: any, transaction_id: any) => {
+    setTransactionDetails({});
+    setTransactionDetails((item: any) => ({
+      ...item,
+      tx_ref: tx_ref,
+      transaction_id: transaction_id,
+    }));
+  };
 
   return (
     <>
@@ -383,7 +402,7 @@ const Page = () => {
                     <td className="py-3 capitalize">
                       {item.amount} {item.currency}
                     </td>
-                    <td className="py-3 capitalize">
+                    <td className="py-3 capitalize flex items-center justify-center gap-4">
                       <span
                         className={`p-2 rounded-lg ${
                           item.status === "successful"
@@ -393,6 +412,17 @@ const Page = () => {
                       >
                         {item.status}
                       </span>
+                      {item.status === "initiated" && (
+                        <RefreshCcw
+                          onClick={() =>
+                            verifyTransaction(
+                              item.tx_ref,
+                              item.transactionReference
+                            )
+                          }
+                          className="cursor-pointer hover:text-green-500"
+                        />
+                      )}
                     </td>
                     <td className="py-3 capitalize">
                       {item.createdAt.slice(0, 10)}
@@ -421,5 +451,13 @@ const Page = () => {
     </>
   );
 };
+
+// export default Transactions;
+
+const Page = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <Transactions />
+  </Suspense>
+);
 
 export default Page;
