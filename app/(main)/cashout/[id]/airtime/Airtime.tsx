@@ -114,7 +114,7 @@ const Airtime = ({ setDisplay, voucherCode }: any) => {
                     type="text"
                     name="phone_number"
                     id="phone_number"
-                    placeholder="Enter account number"
+                    placeholder="Enter phone number"
                     onChange={onchangeHandler}
                     // value={newTransaction.accountNumber}
                     className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
