@@ -1,26 +1,78 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import left from "@/assets/imgs/landing/hero_left1.png";
-import right from "@/assets/imgs/landing/hero_right.png";
-import hero_mid_top from "@/assets/imgs/landing/hero_mid_top.png";
-import hero_mid_bottom from "@/assets/imgs/landing/hero_mid_bottom.png";
+// import right from "@/assets/imgs/landing/hero_right.png";
+// import hero_mid_top from "@/assets/imgs/landing/hero_mid_top.png";
+// import hero_mid_bottom from "@/assets/imgs/landing/hero_mid_bottom.png";
 import hero_users from "@/assets/imgs/landing/hero_users.png";
 import hero_gift_icon from "@/assets/imgs/landing/hero_gift_icon.png";
 import hero_naira_icon from "@/assets/imgs/landing/hero_naira_icon.png";
 import Image from "next/image";
 import { useGeneralContext } from "@/context/GenralContext";
 
+// Randomize image cards
+import birthday_light from "@/assets/imgs/vouchers/birthday_light.png";
+import birthday_dark from "@/assets/imgs/vouchers/birthday_dark.png";
+import birthday_gradient from "@/assets/imgs/vouchers/birthday_gradient.png";
+import bonus_light from "@/assets/imgs/vouchers/bonus_light.png";
+import bonus_dark from "@/assets/imgs/vouchers/bonus_dark.png";
+import bonus_gradient from "@/assets/imgs/vouchers/bonus_gradient.png";
+import wedding_light from "@/assets/imgs/vouchers/wedding_light.png";
+import wedding_dark from "@/assets/imgs/vouchers/wedding_dark.png";
+import wedding_gradient from "@/assets/imgs/vouchers/wedding_gradient.png";
+import seasons_light from "@/assets/imgs/vouchers/seasons_light.png";
+import seasons_dark from "@/assets/imgs/vouchers/seasons_dark.png";
+import gift_light from "@/assets/imgs/vouchers/gift_light.png";
+import gift_dark from "@/assets/imgs/vouchers/gift_dark.png";
+import gift_gradient from "@/assets/imgs/vouchers/gift_gradient.png";
+
 const Page = () => {
   const router = useRouter();
   const { homepageStats }: any = useGeneralContext();
-  console.log("🚀 ~ Page ~ homepageStats:", homepageStats);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const voucherImages = [
+    birthday_light,
+    birthday_dark,
+    birthday_gradient,
+    bonus_light,
+    bonus_dark,
+    bonus_gradient,
+    wedding_light,
+    wedding_dark,
+    wedding_gradient,
+    seasons_light,
+    seasons_dark,
+    gift_light,
+    gift_dark,
+    gift_gradient,
+  ];
+
+  // useEffect(() => {
+  //   const randNum = Math.floor(Math.random() * voucherImages.length);
+  //   console.log("🚀 ~ useEffect ~ randNum:", randNum);
+  //   const interval = setInterval(() => {
+  //     setCurrentImageIndex(randNum);
+  //     // setCurrentImageIndex(
+  //     //   (prevIndex) => (prevIndex + 1) % voucherImages.length
+  //     // );
+  //   }, 3000); // change image after 10 seconds (10000)
+
+  //   return () => clearInterval(interval);
+  // }, [currentImageIndex]);
+
+  useEffect(() => {
+    const randNum = Math.floor(Math.random() * voucherImages.length);
+    const timer = setTimeout(() => {
+      setCurrentImageIndex(randNum);
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, [currentImageIndex]);
 
   function formatNumberToK(number: any) {
-    // console.log("🚀 ~ formatNumberToK ~ number:", number);
-    // const newNumber = parseInt(number) * 10;
     if (number >= 1000) {
       return `${(number / 1000).toFixed(1).replace(/\.0$/, "")}k`;
     }
@@ -115,33 +167,33 @@ const Page = () => {
           </div>
           <div className="w-full flex flex-col items-center justify-center gap-2 lg:flex-row lg:items-end lg:mt-8 lg:mb-8">
             {/* left */}
-            <Image src={left} alt="left" width={320} height={380} priority />
+            <Image src={left} alt="left" width={325} height={380} priority />
 
-            {/* mid */}
+            {/* mid - This is where I want to use the images, replace the image with random images from the imported ones above every 15 seconds */}
             <div className="flex flex-col gap-2">
               <Image
-                src={hero_mid_top}
-                alt="hero_mid_top"
-                width={320}
-                height={380}
+                // src={birthday_light}
+                src={voucherImages[currentImageIndex]}
+                alt="birthday_light"
+                width={580}
+                height={360}
                 priority
               />{" "}
-              <Image
+              {/* <Image
                 src={hero_mid_bottom}
                 alt="hero_mid_bottom"
                 width={320}
                 height={380}
                 priority
-              />
+              /> */}
             </div>
             {/* right */}
-            {/* <Image src={right} alt="right" width={320} height={380} priority /> */}
             <div className="flex flex-col gap-2 w-[320px]">
               <div className="w-full rounded-lg border-brand-grayish/15 shadow border-[0.1px] flex flex-col gap-6 p-6 bg-brand-white">
                 <Image
                   src={hero_users}
                   alt="hero_users"
-                  width={201}
+                  width={180}
                   height={36}
                   priority
                 />
@@ -188,20 +240,6 @@ const Page = () => {
                   </div>
                 </div>
               </div>
-              {/* <Image
-                src={hero_mid_top}
-                alt="hero_mid_top"
-                width={320}
-                height={380}
-                priority
-              />{" "}
-              <Image
-                src={hero_mid_bottom}
-                alt="hero_mid_bottom"
-                width={320}
-                height={380}
-                priority
-              /> */}
             </div>
           </div>
         </div>
