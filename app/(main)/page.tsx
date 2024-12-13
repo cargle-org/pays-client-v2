@@ -114,7 +114,7 @@ const Page = () => {
                 href={"/dashboard/vouchers/create"}
                 className="transition-fx shadow-lg rounded-3xl cursor-pointer font-medium text-xl uppercase py-2 px-4 bg-brand-white flex items-center justify-center gap-4 text-brand-main hover:bg-brand-main hover:text-brand-white"
               >
-                CREATE VOUCHER{" "}
+                CREATE VOUCHER {" "}
                 <svg
                   width="12"
                   height="13"
