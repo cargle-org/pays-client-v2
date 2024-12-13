@@ -10,7 +10,7 @@ import Link from "next/link";
 import Spinner from "@/components/spinner/Spinner";
 
 const Page = () => {
-  const { paymentLInksByUser, setFetchPaymentLinksLoading }: any =
+  const { paymentLInksByUser, fetchPaymentLinksLoading }: any =
     useGeneralContext();
   console.log("🚀 ~ Page ~ paymentLInksByUser:", paymentLInksByUser);
   const router = useRouter();
@@ -182,7 +182,7 @@ const Page = () => {
             </table>
           ) : (
             <>
-              {setFetchPaymentLinksLoading ? (
+              {fetchPaymentLinksLoading ? (
                 <div className="w-full flex items-center justify-center mx-auto">
                   <span className="w-[150px] p-3 px-8 h-[44px] flex items-center justify-center text-brand-white">
                     <Spinner />
