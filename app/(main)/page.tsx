@@ -51,19 +51,6 @@ const Page = () => {
     gift_gradient,
   ];
 
-  // useEffect(() => {
-  //   const randNum = Math.floor(Math.random() * voucherImages.length);
-  //   console.log("🚀 ~ useEffect ~ randNum:", randNum);
-  //   const interval = setInterval(() => {
-  //     setCurrentImageIndex(randNum);
-  //     // setCurrentImageIndex(
-  //     //   (prevIndex) => (prevIndex + 1) % voucherImages.length
-  //     // );
-  //   }, 3000); // change image after 10 seconds (10000)
-
-  //   return () => clearInterval(interval);
-  // }, [currentImageIndex]);
-
   useEffect(() => {
     const randNum = Math.floor(Math.random() * voucherImages.length);
     const timer = setTimeout(() => {
