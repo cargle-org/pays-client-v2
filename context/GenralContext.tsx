@@ -471,6 +471,7 @@ const GeneralProvider = (props: any) => {
       setFetchVouchersLoading(false);
       // console.log("🚀 ~ getVoucherByKey ~ response:", response);
       if (response.status === 200) {
+        setOneVoucher(response?.data?.data?.voucher);
         router.push(
           `/cashout/${response?.data?.data?.voucher?.coupon?.couponCode}`
         );

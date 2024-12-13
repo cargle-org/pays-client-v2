@@ -8,9 +8,13 @@ import right_img from "@/assets/imgs/redeem/redeem_img.png";
 import Airtime from "./airtime/Airtime";
 import Cash from "./cash/Cash";
 import { Coins, Phone } from "lucide-react";
+import { useGeneralContext } from "@/context/GenralContext";
 
 const Redeem = ({ params }: { params: { id: string } }) => {
   const [display, setDisplay] = useState("");
+  const { oneVoucher }: any = useGeneralContext();
+  console.log("🚀 ~ Redeem ~ oneVoucher:", oneVoucher);
+
   return (
     <>
       {display === "airtime" && (
@@ -45,7 +49,11 @@ lg:pt-32"
                   {/* title-bytext */}
                   <div className="flex flex-col justify-start font-geistsans mb-4 gap-2">
                     <span className="font-bold text-4xl text-brand-dark">
-                      Cashout Your Voucher
+                      {/* Cashout Your Voucher */}
+                      {oneVoucher?.title}{" "}
+                      <span className="text-gray-600 text-base">
+                        ₦{oneVoucher.amount}
+                      </span>
                     </span>
                     <span className="font-normal text-xs text-brand-dark">
                       Please select your preferred method of voucher redemption
