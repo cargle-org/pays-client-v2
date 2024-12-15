@@ -20,7 +20,7 @@ export default function RootLayout({
     <>
       <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
         <head>
-          <Script
+          {/* <Script
             async
             src={`https://www.googletagmanager.com/gtag/js?id=G-X0WYX329V6`}
           />
@@ -32,7 +32,7 @@ export default function RootLayout({
             gtag('js', new Date());
             gtag('config', 'G-X0WYX329V6');
           `}
-          </Script>
+          </Script> */}
           {/* <!-- Google tag (gtag.js) --> */}
           {/* <script async src="https://www.googletagmanager.com/gtag/js?id=G-X0WYX329V6"></script>
           <script>
