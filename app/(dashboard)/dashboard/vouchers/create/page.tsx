@@ -346,7 +346,7 @@ const Page = () => {
                     ₦{" "}
                     {(
                       parseInt(formData.amountPerVoucher) *
-                      parseInt(formData.totalNumberOfVouchers)
+                        parseInt(formData.totalNumberOfVouchers) || 0
                     ).toLocaleString("en-NG")}
                   </span>
                 </div>
@@ -367,7 +367,7 @@ const Page = () => {
                     {(
                       parseInt(formData.amountPerVoucher) *
                         parseInt(formData.totalNumberOfVouchers) +
-                      paysFee
+                        paysFee || 0
                     ).toLocaleString("en-NG")}
                   </span>
                 </div>

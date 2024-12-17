@@ -1,19 +1,48 @@
 "use client";
 
 import MainLayout from "@/app/(main)/layout";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import logo from "@/assets/imgs/vouchers/voucher_img.png";
 import { useGeneralContext } from "@/context/GenralContext";
 import Link from "next/link";
 import Spinner from "@/components/spinner/Spinner";
+import { DeleteIcon, EyeIcon, Trash2Icon } from "lucide-react";
 
 const Page = () => {
-  const { paymentLInksByUser, fetchPaymentLinksLoading }: any =
-    useGeneralContext();
+  const {
+    paymentLInksByUser,
+    fetchPaymentLinksLoading,
+    deleteOnePaymentLink,
+    setPaymentLinkDateRange,
+    setPaymentLinkPriceRange,
+    setSelectedPaymentLinkStatus,
+    paymentLinkDateRange,
+    selectedPaymentLinkStatus,
+    paymentLinkPriceRange,
+  }: any = useGeneralContext();
   console.log("🚀 ~ Page ~ paymentLInksByUser:", paymentLInksByUser);
   const router = useRouter();
+
+  const [statusOpen, setStatusOpen] = useState(false);
+  const [amountOpen, setAmountOpen] = useState(false);
+
+  const toggleStatusDropdown = () => setStatusOpen(!statusOpen);
+
+  const statuses = ["active", "expired"];
+
+  const toggleAmountDropdown = () => setAmountOpen(!amountOpen);
+
+  const handlePriceChange = (e: any) => {
+    const { name, value } = e.target;
+    setPaymentLinkPriceRange((prev: any) => ({ ...prev, [name]: value }));
+  };
+
+  const handleDateChange = (e: any) => {
+    const { name, value } = e.target;
+    setPaymentLinkDateRange((prev: any) => ({ ...prev, [name]: value }));
+  };
 
   const checkToken = async () => {
     const token = localStorage.getItem("auth_token");
@@ -65,7 +94,7 @@ const Page = () => {
           <span className="font-geistmono font-normal text-2xl">
             Existing Payment Links
           </span>
-          <div className="flex items-center gap-4">
+          {/* <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 p-2 px-4 font-geistsans font-normal text-sm rounded-3xl bg-brand-white text-brand-main">
               Status{" "}
               <svg
@@ -120,6 +149,131 @@ const Page = () => {
                 />
               </svg>
             </div>
+          </div> */}
+          <div className="flex items-end gap-4">
+            {/* Amount Dropdown */}
+            <div className="relative">
+              <button
+                onClick={toggleAmountDropdown}
+                className="flex items-center gap-2 p-2 px-4 font-geistsans font-normal text-sm rounded-3xl bg-brand-white text-brand-main"
+              >
+                ₦ Amount
+                <svg
+                  width="9"
+                  height="5"
+                  viewBox="0 0 9 5"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.67188 1.00586L4.67187 4.00586L1.67187 1.00586"
+                    stroke="#61666B"
+                    strokeWidth="1.49937"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+              {amountOpen && (
+                <div className="absolute mt-2 bg-white shadow-lg rounded-lg p-4">
+                  <div className="flex flex-col gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Min Price
+                      </label>
+                      <input
+                        type="number"
+                        name="min"
+                        value={paymentLinkPriceRange.min}
+                        onChange={handlePriceChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow focus:border-brand-main focus:ring-brand-main text-sm p-1"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Max Price
+                      </label>
+                      <input
+                        type="number"
+                        name="max"
+                        value={paymentLinkPriceRange.max}
+                        onChange={handlePriceChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow focus:border-brand-main focus:ring-brand-main text-sm p-1"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Date Pickers */}
+            <div className="flex p-2 gap-4 bg-brand-white rounded-xl">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  From Date
+                </label>
+                <input
+                  type="date"
+                  name="from"
+                  value={paymentLinkDateRange.from}
+                  onChange={handleDateChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow focus:border-brand-main focus:ring-brand-main text-sm p-1"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  To Date
+                </label>
+                <input
+                  type="date"
+                  name="to"
+                  value={paymentLinkDateRange.to}
+                  onChange={handleDateChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow focus:border-brand-main focus:ring-brand-main text-sm p-1"
+                />
+              </div>
+            </div>
+
+            {/* Status Dropdown */}
+            <div className="relative">
+              <button
+                onClick={toggleStatusDropdown}
+                className="flex items-center gap-2 p-2 px-4 font-geistsans font-normal text-sm rounded-3xl bg-brand-white text-brand-main"
+              >
+                {selectedPaymentLinkStatus}
+                <svg
+                  width="9"
+                  height="5"
+                  viewBox="0 0 9 5"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.67188 1.00586L4.67187 4.00586L1.67187 1.00586"
+                    stroke="#61666B"
+                    strokeWidth="1.49937"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+              {statusOpen && (
+                <div className="absolute mt-2 bg-white shadow-lg rounded-lg p-2">
+                  {statuses.map((status) => (
+                    <p
+                      key={status}
+                      onClick={() => {
+                        setSelectedPaymentLinkStatus(status);
+                        setStatusOpen(false);
+                      }}
+                      className="p-2 text-sm hover:bg-gray-100 cursor-pointer"
+                    >
+                      {status}
+                    </p>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <div className="bg-brand-white rounded-lg p-8 flex flex-col gap-6 justify-start mb-8">
@@ -130,7 +284,9 @@ const Page = () => {
                 <tr className="rounded-lg">
                   <th className="py-2">S/N</th>
                   <th className="py-2">Title</th>
+                  <th className="py-2">Description</th>
                   <th className="py-2">Corresponding Link</th>
+                  <th className="py-2">Category</th>
                   <th className="py-2">Status</th>
                   <th className="py-2">Amount</th>
                   <th className="py-2"></th>
@@ -141,11 +297,16 @@ const Page = () => {
                   <tr key={i} className="mb-4 rounded-lg">
                     <td className="py-3">{i + 1}</td>
                     <td className="py-3 capitalize">{item.title}</td>
+                    <td className="py-3 capitalize">
+                      {item.description.slice(0, 30)}
+                      {item.description.length > 30 && "..."}
+                    </td>
                     <td className="py-3">
                       <Link href={item.link} className="hover:text-brand-main">
                         {item.link}
                       </Link>
                     </td>
+                    <td className="py-3 capitalize">{item.category}</td>
                     <td className="py-3 capitalize">
                       {new Date(item.linkExpiry) < new Date() ? (
                         <span className="p-2 rounded-lg text-red-500 bg-red-200/80">
@@ -160,21 +321,12 @@ const Page = () => {
                     <td className="py-3 capitalize">
                       {item.amount} {item.currency}
                     </td>
-                    <td className="py-3 capitalize">
-                      <select
-                        name="bankCode"
-                        id="bankCode"
-                        // onChange={handleSelectChange}
-                        className="p-2 border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
-                      >
-                        <option className="text-lg">...</option>
-                        <option className="capitalize" value="view">
-                          view
-                        </option>
-                        <option className="capitalize" value="delete">
-                          delete
-                        </option>
-                      </select>
+                    <td className="py-3 capitalize flex items-center gap-4">
+                      {/* <EyeIcon className="cursor-pointer hover:text-brand-main" /> */}
+                      <Trash2Icon
+                        onClick={() => deleteOnePaymentLink(item._id)}
+                        className="cursor-pointer hover:text-red-500"
+                      />
                     </td>
                   </tr>
                 ))}

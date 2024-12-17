@@ -54,6 +54,15 @@ const GeneralProvider = (props: any) => {
   const [fetchVouchersLoading, setFetchVouchersLoading] = useState(false);
   const [recipients, setRecipients] = useState([]);
   const [voucherSpecialKey, setVoucherSpecialKey] = useState();
+  const [selectedVoucherStatus, setSelectedVoucherStatus] = useState("status");
+  const [voucherPriceRange, setVoucherPriceRange] = useState({
+    min: "",
+    max: "",
+  });
+  const [voucherDateRange, setVoucherDateRange] = useState({
+    from: "",
+    to: "",
+  });
 
   // TRANSACTIONS
   const [allUserTransactions, setAllUserTransactions] = useState();
@@ -80,11 +89,23 @@ const GeneralProvider = (props: any) => {
 
   // PAYMENT LINKS
   const [paymentLInksByUser, setPaymentLinksByUser] = useState();
+  const [paymentLInkId, setPaymentLinkId] = useState();
+  const [onePaymentLInk, setOnePaymentLink] = useState();
   const [fetchPaymentLinksLoading, setFetchPaymentLinksLoading] =
     useState(false);
   const [createPaymentLinkLoading, setCreatePaymentLinkLoading] =
     useState(false);
   const [paymentLinkCategories, setPaymentLinkCategories] = useState();
+  const [selectedPaymentLinkStatus, setSelectedPaymentLinkStatus] =
+    useState("status");
+  const [paymentLinkPriceRange, setPaymentLinkPriceRange] = useState({
+    min: "",
+    max: "",
+  });
+  const [paymentLinkDateRange, setPaymentLinkDateRange] = useState({
+    from: "",
+    to: "",
+  });
   const [payToLinkDetails, setPayToLinkDetails] = useState({
     email: "",
     // amount: "",
@@ -404,7 +425,18 @@ const GeneralProvider = (props: any) => {
       console.log("🚀 ~ getAllVouchersByUser ~ userId:", userId, token);
       setFetchVouchersLoading(true);
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/user/vouchers/all?userId=${userId}`,
+        `${
+          process.env.NEXT_PUBLIC_BASE_URL
+        }/user/vouchers/all?userId=${userId}&${
+          selectedVoucherStatus !== "status" &&
+          `status=${selectedVoucherStatus}`
+        }&${
+          voucherPriceRange.min !== "" && `minAmount=${voucherPriceRange.min}`
+        }&${
+          voucherPriceRange.max !== "" && `maxAmount=${voucherPriceRange.max}`
+        }&${
+          voucherDateRange.from !== "" && `fromDate=${voucherDateRange.from}`
+        }&${voucherDateRange.to !== "" && `toDate=${voucherDateRange.to}`}`,
         {
           headers: {
             "content-type": "application/json",
@@ -596,7 +628,7 @@ const GeneralProvider = (props: any) => {
     }
   };
 
-  // TRANSACTION
+  // Transcation
   const getAllTransactionsByUser = async () => {
     try {
       setFetchTransactionsLoading(true);
@@ -757,7 +789,21 @@ const GeneralProvider = (props: any) => {
     try {
       setFetchPaymentLinksLoading(true);
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/user/links`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/user/links?${
+          selectedPaymentLinkStatus !== "status" &&
+          `status=${selectedPaymentLinkStatus}`
+        }&${
+          paymentLinkPriceRange.min !== "" &&
+          `minAmount=${paymentLinkPriceRange.min}`
+        }&${
+          paymentLinkPriceRange.max !== "" &&
+          `maxAmount=${paymentLinkPriceRange.max}`
+        }&${
+          paymentLinkDateRange.from !== "" &&
+          `fromDate=${paymentLinkDateRange.from}`
+        }&${
+          paymentLinkDateRange.to !== "" && `toDate=${paymentLinkDateRange.to}`
+        }`,
         {
           headers: {
             "content-type": "application/json",
@@ -800,6 +846,63 @@ const GeneralProvider = (props: any) => {
       }
     } catch (err: any) {
       console.log("🚀 ~ getAllPaymentLinkCategories ~ err:", err);
+      setFetchPaymentLinksLoading(false);
+      error(
+        err.response?.data?.message
+          ? err?.response?.data?.message
+          : err.response?.data?.error
+      );
+    }
+  };
+
+  const getOnePaymentLink = async () => {
+    try {
+      setFetchPaymentLinksLoading(true);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/links/one?id=${paymentLInkId}`,
+        {
+          headers: {
+            "content-type": "application/json",
+            "x-access-token": token,
+          },
+        }
+      );
+      console.log("🚀 ~ getOnePaymentLink ~ response:", response);
+      setFetchPaymentLinksLoading(false);
+      if (response.status === 200) {
+        // setOnePaymentLink(response.data.categories);
+      }
+    } catch (err: any) {
+      console.log("🚀 ~ getOnePaymentLink ~ err:", err);
+      setFetchPaymentLinksLoading(false);
+      error(
+        err.response?.data?.message
+          ? err?.response?.data?.message
+          : err.response?.data?.error
+      );
+    }
+  };
+
+  const deleteOnePaymentLink = async (id: any) => {
+    try {
+      setFetchPaymentLinksLoading(true);
+      const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/links/delete?id=${id}`,
+        {
+          headers: {
+            "content-type": "application/json",
+            "x-access-token": token,
+          },
+        }
+      );
+      console.log("🚀 ~ deleteOnePaymentLink ~ response:", response);
+      setFetchPaymentLinksLoading(false);
+      if (response.status === 200) {
+        getAllPaymentLinksByUser();
+        // setOnePaymentLink(response.data.categories);
+      }
+    } catch (err: any) {
+      console.log("🚀 ~ deleteOnePaymentLink ~ err:", err);
       setFetchPaymentLinksLoading(false);
       error(
         err.response?.data?.message
@@ -901,7 +1004,19 @@ const GeneralProvider = (props: any) => {
     if (oneVoucherId) getVoucherById();
   }, [oneVoucherId]);
 
-  // TRANSACTION STUFF
+  useEffect(() => {
+    if (paymentLInkId) getOnePaymentLink();
+  }, [paymentLInkId]);
+
+  // ************************* //
+  // ************************* //
+  // ************* FILTER STUFF ************ //
+  // ************************* //
+  // ************************* //
+
+  // ****************** //
+  // Transaction STUFF
+  // ****************** //
   useEffect(() => {
     // if (transactionDetails?.tx_ref && transactionDetails?.transaction_id)
     if (transactionDetails?.tx_ref && transactionDetails?.status)
@@ -927,6 +1042,53 @@ const GeneralProvider = (props: any) => {
     if (transactionDateRange.from === "" && transactionDateRange.to == "")
       getAllTransactionsByUser();
   }, [transactionDateRange]);
+
+  // ****************** //
+  // VOUCHER STUFF
+  // ****************** //
+
+  useEffect(() => {
+    if (selectedVoucherStatus !== "status") getAllVouchersByUser();
+  }, [selectedVoucherStatus]);
+
+  // prices
+  useEffect(() => {
+    if (voucherPriceRange.min !== "" && voucherPriceRange.max !== "")
+      getAllVouchersByUser();
+    if (voucherPriceRange.min === "" && voucherPriceRange.max == "")
+      getAllVouchersByUser();
+  }, [voucherPriceRange]);
+
+  // dates
+  useEffect(() => {
+    if (voucherDateRange.from !== "" && voucherDateRange.to !== "")
+      getAllVouchersByUser();
+    if (voucherDateRange.from === "" && voucherDateRange.to == "")
+      getAllVouchersByUser();
+  }, [voucherDateRange]);
+
+  // ****************** //
+  // PAYMENT STUFF
+  // ****************** //
+  useEffect(() => {
+    if (selectedPaymentLinkStatus !== "status") getAllPaymentLinksByUser();
+  }, [selectedPaymentLinkStatus]);
+
+  // prices
+  useEffect(() => {
+    if (paymentLinkPriceRange.min !== "" && paymentLinkPriceRange.max !== "")
+      getAllPaymentLinksByUser();
+    if (paymentLinkPriceRange.min === "" && paymentLinkPriceRange.max == "")
+      getAllPaymentLinksByUser();
+  }, [paymentLinkPriceRange]);
+
+  // dates
+  useEffect(() => {
+    if (paymentLinkDateRange.from !== "" && paymentLinkDateRange.to !== "")
+      getAllPaymentLinksByUser();
+    if (paymentLinkDateRange.from === "" && paymentLinkDateRange.to == "")
+      getAllPaymentLinksByUser();
+  }, [paymentLinkDateRange]);
 
   return (
     <GeneralContext.Provider
@@ -968,20 +1130,27 @@ const GeneralProvider = (props: any) => {
         oneVoucherId,
         allUserVouchers,
         oneVoucherStatus,
+        voucherDateRange,
+        voucherPriceRange,
         voucherSpecialKey,
-        createVoucherLoading,
         fetchVouchersLoading,
+        createVoucherLoading,
+        selectedVoucherStatus,
         cashoutVoucherLoading,
         setOneVoucher,
         setRecipients,
         getVoucherById,
         setOneVoucherId,
         getVoucherByKey,
+        setVoucherDateRange,
         setOneVoucherStatus,
+        setVoucherPriceRange,
         setVoucherSpecialKey,
+        getAllVouchersByUser,
         updateVoucherRecipients,
         setCreateVoucherLoading,
         setFetchVouchersLoading,
+        setSelectedVoucherStatus,
         setCashoutVoucherLoading,
         handleRedeemVoucherAsCash,
         handleRedeemVoucherAsAirtime,
@@ -1008,18 +1177,30 @@ const GeneralProvider = (props: any) => {
         setSelectedTransactionStatus,
 
         // Payment Links
+        paymentLInkId,
+        onePaymentLInk,
         payToLinkDetails,
         paymentLInksByUser,
+        paymentLinkDateRange,
         paymentLinkCategories,
+        paymentLinkPriceRange,
         createPaymentLinkLoading,
         fetchPaymentLinksLoading,
+        selectedPaymentLinkStatus,
         handlePayToLink,
+        setPaymentLinkId,
+        setOnePaymentLink,
         setPayToLinkDetails,
+        deleteOnePaymentLink,
         setPaymentLinksByUser,
+        setPaymentLinkDateRange,
         handleCreatePaymentLink,
+        setPaymentLinkPriceRange,
         setPaymentLinkCategories,
+        getAllPaymentLinksByUser,
         setCreatePaymentLinkLoading,
         setFetchPaymentLinksLoading,
+        setSelectedPaymentLinkStatus,
       }}
     >
       {props.children}

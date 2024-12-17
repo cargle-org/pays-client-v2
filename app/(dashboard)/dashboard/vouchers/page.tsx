@@ -1,7 +1,7 @@
 "use client";
 
 import MainLayout from "@/app/(main)/layout";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import logo from "@/assets/imgs/vouchers/voucher_img.png";
@@ -10,9 +10,38 @@ import Link from "next/link";
 import Spinner from "@/components/spinner/Spinner";
 
 const Page = () => {
-  const { allUserVouchers, fetchVouchersLoading }: any = useGeneralContext();
+  const {
+    allUserVouchers,
+    voucherDateRange,
+    voucherPriceRange,
+    setVoucherDateRange,
+    fetchVouchersLoading,
+    setVoucherPriceRange,
+    selectedVoucherStatus,
+    setSelectedVoucherStatus,
+  }: any = useGeneralContext();
   console.log("🚀 ~ Page ~ allUserVouchers:", allUserVouchers);
   const router = useRouter();
+
+  const [statusOpen, setStatusOpen] = useState(false);
+  const [amountOpen, setAmountOpen] = useState(false);
+
+  const toggleStatusDropdown = () => setStatusOpen(!statusOpen);
+
+  const statuses = ["cashed", "pending"];
+
+  const toggleAmountDropdown = () => setAmountOpen(!amountOpen);
+
+  const handlePriceChange = (e: any) => {
+    const { name, value } = e.target;
+    setVoucherPriceRange((prev: any) => ({ ...prev, [name]: value }));
+  };
+
+  const handleDateChange = (e: any) => {
+    const { name, value } = e.target;
+    setVoucherDateRange((prev: any) => ({ ...prev, [name]: value }));
+  };
+
   const checkToken = async () => {
     const token = localStorage.getItem("auth_token");
 
@@ -63,7 +92,7 @@ const Page = () => {
           <span className="font-geistmono font-normal text-2xl">
             Vouchers you created
           </span>
-          <div className="flex items-center gap-4">
+          {/* <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 p-2 px-4 font-geistsans font-normal text-sm rounded-3xl bg-brand-white text-brand-main">
               ₦ Amount{" "}
               <svg
@@ -99,6 +128,131 @@ const Page = () => {
                   strokeLinejoin="round"
                 />
               </svg>
+            </div>
+          </div> */}
+          <div className="flex items-end gap-4">
+            {/* Amount Dropdown */}
+            <div className="relative">
+              <button
+                onClick={toggleAmountDropdown}
+                className="flex items-center gap-2 p-2 px-4 font-geistsans font-normal text-sm rounded-3xl bg-brand-white text-brand-main"
+              >
+                ₦ Amount
+                <svg
+                  width="9"
+                  height="5"
+                  viewBox="0 0 9 5"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.67188 1.00586L4.67187 4.00586L1.67187 1.00586"
+                    stroke="#61666B"
+                    strokeWidth="1.49937"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+              {amountOpen && (
+                <div className="absolute mt-2 bg-white shadow-lg rounded-lg p-4">
+                  <div className="flex flex-col gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Min Price
+                      </label>
+                      <input
+                        type="number"
+                        name="min"
+                        value={voucherPriceRange.min}
+                        onChange={handlePriceChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow focus:border-brand-main focus:ring-brand-main text-sm p-1"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Max Price
+                      </label>
+                      <input
+                        type="number"
+                        name="max"
+                        value={voucherPriceRange.max}
+                        onChange={handlePriceChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow focus:border-brand-main focus:ring-brand-main text-sm p-1"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Date Pickers */}
+            <div className="flex p-2 gap-4 bg-brand-white rounded-xl">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  From Date
+                </label>
+                <input
+                  type="date"
+                  name="from"
+                  value={voucherDateRange.from}
+                  onChange={handleDateChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow focus:border-brand-main focus:ring-brand-main text-sm p-1"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  To Date
+                </label>
+                <input
+                  type="date"
+                  name="to"
+                  value={voucherDateRange.to}
+                  onChange={handleDateChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow focus:border-brand-main focus:ring-brand-main text-sm p-1"
+                />
+              </div>
+            </div>
+
+            {/* Status Dropdown */}
+            <div className="relative">
+              <button
+                onClick={toggleStatusDropdown}
+                className="flex items-center gap-2 p-2 px-4 font-geistsans font-normal text-sm rounded-3xl bg-brand-white text-brand-main"
+              >
+                {selectedVoucherStatus}
+                <svg
+                  width="9"
+                  height="5"
+                  viewBox="0 0 9 5"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.67188 1.00586L4.67187 4.00586L1.67187 1.00586"
+                    stroke="#61666B"
+                    strokeWidth="1.49937"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+              {statusOpen && (
+                <div className="absolute mt-2 bg-white shadow-lg rounded-lg p-2">
+                  {statuses.map((status) => (
+                    <p
+                      key={status}
+                      onClick={() => {
+                        setSelectedVoucherStatus(status);
+                        setStatusOpen(false);
+                      }}
+                      className="p-2 text-sm hover:bg-gray-100 cursor-pointer"
+                    >
+                      {status}
+                    </p>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
