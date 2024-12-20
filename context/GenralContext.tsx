@@ -665,11 +665,11 @@ const GeneralProvider = (props: any) => {
     } catch (err: any) {
       setFetchTransactionsLoading(false);
       console.log("🚀 ~ getAllTransactionsByUser ~ err:", err);
-      // error(
-      //   err.response?.data?.message
-      //     ? err?.response?.data?.message
-      //     : err.response?.data?.error
-      // );
+      error(
+        err.response?.data?.message
+          ? err?.response?.data?.message
+          : err.response?.data?.error
+      );
       if (err?.response?.data?.message === "No transactions found") {
         setAllUserTransactions(err?.response?.data?.data);
       }
@@ -992,6 +992,7 @@ const GeneralProvider = (props: any) => {
 
   useEffect(() => {
     if (userId) {
+      console.log("🚀 ~ useEffect ~ userId:", userId);
       getOneUser();
       getAllVouchersByUser();
       getAllTransactionsByUser();
@@ -1018,29 +1019,36 @@ const GeneralProvider = (props: any) => {
   // Transaction STUFF
   // ****************** //
   useEffect(() => {
-    // if (transactionDetails?.tx_ref && transactionDetails?.transaction_id)
-    if (transactionDetails?.tx_ref && transactionDetails?.status)
-      verifyFundWallet();
+    if (userId) {
+      if (transactionDetails?.tx_ref && transactionDetails?.status)
+        verifyFundWallet();
+    }
   }, [transactionDetails]);
 
   useEffect(() => {
-    if (selectedTransactionStatus !== "Status") getAllTransactionsByUser();
+    if (userId) {
+      if (selectedTransactionStatus !== "Status") getAllTransactionsByUser();
+    }
   }, [selectedTransactionStatus]);
 
   // prices
   useEffect(() => {
-    if (transactionPriceRange.min !== "" && transactionPriceRange.max !== "")
-      getAllTransactionsByUser();
-    if (transactionPriceRange.min === "" && transactionPriceRange.max == "")
-      getAllTransactionsByUser();
+    if (userId) {
+      if (transactionPriceRange.min !== "" && transactionPriceRange.max !== "")
+        getAllTransactionsByUser();
+      if (transactionPriceRange.min === "" && transactionPriceRange.max == "")
+        getAllTransactionsByUser();
+    }
   }, [transactionPriceRange]);
 
   // dates
   useEffect(() => {
-    if (transactionDateRange.from !== "" && transactionDateRange.to !== "")
-      getAllTransactionsByUser();
-    if (transactionDateRange.from === "" && transactionDateRange.to == "")
-      getAllTransactionsByUser();
+    if (userId) {
+      if (transactionDateRange.from !== "" && transactionDateRange.to !== "")
+        getAllTransactionsByUser();
+      if (transactionDateRange.from === "" && transactionDateRange.to == "")
+        getAllTransactionsByUser();
+    }
   }, [transactionDateRange]);
 
   // ****************** //
@@ -1048,46 +1056,58 @@ const GeneralProvider = (props: any) => {
   // ****************** //
 
   useEffect(() => {
-    if (selectedVoucherStatus !== "status") getAllVouchersByUser();
+    if (userId) {
+      if (selectedVoucherStatus !== "status") getAllVouchersByUser();
+    }
   }, [selectedVoucherStatus]);
 
   // prices
   useEffect(() => {
-    if (voucherPriceRange.min !== "" && voucherPriceRange.max !== "")
-      getAllVouchersByUser();
-    if (voucherPriceRange.min === "" && voucherPriceRange.max == "")
-      getAllVouchersByUser();
+    if (userId) {
+      if (voucherPriceRange.min !== "" && voucherPriceRange.max !== "")
+        getAllVouchersByUser();
+      if (voucherPriceRange.min === "" && voucherPriceRange.max == "")
+        getAllVouchersByUser();
+    }
   }, [voucherPriceRange]);
 
   // dates
   useEffect(() => {
-    if (voucherDateRange.from !== "" && voucherDateRange.to !== "")
-      getAllVouchersByUser();
-    if (voucherDateRange.from === "" && voucherDateRange.to == "")
-      getAllVouchersByUser();
+    if (userId) {
+      if (voucherDateRange.from !== "" && voucherDateRange.to !== "")
+        getAllVouchersByUser();
+      if (voucherDateRange.from === "" && voucherDateRange.to == "")
+        getAllVouchersByUser();
+    }
   }, [voucherDateRange]);
 
   // ****************** //
   // PAYMENT STUFF
   // ****************** //
   useEffect(() => {
-    if (selectedPaymentLinkStatus !== "status") getAllPaymentLinksByUser();
+    if (userId) {
+      if (selectedPaymentLinkStatus !== "status") getAllPaymentLinksByUser();
+    }
   }, [selectedPaymentLinkStatus]);
 
   // prices
   useEffect(() => {
-    if (paymentLinkPriceRange.min !== "" && paymentLinkPriceRange.max !== "")
-      getAllPaymentLinksByUser();
-    if (paymentLinkPriceRange.min === "" && paymentLinkPriceRange.max == "")
-      getAllPaymentLinksByUser();
+    if (userId) {
+      if (paymentLinkPriceRange.min !== "" && paymentLinkPriceRange.max !== "")
+        getAllPaymentLinksByUser();
+      if (paymentLinkPriceRange.min === "" && paymentLinkPriceRange.max == "")
+        getAllPaymentLinksByUser();
+    }
   }, [paymentLinkPriceRange]);
 
   // dates
   useEffect(() => {
-    if (paymentLinkDateRange.from !== "" && paymentLinkDateRange.to !== "")
-      getAllPaymentLinksByUser();
-    if (paymentLinkDateRange.from === "" && paymentLinkDateRange.to == "")
-      getAllPaymentLinksByUser();
+    if (userId) {
+      if (paymentLinkDateRange.from !== "" && paymentLinkDateRange.to !== "")
+        getAllPaymentLinksByUser();
+      if (paymentLinkDateRange.from === "" && paymentLinkDateRange.to == "")
+        getAllPaymentLinksByUser();
+    }
   }, [paymentLinkDateRange]);
 
   return (
