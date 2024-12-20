@@ -8,7 +8,7 @@ import logo from "@/assets/imgs/vouchers/voucher_img.png";
 import { useGeneralContext } from "@/context/GenralContext";
 import Link from "next/link";
 import Spinner from "@/components/spinner/Spinner";
-import { Hourglass, RefreshCcw } from "lucide-react";
+import { RefreshCcw } from "lucide-react";
 
 const Transactions = () => {
   const {
@@ -527,7 +527,7 @@ const Transactions = () => {
                       {item.status === "initiated" && (
                         <>
                           {fetchTransactionsLoading && verifyIndex === i ? (
-                            <Hourglass className="animate-spin" />
+                            <RefreshCcw className="animate-spin" />
                           ) : (
                             // <Spinner />
                             <RefreshCcw
