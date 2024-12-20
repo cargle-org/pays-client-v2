@@ -9,6 +9,22 @@ import { useGeneralContext } from "@/context/GenralContext";
 import Link from "next/link";
 import Spinner from "@/components/spinner/Spinner";
 
+// Voucher cards
+import birthday_light from "@/assets/imgs/vouchers/birthday_light.png";
+import birthday_dark from "@/assets/imgs/vouchers/birthday_dark.png";
+import birthday_gradient from "@/assets/imgs/vouchers/birthday_gradient.png";
+import bonus_light from "@/assets/imgs/vouchers/bonus_light.png";
+import bonus_dark from "@/assets/imgs/vouchers/bonus_dark.png";
+import bonus_gradient from "@/assets/imgs/vouchers/bonus_gradient.png";
+import wedding_light from "@/assets/imgs/vouchers/wedding_light.png";
+import wedding_dark from "@/assets/imgs/vouchers/wedding_dark.png";
+import wedding_gradient from "@/assets/imgs/vouchers/wedding_gradient.png";
+import seasons_light from "@/assets/imgs/vouchers/seasons_light.png";
+import seasons_dark from "@/assets/imgs/vouchers/seasons_dark.png";
+import gift_light from "@/assets/imgs/vouchers/gift_light.png";
+import gift_dark from "@/assets/imgs/vouchers/gift_dark.png";
+import gift_gradient from "@/assets/imgs/vouchers/gift_gradient.png";
+
 const Page = () => {
   const {
     allUserVouchers,
@@ -54,6 +70,27 @@ const Page = () => {
   useEffect(() => {
     checkToken();
   }, []);
+
+  const getVoucherImage = (voucher: any) => {
+    const imageMap: { [key: string]: any } = {
+      birthday_light,
+      birthday_dark,
+      birthday_gradient,
+      bonus_light,
+      bonus_dark,
+      bonus_gradient,
+      wedding_light,
+      wedding_dark,
+      wedding_gradient,
+      seasons_light,
+      seasons_dark,
+      gift_light,
+      gift_dark,
+      gift_gradient,
+    };
+
+    return imageMap[voucher?.thumbnail] || gift_light; // Default to gift_light if no match
+  };
 
   return (
     <>
@@ -267,9 +304,9 @@ const Page = () => {
                     <div className="flex gap-4 pr-4 w-[50%]">
                       {item.thumbnail ? (
                         <Image
-                          src={item?.thumbnail}
+                          src={getVoucherImage(item)}
                           alt="Login"
-                          width={80}
+                          width={180}
                           height={80}
                           priority
                           className="rounded-lg"

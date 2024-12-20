@@ -81,6 +81,8 @@ const Transactions = () => {
   }, []);
 
   const verifyTransaction = (tx_ref: any, transaction_id: any, i: number) => {
+    console.log("🚀 ~ verifyTransaction ~ transaction_id:", transaction_id);
+    console.log("🚀 ~ verifyTransaction ~ tx_ref:", tx_ref);
     setVerifyIndex(i);
     setTransactionDetails({});
     setTransactionDetails((item: any) => ({

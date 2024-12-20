@@ -5,16 +5,111 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
+// Voucher cards
+import birthday_light from "@/assets/imgs/vouchers/birthday_light.png";
+import birthday_dark from "@/assets/imgs/vouchers/birthday_dark.png";
+import birthday_gradient from "@/assets/imgs/vouchers/birthday_gradient.png";
+import bonus_light from "@/assets/imgs/vouchers/bonus_light.png";
+import bonus_dark from "@/assets/imgs/vouchers/bonus_dark.png";
+import bonus_gradient from "@/assets/imgs/vouchers/bonus_gradient.png";
+import wedding_light from "@/assets/imgs/vouchers/wedding_light.png";
+import wedding_dark from "@/assets/imgs/vouchers/wedding_dark.png";
+import wedding_gradient from "@/assets/imgs/vouchers/wedding_gradient.png";
+import seasons_light from "@/assets/imgs/vouchers/seasons_light.png";
+import seasons_dark from "@/assets/imgs/vouchers/seasons_dark.png";
+import gift_light from "@/assets/imgs/vouchers/gift_light.png";
+import gift_dark from "@/assets/imgs/vouchers/gift_dark.png";
+import gift_gradient from "@/assets/imgs/vouchers/gift_gradient.png";
+
 const Page = ({ params }: { params: { id: string } }) => {
   const { oneVoucher, setOneVoucherId }: any = useGeneralContext();
-  console.log("🚀 ~ Page ~ oneVoucher:", oneVoucher);
   const [display, setDisplay] = useState("vouchers");
+  const [selectedCoupon, setSelectedCoupon] = useState<any>(null);
+  const [activeShareCoupon, setActiveShareCoupon] = useState<string | null>(
+    null
+  );
+
+  const getVoucherImage = (voucher: any) => {
+    const imageMap: { [key: string]: any } = {
+      birthday_light,
+      birthday_dark,
+      birthday_gradient,
+      bonus_light,
+      bonus_dark,
+      bonus_gradient,
+      wedding_light,
+      wedding_dark,
+      wedding_gradient,
+      seasons_light,
+      seasons_dark,
+      gift_light,
+      gift_dark,
+      gift_gradient,
+    };
+
+    return imageMap[voucher?.thumbnail] || gift_light;
+  };
+
+  const handleShare = async (platform: string, couponCode: string) => {
+    const shareData = {
+      title: `${oneVoucher?.title} Voucher`,
+      text: `Check out this voucher coupon: ${couponCode}`,
+      url: window.location.href,
+    };
+
+    switch (platform) {
+      case "copy":
+        await navigator.clipboard.writeText(shareData.text);
+        alert("Copied to clipboard!");
+        break;
+      case "whatsapp":
+        window.open(
+          `https://wa.me/?text=${encodeURIComponent(shareData.text)}`
+        );
+        break;
+      case "twitter":
+        window.open(
+          `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+            shareData.text
+          )}`
+        );
+        break;
+      case "facebook":
+        window.open(
+          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+            window.location.href
+          )}`
+        );
+        break;
+    }
+    setActiveShareCoupon(null);
+  };
 
   useEffect(() => {
     if (params?.id) {
       setOneVoucherId(params?.id);
     }
   }, [params?.id]);
+
+  // Set default selected coupon to first one in list
+  useEffect(() => {
+    if (oneVoucher?.voucherCoupons?.length > 0) {
+      setSelectedCoupon(oneVoucher.voucherCoupons[0]);
+    }
+  }, [oneVoucher]);
+
+  // Close share options when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest(".share-menu") && !target.closest(".share-icon")) {
+        setActiveShareCoupon(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <>
@@ -57,88 +152,24 @@ const Page = ({ params }: { params: { id: string } }) => {
                     This is a preview of the created voucher for shares.
                   </span>
                 </div>
-                {/* share/message */}
-                <div className="flex items-center gap-2">
-                  <span className="cursor-pointer">
-                    <svg
-                      width="36"
-                      height="36"
-                      viewBox="0 0 36 36"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <circle
-                        cx="18"
-                        cy="18"
-                        r="17.5"
-                        fill="white"
-                        stroke="#E9E9E9"
-                      />
-                      <path
-                        d="M10.5 13.8337C10.5 13.3916 10.6756 12.9677 10.9882 12.6551C11.3007 12.3426 11.7246 12.167 12.1667 12.167H23.8333C24.2754 12.167 24.6993 12.3426 25.0118 12.6551C25.3244 12.9677 25.5 13.3916 25.5 13.8337V22.167C25.5 22.609 25.3244 23.0329 25.0118 23.3455C24.6993 23.6581 24.2754 23.8337 23.8333 23.8337H12.1667C11.7246 23.8337 11.3007 23.6581 10.9882 23.3455C10.6756 23.0329 10.5 22.609 10.5 22.167V13.8337Z"
-                        stroke="#1F0047"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M10.5 13.834L18 18.834L25.5 13.834"
-                        stroke="#1F0047"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
-                  <span className="cursor-pointer">
-                    <svg
-                      width="36"
-                      height="36"
-                      viewBox="0 0 36 36"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <circle
-                        cx="18"
-                        cy="18"
-                        r="17.5"
-                        fill="white"
-                        stroke="#E9E9E9"
-                      />
-                      <path
-                        d="M23 21.4003C22.3667 21.4003 21.8 21.6503 21.3667 22.042L15.425 18.5837C15.4667 18.392 15.5 18.2003 15.5 18.0003C15.5 17.8003 15.4667 17.6087 15.425 17.417L21.3 13.992C21.75 14.4087 22.3417 14.667 23 14.667C24.3833 14.667 25.5 13.5503 25.5 12.167C25.5 10.7837 24.3833 9.66699 23 9.66699C21.6167 9.66699 20.5 10.7837 20.5 12.167C20.5 12.367 20.5333 12.5587 20.575 12.7503L14.7 16.1753C14.25 15.7587 13.6583 15.5003 13 15.5003C11.6167 15.5003 10.5 16.617 10.5 18.0003C10.5 19.3837 11.6167 20.5003 13 20.5003C13.6583 20.5003 14.25 20.242 14.7 19.8253L20.6333 23.292C20.5917 23.467 20.5667 23.6503 20.5667 23.8337C20.5667 25.1753 21.6583 26.267 23 26.267C24.3417 26.267 25.4333 25.1753 25.4333 23.8337C25.4333 22.492 24.3417 21.4003 23 21.4003Z"
-                        fill="#1F0047"
-                      />
-                    </svg>
-                  </span>
-                </div>
               </div>
             </div>
             <div className="rounded-t-xl bg-brand-white p-4 flex flex-col gap-4 justify-between items-center">
-              <div className="flex w-full justify-between items-start">
-                <div className="w-[50%] min-h-[40vh] rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 p-4 flex flex-col gap-4 items-start">
-                  <div className="w-full flex justify-end">
-                    <Image
-                      src={oneVoucher?.thumbnail}
-                      width={180}
-                      height={180}
-                      alt={"thumbnail"}
-                    />
-                  </div>
-                  <div className="w-[60%] flex flex-col items-start justify-between">
-                    <span className="text-lg font-bold text-brand-white lg:text-3xl">
-                      {oneVoucher?.title}
-                    </span>
-                    <span className="text-lg font-semibold font-geistmono text-brand-white/50 mb-2 lg:text-2xl">
-                      {oneVoucher?.voucherKey}
-                    </span>
-                    <span className="w-[60%] text-lg font-medium font-geistmono text-brand-white/60 lg:text-lg">
-                      ₦{oneVoucher?.amountPerVoucher} voucher
-                    </span>
-                    <span className="w-[60%] text-lg font-medium font-geistmono text-brand-white/60 lg:text-lg">
-                      {oneVoucher?.cashedPercentage}% cashed
-                    </span>
-                  </div>
+              <div className="flex flex-col gap-4 w-full justify-between items-start lg:flex-row lg:gap-0">
+                <div className="relative w-[720px] h-[360px]">
+                  <Image
+                    src={getVoucherImage(oneVoucher)}
+                    layout="fill"
+                    objectFit="cover"
+                    alt={oneVoucher?.title || "voucher thumbnail"}
+                  />
+                  {selectedCoupon && (
+                    <div className="absolute flex items-center justify-center right-20 bottom-14">
+                      <span className="text-2xl font-bold text-white bg-brand-main/80 p-2 rounded-lg">
+                        {selectedCoupon.couponCode}
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-col w-max lg:w-[50%]">
                   <div className="rounded-xl bg-brand-white p-4 flex flex-col gap-4 justify-start">
@@ -178,21 +209,104 @@ const Page = ({ params }: { params: { id: string } }) => {
                             <th className="py-2">S/N</th>
                             <th className="py-2">Coupons</th>
                             <th className="py-2">Status</th>
-                            <th className="py-2">Cashed Date</th>
+                            <th className="py-2">Share</th>
                           </tr>
                         </thead>
                         <tbody className="font-normal text-sm text-brand-grayish/80">
                           {oneVoucher?.voucherCoupons?.length > 0 ? (
                             oneVoucher?.voucherCoupons?.map(
                               (item: any, i: number) => (
-                                <tr key={i} className="mb-4 rounded-lg">
+                                <tr
+                                  key={i}
+                                  className={`mb-4 rounded-lg hover:bg-gray-100 cursor-pointer ${
+                                    selectedCoupon?.couponCode ===
+                                    item.couponCode
+                                      ? "bg-gray-100"
+                                      : ""
+                                  }`}
+                                  onClick={() => setSelectedCoupon(item)}
+                                >
                                   <td className="py-2">{i + 1}</td>
                                   <td className="py-2">{item.couponCode}</td>
                                   <td className="py-2 capitalize">
                                     {item.status}
                                   </td>
-                                  <td className="py-2 capitalize">
-                                    {item.cashedDate}
+                                  <td className="py-2">
+                                    <div className="relative flex justify-center">
+                                      <span
+                                        className="share-icon cursor-pointer"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setActiveShareCoupon(
+                                            activeShareCoupon ===
+                                              item.couponCode
+                                              ? null
+                                              : item.couponCode
+                                          );
+                                        }}
+                                      >
+                                        <svg
+                                          width="24"
+                                          height="24"
+                                          viewBox="0 0 24 24"
+                                        >
+                                          <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92zM18 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm12 7.02c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z" />
+                                        </svg>
+                                      </span>
+                                      {activeShareCoupon ===
+                                        item.couponCode && (
+                                        <div className="share-menu absolute right-0 mt-8 bg-white rounded-lg shadow-lg p-2 z-10">
+                                          <div
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              handleShare(
+                                                "copy",
+                                                item.couponCode
+                                              );
+                                            }}
+                                            className="p-2 hover:bg-gray-100 cursor-pointer"
+                                          >
+                                            Copy Link
+                                          </div>
+                                          <div
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              handleShare(
+                                                "whatsapp",
+                                                item.couponCode
+                                              );
+                                            }}
+                                            className="p-2 hover:bg-gray-100 cursor-pointer"
+                                          >
+                                            WhatsApp
+                                          </div>
+                                          <div
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              handleShare(
+                                                "twitter",
+                                                item.couponCode
+                                              );
+                                            }}
+                                            className="p-2 hover:bg-gray-100 cursor-pointer"
+                                          >
+                                            Twitter
+                                          </div>
+                                          <div
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              handleShare(
+                                                "facebook",
+                                                item.couponCode
+                                              );
+                                            }}
+                                            className="p-2 hover:bg-gray-100 cursor-pointer"
+                                          >
+                                            Facebook
+                                          </div>
+                                        </div>
+                                      )}
+                                    </div>
                                   </td>
                                 </tr>
                               )
@@ -212,8 +326,6 @@ const Page = ({ params }: { params: { id: string } }) => {
                         <thead className="divide-y divide-gray-200 font-bold text-sm text-brand-grayish p-4 mb-2">
                           <tr className="rounded-lg">
                             <th className="py-2">S/N</th>
-                            {/* <th className="py-2">Name</th>
-                            <th className="py-2">Number</th> */}
                             <th className="py-2">Email Address</th>
                           </tr>
                         </thead>
@@ -223,12 +335,6 @@ const Page = ({ params }: { params: { id: string } }) => {
                               (item: any, i: number) => (
                                 <tr key={i} className="mb-4 rounded-lg">
                                   <td className="py-2">{i + 1}</td>
-                                  {/* <td className="py-2 capitalize">
-                                    {item.recipient_name}
-                                  </td>
-                                  <td className="py-2 capitalize">
-                                    {item.recipient_phone}
-                                  </td> */}
                                   <td className="py-2 capitalize">
                                     {item.recipient_email}
                                   </td>

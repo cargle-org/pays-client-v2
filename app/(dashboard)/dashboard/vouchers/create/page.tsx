@@ -7,9 +7,23 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { success, error } from "@/helpers/Alert";
 import Spinner from "@/components/spinner/Spinner";
-// import Image from "next/image";
+import Image from "next/image";
 
-// import right_img from "@/assets/imgs/vouchers/voucher_right.png";
+// Voucher cards
+import birthday_light from "@/assets/imgs/vouchers/birthday_light.png";
+import birthday_dark from "@/assets/imgs/vouchers/birthday_dark.png";
+import birthday_gradient from "@/assets/imgs/vouchers/birthday_gradient.png";
+import bonus_light from "@/assets/imgs/vouchers/bonus_light.png";
+import bonus_dark from "@/assets/imgs/vouchers/bonus_dark.png";
+import bonus_gradient from "@/assets/imgs/vouchers/bonus_gradient.png";
+import wedding_light from "@/assets/imgs/vouchers/wedding_light.png";
+import wedding_dark from "@/assets/imgs/vouchers/wedding_dark.png";
+import wedding_gradient from "@/assets/imgs/vouchers/wedding_gradient.png";
+import seasons_light from "@/assets/imgs/vouchers/seasons_light.png";
+import seasons_dark from "@/assets/imgs/vouchers/seasons_dark.png";
+import gift_light from "@/assets/imgs/vouchers/gift_light.png";
+import gift_dark from "@/assets/imgs/vouchers/gift_dark.png";
+import gift_gradient from "@/assets/imgs/vouchers/gift_gradient.png";
 
 const Page = () => {
   const router = useRouter();
@@ -18,20 +32,36 @@ const Page = () => {
     setOneVoucherId,
     createVoucherLoading,
     setCreateVoucherLoading,
+    getAllVouchersByUser,
   }: any = useGeneralContext();
-  const [thumbnail, setThumbnail] = useState<File | null>(null);
+  const [thumbnail, setThumbnail] = useState<string>("");
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     voucherKey: "",
-    // expiry_date: "",
     amountPerVoucher: "",
     totalNumberOfVouchers: "",
   });
   const [newAmount, setNewAmount] = useState(0);
   console.log("🚀 ~ Page ~ newAmount:", newAmount);
   const [paysFee, setPaysFee] = useState(0);
-  // const [createVoucherLoading, setCreateVoucherLoading] = useState(false);
+
+  const voucherCards = [
+    { name: "birthday_light", image: birthday_light },
+    { name: "birthday_dark", image: birthday_dark },
+    { name: "birthday_gradient", image: birthday_gradient },
+    { name: "bonus_light", image: bonus_light },
+    { name: "bonus_dark", image: bonus_dark },
+    { name: "bonus_gradient", image: bonus_gradient },
+    { name: "wedding_light", image: wedding_light },
+    { name: "wedding_dark", image: wedding_dark },
+    { name: "wedding_gradient", image: wedding_gradient },
+    { name: "seasons_light", image: seasons_light },
+    { name: "seasons_dark", image: seasons_dark },
+    { name: "gift_light", image: gift_light },
+    { name: "gift_dark", image: gift_dark },
+    { name: "gift_gradient", image: gift_gradient },
+  ];
 
   const onchangeHandler = (e: any) => {
     setFormData((prev) => ({
@@ -40,34 +70,26 @@ const Page = () => {
     }));
   };
 
-  const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setThumbnail(e.target.files[0]);
-    }
-  };
-
   const onSubmit = async (e: any) => {
     try {
       e.preventDefault();
       setCreateVoucherLoading(true);
-      const data = new FormData();
-      data.append("title", formData.title);
-      data.append("description", formData.description);
-      data.append("voucherKey", formData.voucherKey);
-      // data.append("expiry_date", formData.expiry_date);
-      data.append("amountPerVoucher", formData.amountPerVoucher);
-      data.append("totalNumberOfVouchers", formData.totalNumberOfVouchers);
-
-      if (thumbnail) {
-        data.append("thumbnail", thumbnail);
-      }
+      const data = {
+        title: formData.title,
+        description: formData.description,
+        voucherKey: formData.voucherKey,
+        amountPerVoucher: formData.amountPerVoucher,
+        totalNumberOfVouchers: formData.totalNumberOfVouchers,
+        thumbnail: thumbnail,
+      };
+      console.log("🚀 ~ onSubmit ~ data:", data);
 
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/utils/voucher/create`,
         data,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
             "x-access-token": token,
           },
         }
@@ -78,6 +100,7 @@ const Page = () => {
       setOneVoucherId(response.data.data.voucher._id);
       setOneVoucherId(response.data.data.voucher.specialKey);
       if (response.status === 200) {
+        getAllVouchersByUser();
         success("Voucher created successfully.");
         router.push(
           `/dashboard/vouchers/create/recipients/${response.data.data.voucher.specialKey}`
@@ -195,50 +218,31 @@ const Page = () => {
               </div>
               {/* Inputs */}
               <div className="flex flex-col gap-3 justify-start">
-                <div className="flex p-4 justify-between items-center border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs">
-                  <div className="flex gap-2 items-center">
-                    <svg
-                      width="28"
-                      height="32"
-                      viewBox="0 0 28 32"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M3.33268 0C1.85992 0 0.666016 1.19391 0.666016 2.66667V29.3333C0.666016 30.8061 1.85992 32 3.33268 32H24.666C26.1388 32 27.3327 30.8061 27.3327 29.3333V0H3.33268ZM27.3327 2.09808e-05V5.33333L21.9993 2.05146e-05L27.3327 2.09808e-05Z"
-                        fill="#E2E8F0"
-                      />
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M22 0V5.33331H27.3333L22 0Z"
-                        fill="#94A3B8"
-                      />
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M27.332 10.667V5.33366H21.9987L27.332 10.667Z"
-                        fill="#CBD5E1"
-                      />
-                    </svg>
-                    <div className="flex flex-col gap-1 justify-start">
-                      <span className="font-medium text-sm text-brand-grayish">
-                        Upload Voucher Image
-                      </span>
-                      <span className="font-normal text-xs text-brand-grayish">
-                        Click here to select Image
-                      </span>
-                    </div>
+                <div className="flex flex-col gap-3">
+                  <span className="font-medium text-sm text-brand-grayish">
+                    Select Voucher Design
+                  </span>
+                  <div className="grid grid-cols-3 gap-2 max-h-[200px] overflow-y-auto p-2">
+                    {voucherCards.map((card) => (
+                      <div
+                        key={card.name}
+                        onClick={() => setThumbnail(card.name)}
+                        className={`relative cursor-pointer rounded-lg overflow-hidden border-2 ${
+                          thumbnail === card.name
+                            ? "border-brand-main"
+                            : "border-transparent"
+                        }`}
+                      >
+                        <Image
+                          src={card.image}
+                          alt={card.name}
+                          width={100}
+                          height={60}
+                          className="w-full h-auto"
+                        />
+                      </div>
+                    ))}
                   </div>
-                  <input
-                    type="file"
-                    name="thumbnail"
-                    id="thumbnail"
-                    onChange={onImageChange}
-                    className="px-2 py-[12px] flex items-center justify-center border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs cursor-pointer"
-                  />
                 </div>
                 <div className="flex flex-col justify-start">
                   <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
@@ -279,20 +283,6 @@ const Page = () => {
                     className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
-                {/* <div className="flex flex-col justify-start">
-                  <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
-                    Expiry Date
-                    <span className="text-red-400">*</span>
-                  </span>
-                  <input
-                    type="date"
-                    name="expiry_date"
-                    id="expiry_date"
-                    placeholder="Enter voucher expiry date"
-                    onChange={onchangeHandler}
-                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
-                  />
-                </div> */}
               </div>
             </div>
           </div>
@@ -363,7 +353,7 @@ const Page = () => {
                     Total Amount
                   </span>
                   <span className="font-bold text-base text-brand-dark/70">
-                    {/* ₦ {newAmount.toLocaleString("en-NG")} */}₦{" "}
+                    ₦{" "}
                     {(
                       parseInt(formData.amountPerVoucher) *
                         parseInt(formData.totalNumberOfVouchers) +
@@ -395,9 +385,6 @@ const Page = () => {
               )}
             </div>
           </div>
-          {/* <div className="hidden lg:flex">
-            <Image src={right_img} alt="right" />
-          </div> */}
         </form>
       </div>
     </>
