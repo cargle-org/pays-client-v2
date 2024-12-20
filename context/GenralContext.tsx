@@ -1020,8 +1020,11 @@ const GeneralProvider = (props: any) => {
   // ****************** //
   useEffect(() => {
     if (userId) {
-      if (transactionDetails?.tx_ref && transactionDetails?.status)
+      console.log("🚀 ~ useEffect ~ transactionDetails:", transactionDetails);
+      // if (transactionDetails?.tx_ref && transactionDetails?.status) {
+      if (transactionDetails?.tx_ref && transactionDetails?.transaction_id) {
         verifyFundWallet();
+      }
     }
   }, [transactionDetails]);
 

@@ -8,7 +8,7 @@ import logo from "@/assets/imgs/vouchers/voucher_img.png";
 import { useGeneralContext } from "@/context/GenralContext";
 import Link from "next/link";
 import Spinner from "@/components/spinner/Spinner";
-import { RefreshCcw } from "lucide-react";
+import { Hourglass, RefreshCcw } from "lucide-react";
 
 const Transactions = () => {
   const {
@@ -23,6 +23,7 @@ const Transactions = () => {
     setTransactionPriceRange,
     transactionDateRange,
     setTransactionDateRange,
+    fetchTransactionsLoading,
   }: any = useGeneralContext();
 
   const router = useRouter();
@@ -30,6 +31,7 @@ const Transactions = () => {
 
   const [statusOpen, setStatusOpen] = useState(false);
   const [amountOpen, setAmountOpen] = useState(false);
+  const [verifyIndex, setVerifyIndex] = useState(0);
 
   const toggleStatusDropdown = () => setStatusOpen(!statusOpen);
 
@@ -78,7 +80,8 @@ const Transactions = () => {
     }
   }, []);
 
-  const verifyTransaction = (tx_ref: any, transaction_id: any) => {
+  const verifyTransaction = (tx_ref: any, transaction_id: any, i: number) => {
+    setVerifyIndex(i);
     setTransactionDetails({});
     setTransactionDetails((item: any) => ({
       ...item,
@@ -522,15 +525,23 @@ const Transactions = () => {
                         {item.status}
                       </span>
                       {item.status === "initiated" && (
-                        <RefreshCcw
-                          onClick={() =>
-                            verifyTransaction(
-                              item.tx_ref,
-                              item.transactionReference
-                            )
-                          }
-                          className="cursor-pointer hover:text-green-500"
-                        />
+                        <>
+                          {fetchTransactionsLoading && verifyIndex === i ? (
+                            <Hourglass className="animate-spin" />
+                          ) : (
+                            // <Spinner />
+                            <RefreshCcw
+                              onClick={() =>
+                                verifyTransaction(
+                                  item.tx_ref,
+                                  item.transactionReference,
+                                  i
+                                )
+                              }
+                              className="cursor-pointer hover:text-green-500"
+                            />
+                          )}
+                        </>
                       )}
                     </td>
                     <td className="py-3 capitalize">
