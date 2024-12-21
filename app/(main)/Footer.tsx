@@ -22,7 +22,7 @@ const Footer = () => {
         </span>
         {/* right */}
         <div className="flex items-center justify-evenly gap-4">
-          <Link
+          {/* <Link
             href={"#"}
             className="transition-fx nav-hover-fx font-medium capitalize text-base text-brand-grayish font-geistsans hover:text-brand-main"
           >
@@ -61,9 +61,9 @@ const Footer = () => {
                 fill="#1F0047"
               />
             </svg>
-          </Link>{" "}
+          </Link>{" "} */}
           <Link
-            href={"#"}
+            href={"https://www.instagram.com/usepays_co "}
             className="transition-fx nav-hover-fx font-medium capitalize text-base text-brand-grayish font-geistsans hover:text-brand-main"
           >
             <svg
