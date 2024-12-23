@@ -15,14 +15,12 @@ const Login = () => {
       {display === "individual" && <IndividualLogin setDisplay={setDisplay} />}
       {display === "company" && <CompanyLogin setDisplay={setDisplay} />}
       {display === "" && (
-        <div
-          className="max-w-[2560px] mx-auto w-full min-h-screen flex items-center justify-center py-16
-lg:pt-32"
-        >
+        <div className="max-w-md lg:max-w-[2560px] mx-auto w-full min-h-screen flex items-center justify-center py-16 lg:pt-32">
           {/* content */}
           <div className="min-h-[60%] w-[80%] flex flex-col items-center lg:min-h-[80%]">
             {/* divider */}
             <div className="w-[95%] h-[0.1px] mb-8 bg-brand-grayish/30"></div>
+
             <div className="w-full flex flex-col-reverse justify-between items-start gap-8 h-[100%] lg:gap-6 lg:flex-row">
               {/* left */}
               <div className="w-full h-[100%] flex flex-col justify-between gap-4 lg:h-[600px] lg:w-[50%]">
@@ -39,7 +37,7 @@ lg:pt-32"
                   </div>
                   {/* title-bytext */}
                   <div className="flex flex-col justify-start font-geistsans mb-4 gap-2">
-                    <span className="font-bold text-4xl text-brand-dark">
+                    <span className="font-bold text-[32px] lg:text-4xl text-brand-dark">
                       Sign Up As
                     </span>
                     <span className="font-normal text-xs text-brand-dark">
@@ -48,14 +46,13 @@ lg:pt-32"
                     </span>
                   </div>
                   {/* input fields */}
-                  <div className="flex items-center justify-start gap-6">
+                  <div className="flex items-center gap-1.5 sm:gap-2 max-w-full">
                     <div
                       onClick={() => setDisplay("individual")}
-                      className="transition-fx group w-[50%] max-w-[240px] p-4 flex flex-col justify-start gap-2 border-[0.1px] border-brand-grayish rounded-lg cursor-pointer hover:text-brand-white hover:bg-brand-main"
+                      className="transition-fx group w-1/2 xl:w-[240px] xl:h-[184px] p-2 xl:p-4 flex flex-col justify-start gap-2 border-[0.1px] border-brand-grayish rounded-lg cursor-pointer hover:text-brand-white hover:bg-brand-main"
                     >
                       <svg
-                        width="58"
-                        height="58"
+                        className="w-11 h-11 xl:w-[58px] xl:h-[58px]"
                         viewBox="0 0 58 58"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
@@ -70,20 +67,19 @@ lg:pt-32"
                           fill="#1F0047"
                         />
                       </svg>
-                      <span className="font-bold text-2xl gont-geistsans">
+                      <span className="font-bold text-lg lg:text-2xl font-geistsans leading-6">
                         Individual
                       </span>
-                      <div className="font-normal text-xs text-brand-grayish font-geistsans">
-                        Enjoy exclusive voucher offers just for you
+                      <div className="font-normal text-xs text-brand-grayish font-geistsans leading-4 tracking-tighter lg:tracking-normal">
+                        Enjoy exclusive voucher offer just for you
                       </div>
                     </div>
                     <div
                       onClick={() => setDisplay("company")}
-                      className="transition-fx group max-w-[240px] p-4 flex flex-col justify-start gap-2 border-[0.1px] border-brand-grayish rounded-lg cursor-pointer hover:text-brand-white hover:bg-brand-main"
+                      className="transition-fx group w-1/2 xl:w-[240px] xl:h-[184px] p-2 xl:p-4 flex flex-col justify-start gap-2 border-[0.1px] border-brand-grayish rounded-lg cursor-pointer hover:text-brand-white hover:bg-brand-main"
                     >
                       <svg
-                        width="58"
-                        height="58"
+                        className="w-11 h-11 xl:w-[58px] xl:h-[58px]"
                         viewBox="0 0 58 58"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
@@ -98,11 +94,11 @@ lg:pt-32"
                           fill="#1F0047"
                         />
                       </svg>
-                      <span className="font-bold text-2xl gont-geistsans">
+                      <span className="font-bold text-lg lg:text-2xl gont-geistsans leading-6">
                         Company
                       </span>
-                      <div className="font-normal text-xs text-brand-grayish font-geistsans">
-                        Customized voucher solutions for corporate advantage
+                      <div className="font-normal text-xs text-brand-grayish font-geistsans leading-4">
+                        Voucher solutions for corporate advantage
                       </div>
                     </div>
                   </div>
@@ -110,13 +106,12 @@ lg:pt-32"
                 {/* left bottom */}
                 <div className="flex flex-col gap-4 pt-auto justify-start">
                   {/* divider */}
-                  <div className="w-[90%] h-[0.1px] mt-4 bg-brand-grayish"></div>
-                  <span className="font-geistsans text-sm font-normal flex items-center gap-2 w-full lg:text-base">
-                    If you already have an account{" "}
+                  <div className="w-full max-w-lg h-[0.1px] mt-4 bg-brand-grayish"></div>
+                  <span className="font-Manrope text-[#262626] text-base font-normal flex justify-around items-center gap-3 w-auto xl:w-[353px] tracking-tighter leading-5">
+                    If you don&apos;t have an account{" "}
                     <Link
                       href={"/auth/login"}
-                      className="flex items-center
-                  text-blue-700"
+                      className="flex items-center text-[#3B82F6] text-base"
                     >
                       Login Here{" "}
                       <svg
