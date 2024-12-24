@@ -35,8 +35,8 @@ const Page = () => {
             backgroundPosition: "center", // Centers the background image
           }}
         >
-          <div className="flex flex-col gap-8 items-center justify-center">
-            <span className="w-full text-center text-brand dark font-medium text-3xl font-geistsans lg:text-6xl">
+          <div className="max-w-sm flex flex-col gap-8 justify-center">
+            <span className="w-full text-3xl md:text-4xl text-center text-brand dark font-medium font-geistsans">
               Cashout your Voucher
             </span>
             <span className="font-medium text-center text-base text-brand-dark/70">
@@ -47,7 +47,7 @@ const Page = () => {
               className="flex flex-col items-center gap-8 justify-center"
             >
               {/* input fields */}
-              <div className="flex flex-col justify-start">
+              <div className="flex flex-col justify-start w-full items-center">
                 <span className="font-medium text-sm text-gray-500 font-geistsans mb-2">
                   Voucher Code
                 </span>
@@ -57,7 +57,7 @@ const Page = () => {
                   id="voucherCode"
                   placeholder="Enter Voucher Code"
                   onChange={onchangeHandler}
-                  className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-grayish bg-transparent"
+                  className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-grayish bg-transparent"
                 />
               </div>
               {fetchVouchersLoading ? (
@@ -67,9 +67,9 @@ const Page = () => {
               ) : (
                 <button
                   type="submit"
-                  className="transition-fx shadow-lg rounded-3xl cursor-pointer font-medium text-xl uppercase py-2 px-4 w-[353px] bg-brand-main/45 flex items-center justify-center gap-4 text-brand-main hover:bg-brand-main hover:text-brand-white"
+                  className="transition-fx shadow-lg rounded-3xl cursor-pointer font-medium text-xl uppercase py-2 px-4 w-full sm:w-[353px] bg-brand-main/45 flex items-center justify-center gap-4 text-brand-main hover:bg-brand-main hover:text-brand-white"
                 >
-                  FIND VOUCHER{" "}
+                  FIND VOUCHER
                   <svg
                     width="12"
                     height="13"
