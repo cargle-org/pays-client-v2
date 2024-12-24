@@ -24,15 +24,12 @@ const Redeem = ({ params }: { params: { id: string } }) => {
         <Cash voucherCode={params?.id} setDisplay={setDisplay} />
       )}
       {display === "" && (
-        <div
-          className="max-w-[2560px] mx-auto w-full min-h-screen flex items-center justify-center py-16
-lg:pt-32"
-        >
+        <div className="max-w-md lg:max-w-[2560px] mx-auto w-full min-h-screen flex items-center justify-center py-16 lg:pt-32">
           {/* content */}
           <div className="min-h-[60%] w-[80%] flex flex-col items-center lg:min-h-[80%]">
             {/* divider */}
             <div className="w-[95%] h-[0.1px] mb-8 bg-brand-grayish/30"></div>
-            <div className="w-full flex flex-col-reverse justify-between items-start gap-8 h-[100%] lg:gap-6 lg:flex-row">
+            <div className="w-full flex flex-col-reverse justify-between items-start gap-6 h-[100%] lg:flex-row lg:space-x-5">
               {/* left */}
               <div className="w-full h-[100%] flex flex-col justify-between gap-4 lg:h-[600px] lg:w-[50%]">
                 {/* left top */}
@@ -52,7 +49,7 @@ lg:pt-32"
                       {/* Cashout Your Voucher */}
                       {oneVoucher?.title}{" "}
                       <span className="text-gray-600 text-base">
-                        ₦{oneVoucher.amount}
+                        ₦{oneVoucher?.amount}
                       </span>
                     </span>
                     <span className="font-normal text-xs text-brand-dark">
@@ -63,7 +60,7 @@ lg:pt-32"
                   <div className="flex flex-col items-center justify-start gap-6 lg:flex-row">
                     <div
                       onClick={() => setDisplay("cash")}
-                      className="transition-fx group w-[50%] min-w-[240px] max-w-[240px] p-4 flex flex-col justify-start gap-2 border-[0.1px] border-brand-grayish rounded-lg cursor-pointer hover:text-brand-white hover:bg-brand-main"
+                      className="transition-fx group w-full max-w-[240px] p-4 flex flex-col justify-start gap-2 border-[0.1px] border-brand-grayish rounded-lg cursor-pointer hover:text-brand-white hover:bg-brand-main"
                     >
                       <Coins className="font-bold w-[40px] h-[40px] p-1 gont-geistsans" />
                       <span className="font-bold text-2xl gont-geistsans">
@@ -75,7 +72,7 @@ lg:pt-32"
                     </div>
                     <div
                       onClick={() => setDisplay("airtime")}
-                      className="transition-fx group min-w-[240px] max-w-[240px] p-4 flex flex-col justify-start gap-2 border-[0.1px] border-brand-grayish rounded-lg cursor-pointer hover:text-brand-white hover:bg-brand-main"
+                      className="transition-fx group w-full max-w-[240px] p-4 flex flex-col justify-start gap-2 border-[0.1px] border-brand-grayish rounded-lg cursor-pointer hover:text-brand-white hover:bg-brand-main"
                     >
                       <Phone className="font-bold w-[40px] h-[40px] p-1 gont-geistsans" />
                       <span className="font-bold text-2xl gont-geistsans">
@@ -90,13 +87,12 @@ lg:pt-32"
                 {/* left bottom */}
                 <div className="flex flex-col gap-4 pt-auto justify-start">
                   {/* divider */}
-                  <div className="w-[90%] h-[0.1px] mt-4 bg-brand-grayish"></div>
-                  <span className="font-geistsans text-sm font-normal flex items-center gap-2 w-full lg:text-base">
+                  <div className="w-full h-[0.1px] mt-4 bg-brand-grayish"></div>
+                  <span className="font-Manrope text-[#262626] text-base font-normal flex justify-around items-center gap-3 w-auto xl:w-[353px] tracking-tighter leading-5">
                     Want to use another coupon instead?{" "}
                     <Link
                       href={"/cashout"}
-                      className="flex items-center
-                  text-blue-700"
+                      className="flex items-center text-[#3B82F6] text-base"
                     >
                       Go Back{" "}
                       <svg
