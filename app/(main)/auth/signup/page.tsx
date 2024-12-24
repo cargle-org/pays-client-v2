@@ -46,10 +46,10 @@ const Login = () => {
                     </span>
                   </div>
                   {/* input fields */}
-                  <div className="flex items-center gap-1.5 sm:gap-2 max-w-full">
+                  <div className="flex flex-col items-center justify-start gap-6 lg:flex-row">
                     <div
                       onClick={() => setDisplay("individual")}
-                      className="transition-fx group w-1/2 xl:w-[240px] xl:h-[184px] p-2 xl:p-4 flex flex-col justify-start gap-2 border-[0.1px] border-brand-grayish rounded-lg cursor-pointer hover:text-brand-white hover:bg-brand-main"
+                      className="transition-fx group w-full max-w-[240px] p-4 flex flex-col justify-start gap-2 border-[0.1px] border-brand-grayish rounded-lg cursor-pointer hover:text-brand-white hover:bg-brand-main"
                     >
                       <svg
                         className="w-11 h-11 xl:w-[58px] xl:h-[58px]"
@@ -70,13 +70,13 @@ const Login = () => {
                       <span className="font-bold text-lg lg:text-2xl font-geistsans leading-6">
                         Individual
                       </span>
-                      <div className="font-normal text-xs text-brand-grayish font-geistsans leading-4 tracking-tighter lg:tracking-normal">
+                      <div className="font-normal text-xs text-brand-grayish font-geistsans leading-4">
                         Enjoy exclusive voucher offer just for you
                       </div>
                     </div>
                     <div
                       onClick={() => setDisplay("company")}
-                      className="transition-fx group w-1/2 xl:w-[240px] xl:h-[184px] p-2 xl:p-4 flex flex-col justify-start gap-2 border-[0.1px] border-brand-grayish rounded-lg cursor-pointer hover:text-brand-white hover:bg-brand-main"
+                      className="transition-fx group w-full max-w-[240px] p-4 flex flex-col justify-start gap-2 border-[0.1px] border-brand-grayish rounded-lg cursor-pointer hover:text-brand-white hover:bg-brand-main"
                     >
                       <svg
                         className="w-11 h-11 xl:w-[58px] xl:h-[58px]"
