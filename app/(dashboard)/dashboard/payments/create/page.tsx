@@ -77,7 +77,7 @@ const Page = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-4 justify-start w-full mx-auto">
+      <div className="max-w-[1440px] flex flex-col gap-4 justify-start w-full mx-auto">
         {/* breadcumb */}
         <div className="flex items-center gap-2 font-geistsans font-normal text-[10px] text-brand-grayish">
           <Link
@@ -107,7 +107,7 @@ const Page = () => {
           className="flex gap-2 items-start justify-between"
         >
           {/* left */}
-          <div className="flex flex-col w-max lg:w-[50%]">
+          <div className="flex flex-col w-full">
             <div className="rounded-t-xl bg-brand-white p-4 flex flex-col gap-4 justify-start">
               <div className="flex flex-col gap-2 justify-start w-full">
                 <span className="font-bold font-geistsans text-3xl text-brand-dark">
@@ -126,7 +126,7 @@ const Page = () => {
                     id="title"
                     placeholder="Enter Payment Title"
                     onChange={onchangeHandler}
-                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
                 <div className="flex flex-col justify-start">
@@ -139,7 +139,7 @@ const Page = () => {
                     id="amount"
                     placeholder="Enter Amount"
                     onChange={onchangeHandler}
-                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
                 <div className="flex flex-col justify-start">
@@ -150,7 +150,7 @@ const Page = () => {
                     name="category"
                     id="category"
                     onChange={onchangeHandler}
-                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   >
                     <option value="">Select a category</option>
                     {paymentLinkCategories?.length > 0 &&
@@ -177,7 +177,7 @@ const Page = () => {
                     id="linkExpiry"
                     placeholder="Enter voucher expiry date"
                     onChange={onchangeHandler}
-                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
                 <div className="flex flex-col justify-start">
@@ -190,7 +190,7 @@ const Page = () => {
                     placeholder="Enter a brief description"
                     onChange={onchangeHandler}
                     rows={3}
-                    className="w-[353px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    className="w-full sm:w-[353px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   ></textarea>
                 </div>
               </div>
@@ -199,7 +199,7 @@ const Page = () => {
             <div className="rounded-b-xl bg-brand-white p-4 flex justify-between items-center border border-brand-grayish/15">
               <Link
                 href={"/dashboard/vouchers"}
-                className="py-3 px-8 bg-transparent text-[#DE2626] border-[0.3px] border-[#DE2626] font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-[#DE2626] hover:text-brand-white"
+                className="py-1.5 sm:p-3 px-6 sm:px-8 bg-transparent text-[#DE2626] border-[0.3px] border-[#DE2626] font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-[#DE2626] hover:text-brand-white"
               >
                 Back
               </Link>
@@ -210,7 +210,7 @@ const Page = () => {
               ) : (
                 <button
                   type="submit"
-                  className="p-3 px-8 bg-brand-main text-brand-white font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-brand-main/25"
+                  className="p-1.5 sm:p-3 px-6 sm:px-8 bg-brand-main text-brand-white font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-brand-main/25"
                 >
                   Continue
                 </button>
