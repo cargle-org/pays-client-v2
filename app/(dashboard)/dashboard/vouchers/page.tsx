@@ -95,7 +95,7 @@ const Page = () => {
   return (
     <>
       <div className="flex flex-col gap-4">
-        <div className="flex justify-between items-center pb-2 border-b-[0.3px]">
+        <div className="flex justify-between flex-col sm:flex-row items-center pb-2 border-b-[0.3px]">
           <div className="flex flex-col justify-start gap-2 font-geistsans mb-4">
             <span className="font-bold text-4xl text-brand-dark">
               My Vouchers
@@ -106,7 +106,7 @@ const Page = () => {
           </div>
           <Link
             href={"/dashboard/vouchers/create"}
-            className="transition-fx flex items-center gap-2 p-2 px-4 rounded-3xl bg-brand-main text-brand-white font-geistsans text-base font-normal cursor-pointer hover:bg-brand-main/50"
+            className="transition-fx flex items-center gap-2 p-1 sm:p-2 px-2 sm:px-4 rounded-3xl bg-brand-main text-brand-white font-geistsans text-base text-nowrap font-normal cursor-pointer hover:bg-brand-main/50"
           >
             <svg
               width="12"
@@ -125,7 +125,7 @@ const Page = () => {
         </div>
       </div>
       <div className="flex flex-col justify-start gap-4 my-6">
-        <div className="w-full flex justify-between items-center">
+        <div className="w-full flex flex-col lg:flex-row justify-between items-center">
           <span className="font-geistmono font-normal text-2xl">
             Vouchers you created
           </span>
@@ -167,7 +167,7 @@ const Page = () => {
               </svg>
             </div>
           </div> */}
-          <div className="flex items-end gap-4">
+          <div className="flex flex-col sm:flex-row items-end gap-4">
             {/* Amount Dropdown */}
             <div className="relative">
               <button
@@ -293,15 +293,18 @@ const Page = () => {
             </div>
           </div>
         </div>
-        <div className="bg-brand-white rounded-lg p-8 flex flex-col gap-6 justify-start">
+        <div className="max-w-md sm:max-w-[1440px] mx-auto w-full bg-brand-white rounded-lg p-3 lg:p-8 flex flex-col gap-3 xl:gap-6 justify-start">
           {/* voucher */}
           {allUserVouchers?.length > 0 ? (
             allUserVouchers.map((item: any, i: number) => (
-              <div key={i} className="border-[0.3px] rounded-xl p-4 w-full">
+              <div
+                key={i}
+                className="border-[0.3px] rounded-xl p-2 lg:p-4 w-full"
+              >
                 <div className="flex w-full items-center justify-between">
-                  <div className="flex items-center gap-4 w-[70%]">
+                  <div className="flex flex-col sm:flex-row flex-grow items-center gap-4 w-full xl:w-4/5 h-auto sm:h-[74px]">
                     {/* left */}
-                    <div className="flex gap-4 pr-4 w-[50%]">
+                    <div className="flex w-full sm:w-auto gap-4 pr-4">
                       {item.thumbnail ? (
                         <Image
                           src={getVoucherImage(item)}
@@ -309,7 +312,7 @@ const Page = () => {
                           width={180}
                           height={80}
                           priority
-                          className="rounded-lg"
+                          className="w-16 rounded-lg"
                         />
                       ) : (
                         <Image
@@ -318,44 +321,45 @@ const Page = () => {
                           width={80}
                           height={80}
                           priority
-                          className="rounded-lg"
+                          className="w-16 rounded-lg"
                         />
                       )}
-                      <div className="flex flex-col justify-center gap-2">
-                        <span className="font-geistsans text-2xl font-medium capitalize">
-                          {item.title}
+                      <div className="flex flex-col justify-center lg:gap-2 w-[135px] xl:w-[158px] ">
+                        <span className="font-geistsans text-nowrap text-base lg:text-lg xl:text-2xl font-medium capitalize">
+                          {item.title.slice(0, 10)}
+                          {item.title.length > 10 && "..."}
                         </span>
-                        <span className="font-geistsans text-base font-normal">
+                        <span className="font-geistsans text-sm md:text-xs lg:text-base font-normal">
                           {item.voucherKey}
                         </span>
                       </div>
                     </div>
                     {/* middle */}
-                    <div className="flex justify-evenly gap-8 items-center px-4 border-l-[0.3px] min-w-[50%]">
+                    <div className="flex lg:justify-evenly gap-3 xl:gap-8 items-center lg:px-4 w-full">
                       <div className="flex flex-col items-center justify-center gap-2">
-                        <span className="text-brand-grayish font-normal text-xs font-geistsans">
+                        <span className="text-brand-grayish font-normal text-xs font-geistsans tracking-tighter sm:tracking-normal">
                           Amount
                         </span>
-                        <span className="text-brand-grayish font-normal text-xs font-geistsans border-[0.3px] rounded-xl px-[6px] py-[2px]">
+                        <span className="text-brand-grayish font-normal text-xs font-geistsans border-[0.3px] rounded-xl px-[6px] py-[2px] tracking-tighter sm:tracking-normal">
                           ₦{item.amountPerVoucher}
                         </span>
                       </div>
                       <div className="flex flex-col items-center justify-center gap-2">
-                        <span className="w-max  text-brand-grayish font-normal text-xs font-geistsans">
+                        <span className="w-max  text-brand-grayish font-normal text-xs font-geistsans tracking-tighter sm:tracking-normal">
                           Cashed Vouchers
                         </span>
-                        <span className="text-brand-grayish font-normal text-xs w-max font-geistsans border-[0.3px] rounded-xl px-[6px] py-[2px]">
+                        <span className="text-brand-grayish font-normal text-xs w-max font-geistsans border-[0.3px] rounded-xl px-[6px] py-[2px] tracking-tighter sm:tracking-normal">
                           {item.vouchersCashed} / {item.totalNumberOfVouchers}{" "}
                           Vouchers
                         </span>
                       </div>
-                      <div className="flex flex-col items-center justify-center gap-2">
+                      <div className="sm:flex flex-col items-center justify-center gap-2 hidden">
                         <span className="text-brand-grayish font-normal text-xs font-geistsans">
                           Description of Voucher
                         </span>
                         <span className="text-brand-grayish font-normal text-xs w-max font-geistsans border-[0.3px] rounded-xl px-[6px] py-[2px]">
-                          {item.description.slice(0, 40)}{" "}
-                          {item.description.length > 40 && "..."}
+                          {item.description.slice(0, 15)}{" "}
+                          {item.description.length > 15 && "..."}
                         </span>
                       </div>
                     </div>
@@ -363,7 +367,7 @@ const Page = () => {
                   {/* right */}
                   <Link
                     href={`/dashboard/vouchers/${item._id}`}
-                    className="transition-fx p-4 px-6 rounded-lg flex items-center justify-center bg-brand-grayish cursor-pointer hover:bg-brand-main"
+                    className="transition-fx p-2 lg:p-4 px-2 lg:px-6 rounded-lg flex items-center justify-center bg-brand-grayish cursor-pointer hover:bg-brand-main"
                   >
                     <svg
                       width="8"
