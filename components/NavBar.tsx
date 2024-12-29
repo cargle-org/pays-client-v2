@@ -1,27 +1,90 @@
 "use client";
+
+import React, { MouseEvent, useEffect, useRef, useState } from "react";
+import { User, Wallet, Menu } from "lucide-react";
+
+import MobileSideNavBar from "./MobileSideBar";
 import { useGeneralContext } from "@/context/GenralContext";
-import { User, Wallet } from "lucide-react";
-import React from "react";
 
 const NavBar = () => {
   const { user }: any = useGeneralContext();
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // Toggle Sidebar
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
+  // Close Sidebar
+  const closeSidebar = () => setIsSidebarOpen(false);
+
+  const navRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const handleClickOutside = (event: any) => {
+    if (navRef.current && !navRef.current.contains(event.target as Node)) {
+      setIsOpen(false);
+    }
+  };
+
+  //to handle Click Outside the sidebar
+  useEffect(() => {
+    const handleDocumentClick = (event: MouseEvent | MouseEventInit) => {
+      handleClickOutside(event);
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleDocumentClick);
+    } else {
+      document.removeEventListener("mousedown", handleDocumentClick);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleDocumentClick);
+    };
+  }, [isOpen]);
+
   return (
-    <div className="ml-[208px] py-4 fixed inset-x-0 border-b-[0.3px] z-50 bg-brand-ash">
+    <div
+      ref={navRef}
+      className="md:ml-[198px] lg:ml-[208px] py-4 fixed inset-x-0 border-b-[0.3px] z-50 bg-brand-ash"
+    >
       <div className="flex px-4 items-center h-full w-full justify-between">
-        <div className="flex items-center gap-2">
-          <h1 className="text-xl text-brand-main font-semibold">WELCOME</h1>
+        <div className="flex items-center space-x-4 md:space-x-0">
+          <button
+            className="flex md:hidden rounded"
+            onClick={toggleSidebar}
+            aria-label="Toggle Sidebar"
+          >
+            <Menu />
+          </button>
+          {/* Overlay */}
+          {isSidebarOpen && (
+            <div
+              className="w-3/4 sm:3/4 fixed inset-0 z-5"
+              onClick={closeSidebar}
+            >
+              <MobileSideNavBar
+                onClose={closeSidebar}
+                isSidebarOpen={isSidebarOpen}
+                closeSidebar={closeSidebar}
+              />
+            </div>
+          )}
+          <h1 className="text-lg sm:text-xl text-brand-main font-semibold">
+            WELCOME
+          </h1>
           {/* <h1 className="text-lg text-brand-main font-geistsans font-medium">
             {" "}
             {user?.name}
           </h1> */}
         </div>
-        <div className="flex items-center gap-3">
-          <div className="flex gap-2 items-end p-2 px-4 font-geistsans font-normal text-base rounded-3xl bg-brand-white text-brand-main">
+        <div className="flex items-center gap-1.5 sm:gap-3">
+          <div className="flex gap-2 items-end p-1 sm:p-2 px-2.5 sm:px-4 font-geistsans font-normal text-base rounded-3xl bg-brand-white text-brand-main">
             <Wallet />₦{(user?.walletBalance || 0).toLocaleString("en-NG")}
           </div>
-          <div className="flex gap-2 items-end p-2 px-4 font-geistsans font-normal text-base rounded-3xl bg-brand-white text-brand-main">
+          <div className="flex gap-2 items-end p-1 sm:p-2 px-2.5 sm:px-4 font-geistsans font-normal text-base rounded-3xl bg-brand-white text-brand-main">
             <User />
-            {user?.name}
+            <span className="hidden sm:flex">{user?.name.split(" ")[0]}</span>
           </div>
           {/* <div className="flex flex-col items-end">
             <h1 className="font-semibold">{user?.email}</h1>
