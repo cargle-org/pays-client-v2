@@ -29,7 +29,7 @@ const Recipients = ({ params }: { params: { key: string } }) => {
   }, []);
   return (
     <>
-      <div className="flex flex-col gap-4 justify-start w-full mx-auto">
+      <div className="max-w-xl lg:max-w-[2560px] flex flex-col gap-4 justify-start w-full mx-auto">
         {/* breadcumb */}
         <div className="flex items-center gap-2 font-geistsans font-normal text-[10px] text-brand-grayish">
           <Link
@@ -63,18 +63,18 @@ const Recipients = ({ params }: { params: { key: string } }) => {
         {display === "" && (
           <div className="flex gap-2 items-start justify-between">
             {/* left */}
-            <div className="flex flex-col w-max lg:w-[50%]">
+            <div className="flex flex-col w-full max-w-3xl">
               <div className="rounded-xl bg-brand-white p-4 flex flex-col gap-4 justify-start min-h-[80vh]">
                 <div className="flex flex-col gap-2 justify-start w-full">
                   <div className="p-2 px-4 bg-brand-main text-brand-white font-normal text-xs w-max font-geistsans rounded-2xl">
                     Step 3 of 3
                   </div>
-                  <span className="font-bold font-geistsans text-3xl text-brand-dark">
+                  <span className="font-bold font-geistsans text-2xl sm:text-3xl text-brand-dark">
                     Add Voucher Recipients
                   </span>
                 </div>
                 {/* input fields */}
-                <div className="flex items-center justify-start gap-6 my-8">
+                <div className="flex flex-col items-center justify-start gap-6 my-8 lg:flex-row ">
                   <div
                     onClick={() => setDisplay("manual")}
                     className="transition-fx group max-w-[240px] h-[188px] p-4 flex flex-col justify-start gap-2 border-[0.1px] border-brand-grayish rounded-lg cursor-pointer hover:text-brand-white hover:bg-brand-main"
@@ -137,7 +137,7 @@ const Recipients = ({ params }: { params: { key: string } }) => {
                 <div className="rounded-b-xl bg-brand-white p-4 flex justify-between items-center border border-brand-grayish/15 mt-auto">
                   <Link
                     href={"/dashboard/vouchers"}
-                    className="py-3 px-8 bg-transparent text-[#DE2626] border-[0.3px] border-[#DE2626] font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-[#DE2626] hover:text-brand-white"
+                    className="py-1.5 sm:py-3 px-6 sm:px-8 bg-transparent text-[#DE2626] border-[0.3px] border-[#DE2626] font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-[#DE2626] hover:text-brand-white"
                   >
                     Back
                   </Link>

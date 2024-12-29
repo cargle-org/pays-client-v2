@@ -27,12 +27,12 @@ const CompanyLogin = ({ setDisplay }: any) => {
   }, []);
   return (
     <>
-      <div className="max-w-[2560px] mx-auto w-full h-screen flex items-center justify-center">
+      <div className="max-w-md lg:max-w-[2560px] mx-auto w-full min-h-screen flex items-center justify-center py-16 lg:pt-32">
         {/* content */}
         <div className="min-h-[60%] w-[80%] flex flex-col items-center lg:min-h-[80%]">
           {/* divider */}
           <div className="w-[95%] h-[0.1px] mb-8 bg-brand-grayish/30"></div>
-          <div className="w-full flex justify-between items-start h-[100%]">
+          <div className="w-full flex flex-col-reverse justify-between items-start gap-6 h-[100%] lg:flex-row lg:space-x-5">
             {/* left */}
             <form
               onSubmit={handleSignup}
@@ -42,10 +42,10 @@ const CompanyLogin = ({ setDisplay }: any) => {
               <div className="flex flex-col gap-6 justify-start">
                 {/* title-bytext */}
                 <div className="flex flex-col justify-start font-geistsans mb-4">
-                  <span className="font-bold text-4xl text-brand-dark">
+                  <span className="font-bold text-[32px] lg:text-4xl text-brand-dark leading-[43.71px] tracking-tight md:tracking-normal">
                     Let&apos;s get you set up
                   </span>
-                  <span className="font-normal text-xs text-brand-dark">
+                  <span className="font-normal text-xs text-brand-dark leading-5">
                     Complete the Fields Below – Your Personalized Voucher
                     Experience Awaits!
                   </span>
@@ -61,7 +61,7 @@ const CompanyLogin = ({ setDisplay }: any) => {
                     id="name"
                     placeholder="Enter Company Name"
                     onChange={onchangeHandler}
-                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-dark/70 bg-transparent"
+                    className="w-full xl:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-grayish bg-transparent"
                   />
                 </div>
                 <div className="flex flex-col justify-start">
@@ -74,7 +74,7 @@ const CompanyLogin = ({ setDisplay }: any) => {
                     id="email"
                     placeholder="Enter Official Email Address"
                     onChange={onchangeHandler}
-                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-dark/70 bg-transparent"
+                    className="w-full xl:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-grayish bg-transparent"
                   />
                 </div>
                 <div className="flex flex-col justify-start">
@@ -87,21 +87,21 @@ const CompanyLogin = ({ setDisplay }: any) => {
                     id="phone"
                     placeholder="Enter Official Phone Number"
                     onChange={onchangeHandler}
-                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-dark/70 bg-transparent"
+                    className="w-full xl:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-grayish bg-transparent"
                   />
                 </div>
                 <div className="flex flex-col justify-start">
                   <span className="font-medium text-sm text-gray-500 font-geistsans mb-2">
                     Password
                   </span>
-                  <div className="relative w-[353px]">
+                  <div className="relative max-w-full xl:max-w-fit">
                     <input
                       type={showPassword ? "text" : "password"}
                       name="password"
                       id="password"
                       placeholder="Password"
                       onChange={onchangeHandler}
-                      className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-dark/70 bg-transparent"
+                      className="w-full xl:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-grayish bg-transparent"
                     />
                     <svg
                       width="20"
@@ -133,19 +133,18 @@ const CompanyLogin = ({ setDisplay }: any) => {
                 ) : (
                   <button
                     type="submit"
-                    className="transition-fx w-[353px] h-[44px] capitalize bg-brand-main/20 cursor-pointer rounded-3xl flex items-center justify-center text-brand-white hover:bg-brand-main"
+                    className="transition-fx w-auto xl:w-[353px] h-[44px] capitalize bg-brand-main/20 cursor-pointer rounded-3xl flex items-center justify-center text-brand-white hover:bg-brand-main"
                   >
                     NEXT
                   </button>
                 )}
                 {/* divider */}
-                <div className="w-[90%] h-[0.1px] mt-4 bg-brand-grayish"></div>
-                <span className="font-geistsans text-base font-normal flex items-center gap-2 w-full">
+                <div className="w-full max-w-lg h-[0.1px] mt-4 bg-brand-grayish"></div>
+                <span className="font-Manrope text-[#262626] text-base font-normal flex justify-around items-center gap-3 w-auto xl:w-[353px] tracking-tighter leading-5">
                   Made a wrong turn?{" "}
                   <span
                     onClick={() => setDisplay("")}
-                    className="flex items-center
-                  text-blue-700 cursor-pointer"
+                    className="flex items-center text-[#3B82F6] text-base"
                   >
                     Back to previous{" "}
                     <svg

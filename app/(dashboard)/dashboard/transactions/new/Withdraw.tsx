@@ -85,13 +85,16 @@ const Withdraw = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="flex flex-col w-max lg:w-[50%]">
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-[1440px] flex flex-col w-full"
+      >
         <div className="rounded-xl bg-brand-white p-4 flex flex-col gap-2 justify-start h-[80vh]">
           <div className="flex flex-col gap-2 justify-start w-full pt-4">
             <div className="p-2 px-4 bg-brand-main text-brand-white font-normal text-xs w-max font-geistsans rounded-2xl">
               Step 2 of 2
             </div>
-            <span className="font-bold font-geistsans text-3xl text-brand-dark">
+            <span className="font-bold font-geistsans text-2xl sm:text-3xl text-brand-dark">
               Withdraw From Your Wallet
             </span>
           </div>
@@ -110,7 +113,7 @@ const Withdraw = () => {
                 placeholder="Enter amount"
                 onChange={onchangeHandler}
                 // value={newTransaction.amount}
-                className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
               />
             </div>
 
@@ -125,7 +128,7 @@ const Withdraw = () => {
                 placeholder="Enter account number"
                 onChange={getAccountNumber}
                 // value={newTransaction.accountNumber}
-                className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
               />
             </div>
 
@@ -137,7 +140,7 @@ const Withdraw = () => {
                 name="bankCode"
                 id="bankCode"
                 onChange={handleSelectChange}
-                className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
               >
                 <option value="">Select a bank</option>
                 {!showOtherBanks &&
@@ -185,7 +188,7 @@ const Withdraw = () => {
               newTransaction.bankCode && (
                 <button
                   type="submit"
-                  className="p-3 px-8 bg-brand-main text-brand-white font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-brand-main/25"
+                  className="p-1.5 sm:p-3 px-4 sm:px-8 bg-brand-main text-brand-white font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-brand-main/25"
                 >
                   Continue
                 </button>

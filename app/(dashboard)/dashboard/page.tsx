@@ -34,7 +34,7 @@ const Page = () => {
   }, []);
   return (
     <>
-      <div className="flex flex-col gap-6">
+      <div className="max-w-md sm:max-w-[1440px] flex flex-col gap-6 mx-auto">
         <div className="flex justify-between items-center pb-2 border-b-[0.3px]">
           <div className="flex flex-col justify-start gap-2 font-geistsans mb-4">
             <span className="font-bold text-4xl text-brand-dark">
@@ -45,139 +45,196 @@ const Page = () => {
             </span>
           </div>
         </div>
-        <div className="bg-brand-white rounded-lg p-8 flex gap-6 justify-evenly items-center">
+        <div className="w-full bg-brand-white rounded-lg p-3 lg:p-8 flex flex-col sm:flex-row gap-2 lg:gap-6 justify-evenly items-center">
           {/* Item */}
-          <div className="h-[107px] flex flex-col items-start justify-start gap-2">
-            <svg
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                x="0.5"
-                y="0.5"
-                width="31"
-                height="31"
-                rx="15.5"
-                fill="#F5F5F5"
-              />
-              <rect
-                x="0.5"
-                y="0.5"
-                width="31"
-                height="31"
-                rx="15.5"
-                stroke="#E9E9E9"
-              />
-              <path
-                d="M11.6957 23.9286V18.3751H10V16.9922H11.6957V15.2203H10V13.8373H11.6957V8.5H13.9565L16.0217 13.8373H18.587V8.5H20.3043V13.8373H22V15.2203H20.3043V16.9922H22V18.3751H20.3043V23.9286H18.0217L15.9565 18.3751H13.3913V23.9286H11.6957ZM13.3913 16.9922H15.4348L14.7826 15.2203H13.3478L13.3913 16.9922ZM18.587 20.8818H18.6739L18.6087 18.3751H17.6957L18.587 20.8818ZM13.3478 13.8373H14.2609L13.3478 11.1579H13.2609L13.3478 13.8373ZM17.1739 16.9922H18.6304L18.587 15.2203H16.5217L17.1739 16.9922Z"
-                fill="#1F0047"
-              />
-            </svg>
-            <span className="font-normal text-base text-brand-grayish font-geistsans">
-              Account Balance
-            </span>
-            <span className="font-medium text-4xl font-geistsans text-brand-dark">
-              ₦{(user?.walletBalance || 0).toLocaleString("en-NG")}
-            </span>
+          <div className="w-full flex space-x-5 sm:space-x-0 border-b-2 sm:border-none border-brand-gray py-1 sm:py-0 gap-2 lg:gap-6">
+            <div className="w-full h-[107px] flex flex-col items-start justify-start gap-2">
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="0.5"
+                  y="0.5"
+                  width="31"
+                  height="31"
+                  rx="15.5"
+                  fill="#F5F5F5"
+                />
+                <rect
+                  x="0.5"
+                  y="0.5"
+                  width="31"
+                  height="31"
+                  rx="15.5"
+                  stroke="#E9E9E9"
+                />
+                <path
+                  d="M11.6957 23.9286V18.3751H10V16.9922H11.6957V15.2203H10V13.8373H11.6957V8.5H13.9565L16.0217 13.8373H18.587V8.5H20.3043V13.8373H22V15.2203H20.3043V16.9922H22V18.3751H20.3043V23.9286H18.0217L15.9565 18.3751H13.3913V23.9286H11.6957ZM13.3913 16.9922H15.4348L14.7826 15.2203H13.3478L13.3913 16.9922ZM18.587 20.8818H18.6739L18.6087 18.3751H17.6957L18.587 20.8818ZM13.3478 13.8373H14.2609L13.3478 11.1579H13.2609L13.3478 13.8373ZM17.1739 16.9922H18.6304L18.587 15.2203H16.5217L17.1739 16.9922Z"
+                  fill="#1F0047"
+                />
+              </svg>
+              <span className="font-normal text-sm lg:text-base text-brand-grayish font-geistsans">
+                Account Balance
+              </span>
+              <span className="font-medium text-xl lg:text-4xl font-geistsans text-brand-dark">
+                ₦{(user?.walletBalance || 0).toLocaleString("en-NG")}
+              </span>
+            </div>
+            {/* divider */}
+            <span className="h-[107px] bg-brand-ash w-[1px]"></span>
+            {/* item */}
+            <div className="w-full h-[107px] flex flex-col items-start justify-start gap-2">
+              <svg
+                width="32"
+                height="33"
+                viewBox="0 0 32 33"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="0.5"
+                  y="1"
+                  width="31"
+                  height="31"
+                  rx="15.5"
+                  fill="#F5F5F5"
+                />
+                <rect
+                  x="0.5"
+                  y="1"
+                  width="31"
+                  height="31"
+                  rx="15.5"
+                  stroke="#E9E9E9"
+                />
+                <path
+                  d="M10 16.25V22.25C10 22.6478 10.158 23.0294 10.4393 23.3107C10.7206 23.592 11.1022 23.75 11.5 23.75H20.5C20.8978 23.75 21.2794 23.592 21.5607 23.3107C21.842 23.0294 22 22.6478 22 22.25V16.25"
+                  stroke="#1F0047"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M16 12.125C16 11.4288 15.7234 10.7611 15.2312 10.2688C14.7389 9.77656 14.0712 9.5 13.375 9.5C12.8777 9.5 12.4008 9.69754 12.0492 10.0492C11.6975 10.4008 11.5 10.8777 11.5 11.375C11.5 11.8723 11.6975 12.3492 12.0492 12.7008C12.4008 13.0525 12.8777 13.25 13.375 13.25H16M16 12.125V13.25M16 12.125C16 11.4288 16.2766 10.7611 16.7688 10.2688C17.2611 9.77656 17.9288 9.5 18.625 9.5C19.1223 9.5 19.5992 9.69754 19.9508 10.0492C20.3025 10.4008 20.5 10.8777 20.5 11.375C20.5 11.6212 20.4515 11.865 20.3573 12.0925C20.263 12.32 20.1249 12.5267 19.9508 12.7008C19.7767 12.8749 19.57 13.013 19.3425 13.1073C19.115 13.2015 18.8712 13.25 18.625 13.25H16"
+                  stroke="#1F0047"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M16 16.25V23.75M9.25 13.25H22.75V16.25H9.25V13.25Z"
+                  stroke="#1F0047"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <span className="font-normal text-sm lg:text-base text-brand-grayish font-geistsans tracking-wide">
+                Total Vouchers
+              </span>
+              <span className="font-medium text-lg lg:text-4xl font-geistsans text-brand-dark">
+                {(user?.totalVouchers || 0).toLocaleString("en-NG")}
+              </span>
+            </div>
+            {/* divider */}
+            <span className="h-[107px] bg-brand-ash w-[1px]"></span>
           </div>
-          {/* divider */}
-          <span className="h-[107px] bg-brand-ash w-[1px]"></span>
-          {/* item */}
-          <div className="h-[107px] flex flex-col items-start justify-start gap-2">
-            <svg
-              width="32"
-              height="33"
-              viewBox="0 0 32 33"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                x="0.5"
-                y="1"
-                width="31"
-                height="31"
-                rx="15.5"
-                fill="#F5F5F5"
-              />
-              <rect
-                x="0.5"
-                y="1"
-                width="31"
-                height="31"
-                rx="15.5"
-                stroke="#E9E9E9"
-              />
-              <path
-                d="M10 16.25V22.25C10 22.6478 10.158 23.0294 10.4393 23.3107C10.7206 23.592 11.1022 23.75 11.5 23.75H20.5C20.8978 23.75 21.2794 23.592 21.5607 23.3107C21.842 23.0294 22 22.6478 22 22.25V16.25"
-                stroke="#1F0047"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M16 12.125C16 11.4288 15.7234 10.7611 15.2312 10.2688C14.7389 9.77656 14.0712 9.5 13.375 9.5C12.8777 9.5 12.4008 9.69754 12.0492 10.0492C11.6975 10.4008 11.5 10.8777 11.5 11.375C11.5 11.8723 11.6975 12.3492 12.0492 12.7008C12.4008 13.0525 12.8777 13.25 13.375 13.25H16M16 12.125V13.25M16 12.125C16 11.4288 16.2766 10.7611 16.7688 10.2688C17.2611 9.77656 17.9288 9.5 18.625 9.5C19.1223 9.5 19.5992 9.69754 19.9508 10.0492C20.3025 10.4008 20.5 10.8777 20.5 11.375C20.5 11.6212 20.4515 11.865 20.3573 12.0925C20.263 12.32 20.1249 12.5267 19.9508 12.7008C19.7767 12.8749 19.57 13.013 19.3425 13.1073C19.115 13.2015 18.8712 13.25 18.625 13.25H16"
-                stroke="#1F0047"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M16 16.25V23.75M9.25 13.25H22.75V16.25H9.25V13.25Z"
-                stroke="#1F0047"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <span className="font-normal text-base text-brand-grayish font-geistsans">
-              Total Vouchers
-            </span>
-            <span className="font-medium text-4xl font-geistsans text-brand-dark">
-              {(user?.totalVouchers || 0).toLocaleString("en-NG")}
-            </span>
-          </div>
-          {/* divider */}
-          <span className="h-[107px] bg-brand-ash w-[1px]"></span>
           {/* Item */}
-          <div className="h-[107px] flex flex-col items-start justify-start gap-2">
-            <svg
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                x="0.5"
-                y="0.5"
-                width="31"
-                height="31"
-                rx="15.5"
-                fill="#F5F5F5"
-              />
-              <rect
-                x="0.5"
-                y="0.5"
-                width="31"
-                height="31"
-                rx="15.5"
-                stroke="#E9E9E9"
-              />
-              <path
-                d="M11.6957 23.9286V18.3751H10V16.9922H11.6957V15.2203H10V13.8373H11.6957V8.5H13.9565L16.0217 13.8373H18.587V8.5H20.3043V13.8373H22V15.2203H20.3043V16.9922H22V18.3751H20.3043V23.9286H18.0217L15.9565 18.3751H13.3913V23.9286H11.6957ZM13.3913 16.9922H15.4348L14.7826 15.2203H13.3478L13.3913 16.9922ZM18.587 20.8818H18.6739L18.6087 18.3751H17.6957L18.587 20.8818ZM13.3478 13.8373H14.2609L13.3478 11.1579H13.2609L13.3478 13.8373ZM17.1739 16.9922H18.6304L18.587 15.2203H16.5217L17.1739 16.9922Z"
-                fill="#1F0047"
-              />
-            </svg>
-            <span className="font-normal text-base text-brand-grayish font-geistsans">
-              Amount Cashed
-            </span>
-            <span className="font-medium text-4xl font-geistsans text-brand-dark">
-              ₦{(user?.totalAmountCashed || 0).toLocaleString("en-NG")}
-            </span>
+          <div className="w-full flex space-x-5 sm:space-x-0 border-b-2 sm:border-none border-brand-gray py-1 sm:py-0 gap-2 lg:gap-6">
+            <div className="w-full h-[107px] flex flex-col items-start justify-start gap-2">
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="0.5"
+                  y="0.5"
+                  width="31"
+                  height="31"
+                  rx="15.5"
+                  fill="#F5F5F5"
+                />
+                <rect
+                  x="0.5"
+                  y="0.5"
+                  width="31"
+                  height="31"
+                  rx="15.5"
+                  stroke="#E9E9E9"
+                />
+                <path
+                  d="M11.6957 23.9286V18.3751H10V16.9922H11.6957V15.2203H10V13.8373H11.6957V8.5H13.9565L16.0217 13.8373H18.587V8.5H20.3043V13.8373H22V15.2203H20.3043V16.9922H22V18.3751H20.3043V23.9286H18.0217L15.9565 18.3751H13.3913V23.9286H11.6957ZM13.3913 16.9922H15.4348L14.7826 15.2203H13.3478L13.3913 16.9922ZM18.587 20.8818H18.6739L18.6087 18.3751H17.6957L18.587 20.8818ZM13.3478 13.8373H14.2609L13.3478 11.1579H13.2609L13.3478 13.8373ZM17.1739 16.9922H18.6304L18.587 15.2203H16.5217L17.1739 16.9922Z"
+                  fill="#1F0047"
+                />
+              </svg>
+              <span className="font-normal text-sm lg:text-base text-brand-grayish font-geistsans">
+                Amount Cashed
+              </span>
+              <span className="font-medium text-xl lg:text-4xl font-geistsans text-brand-dark">
+                ₦{(user?.totalAmountCashed || 0).toLocaleString("en-NG")}
+              </span>
+            </div>
+
+            {/* divider */}
+            <span className="h-[107px] bg-brand-ash w-[1px]"></span>
+            {/* item */}
+            <div className="w-full h-[107px] flex flex-col items-start justify-start gap-2">
+              <svg
+                width="32"
+                height="33"
+                viewBox="0 0 32 33"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="0.5"
+                  y="1"
+                  width="31"
+                  height="31"
+                  rx="15.5"
+                  fill="#F5F5F5"
+                />
+                <rect
+                  x="0.5"
+                  y="1"
+                  width="31"
+                  height="31"
+                  rx="15.5"
+                  stroke="#E9E9E9"
+                />
+                <path
+                  d="M10 16.25V22.25C10 22.6478 10.158 23.0294 10.4393 23.3107C10.7206 23.592 11.1022 23.75 11.5 23.75H20.5C20.8978 23.75 21.2794 23.592 21.5607 23.3107C21.842 23.0294 22 22.6478 22 22.25V16.25"
+                  stroke="#1F0047"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M16 12.125C16 11.4288 15.7234 10.7611 15.2312 10.2688C14.7389 9.77656 14.0712 9.5 13.375 9.5C12.8777 9.5 12.4008 9.69754 12.0492 10.0492C11.6975 10.4008 11.5 10.8777 11.5 11.375C11.5 11.8723 11.6975 12.3492 12.0492 12.7008C12.4008 13.0525 12.8777 13.25 13.375 13.25H16M16 12.125V13.25M16 12.125C16 11.4288 16.2766 10.7611 16.7688 10.2688C17.2611 9.77656 17.9288 9.5 18.625 9.5C19.1223 9.5 19.5992 9.69754 19.9508 10.0492C20.3025 10.4008 20.5 10.8777 20.5 11.375C20.5 11.6212 20.4515 11.865 20.3573 12.0925C20.263 12.32 20.1249 12.5267 19.9508 12.7008C19.7767 12.8749 19.57 13.013 19.3425 13.1073C19.115 13.2015 18.8712 13.25 18.625 13.25H16"
+                  stroke="#1F0047"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M16 16.25V23.75M9.25 13.25H22.75V16.25H9.25V13.25Z"
+                  stroke="#1F0047"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <span className="font-normal text-sm lg:text-base text-brand-grayish font-geistsans">
+                Active Vouchers
+              </span>
+              <span className="font-medium text-lg lg:text-4xl font-geistsans text-brand-dark">
+                {(user?.activeVouchers || 0).toLocaleString("en-NG")}
+              </span>
+            </div>
+            {/* divider */}
+            <span className="h-[107px] bg-brand-ash w-[1px]"></span>
           </div>
-          {/* divider */}
-          <span className="h-[107px] bg-brand-ash w-[1px]"></span>
           {/* item */}
-          <div className="h-[107px] flex flex-col items-start justify-start gap-2">
+          <div className="h-[107px] flex flex-col items-center sm:items-start justify-start gap-2">
             <svg
               width="32"
               height="33"
@@ -219,69 +276,17 @@ const Page = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span className="font-normal text-base text-brand-grayish font-geistsans">
-              Active Vouchers
-            </span>
-            <span className="font-medium text-4xl font-geistsans text-brand-dark">
-              {(user?.activeVouchers || 0).toLocaleString("en-NG")}
-            </span>
-          </div>
-          {/* divider */}
-          <span className="h-[107px] bg-brand-ash w-[1px]"></span>
-          {/* item */}
-          <div className="h-[107px] flex flex-col items-start justify-start gap-2">
-            <svg
-              width="32"
-              height="33"
-              viewBox="0 0 32 33"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                x="0.5"
-                y="1"
-                width="31"
-                height="31"
-                rx="15.5"
-                fill="#F5F5F5"
-              />
-              <rect
-                x="0.5"
-                y="1"
-                width="31"
-                height="31"
-                rx="15.5"
-                stroke="#E9E9E9"
-              />
-              <path
-                d="M10 16.25V22.25C10 22.6478 10.158 23.0294 10.4393 23.3107C10.7206 23.592 11.1022 23.75 11.5 23.75H20.5C20.8978 23.75 21.2794 23.592 21.5607 23.3107C21.842 23.0294 22 22.6478 22 22.25V16.25"
-                stroke="#1F0047"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M16 12.125C16 11.4288 15.7234 10.7611 15.2312 10.2688C14.7389 9.77656 14.0712 9.5 13.375 9.5C12.8777 9.5 12.4008 9.69754 12.0492 10.0492C11.6975 10.4008 11.5 10.8777 11.5 11.375C11.5 11.8723 11.6975 12.3492 12.0492 12.7008C12.4008 13.0525 12.8777 13.25 13.375 13.25H16M16 12.125V13.25M16 12.125C16 11.4288 16.2766 10.7611 16.7688 10.2688C17.2611 9.77656 17.9288 9.5 18.625 9.5C19.1223 9.5 19.5992 9.69754 19.9508 10.0492C20.3025 10.4008 20.5 10.8777 20.5 11.375C20.5 11.6212 20.4515 11.865 20.3573 12.0925C20.263 12.32 20.1249 12.5267 19.9508 12.7008C19.7767 12.8749 19.57 13.013 19.3425 13.1073C19.115 13.2015 18.8712 13.25 18.625 13.25H16"
-                stroke="#1F0047"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M16 16.25V23.75M9.25 13.25H22.75V16.25H9.25V13.25Z"
-                stroke="#1F0047"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <span className="font-normal text-base text-brand-grayish font-geistsans">
+            <span className="font-normal text-sm lg:text-base text-brand-grayish font-geistsans">
               Cashed vouchers
             </span>
-            <span className="font-medium text-4xl font-geistsans text-brand-dark">
+            <span className="font-medium text-lg lg:text-4xl font-geistsans text-brand-dark">
               {(user?.cashedVouchers || 0).toLocaleString("en-NG")}
             </span>
           </div>
         </div>
-        <div className="flex items-start justify-between gap-4 mb-4">
+        <div className="flex items-start justify-between flex-col lg:flex-row gap-4 mb-4">
           {/* left */}
-          <div className="flex flex-col gap-3 w-[50%]">
+          <div className="flex flex-col gap-3 w-full lg:w-1/2">
             {/* left top */}
             <div className="flex items-center justify-between w-full rounded-lg bg-brand-white p-2">
               <span className="font-bold text-sm text-brand-dark font-geistsa">
@@ -315,9 +320,9 @@ const Page = () => {
                     className="border-[0.3px] rounded-xl p-4 w-full bg-brand-white mb-2"
                   >
                     <div className="flex w-full items-center justify-between">
-                      <div className="flex items-center gap-4 w-[70%]">
+                      <div className="flex flex-col sm:flex-row items-center gap-4 w-full xl:w-4/5 h-auto sm:h-[74px]">
                         {/* left */}
-                        <div className="flex gap-4 pr-4 w-[50%]">
+                        <div className="flex w-full sm:w-auto gap-4 sm:pr-4">
                           {item.thumbnail ? (
                             <Image
                               src={item?.thumbnail}
@@ -325,7 +330,7 @@ const Page = () => {
                               width={80}
                               height={80}
                               priority
-                              className="rounded-lg"
+                              className="w-20 h-16 rounded-lg"
                             />
                           ) : (
                             <Image
@@ -334,10 +339,10 @@ const Page = () => {
                               width={80}
                               height={80}
                               priority
-                              className="rounded-lg"
+                              className="w-20 h-16 rounded-lg"
                             />
                           )}
-                          <div className="flex flex-col justify-center gap-2">
+                          <div className="w-full flex flex-col justify-center gap-2">
                             <Link
                               href={`/dashboard/vouchers/${item._id}`}
                               className="font-geistsans text-2xl font-medium capitalize hover:animate-bounce"
@@ -345,7 +350,7 @@ const Page = () => {
                               {item.title}
                             </Link>
                             {/* middle */}
-                            <div className="flex justify-evenly gap-8 items-center px-4 border-l-[0.3px] min-w-[50%]">
+                            <div className="flex justify-evenly gap-4 xl:gap-8 items-center sm:px-4 border-l-[0.3px] w-full">
                               <div className="flex flex-col items-center justify-center gap-2">
                                 <span className="text-brand-grayish font-normal text-xs font-geistsans">
                                   Amount
@@ -354,8 +359,8 @@ const Page = () => {
                                   ₦{item.amountPerVoucher}
                                 </span>
                               </div>
-                              <div className="flex flex-col items-center justify-center gap-2">
-                                <span className="w-max  text-brand-grayish font-normal text-xs font-geistsans">
+                              <div className="sm:flex flex-col items-center justify-center gap-2 hidden">
+                                <span className="w-max text-brand-grayish font-normal text-xs font-geistsans">
                                   Cashed Vouchers
                                 </span>
                                 <span className="text-brand-grayish font-normal text-xs w-max font-geistsans border-[0.3px] rounded-xl px-[6px] py-[2px]">
@@ -368,8 +373,8 @@ const Page = () => {
                                   Description of Voucher
                                 </span>
                                 <span className="text-brand-grayish font-normal text-xs w-max font-geistsans border-[0.3px] rounded-xl px-[6px] py-[2px]">
-                                  {item.description.slice(0, 40)}{" "}
-                                  {item.description.length > 40 && "..."}
+                                  {item.description.slice(0, 15)}{" "}
+                                  {item.description.length > 15 && "..."}
                                 </span>
                               </div>
                             </div>
@@ -397,7 +402,7 @@ const Page = () => {
             </div>
           </div>
           {/* right */}
-          <div className="flex flex-col gap-3 w-[50%]">
+          <div className="flex flex-col gap-3 w-full lg:w-1/2">
             {/* right top */}
             <div className="flex items-center justify-between w-full rounded-lg bg-brand-white p-2">
               <span className="font-bold text-sm text-brand-dark font-geistsa">
@@ -429,7 +434,9 @@ const Page = () => {
                   <thead className="divide-y divide-gray-200 font-bold text-sm text-brand-grayish py-2 px-4 mb-2">
                     <tr className="rounded-lg">
                       <th className="py-2">S/N</th>
-                      <th className="py-2">Title</th>
+                      <th className="py-2 text-start pl-4 hidden sm:block">
+                        Title
+                      </th>
                       <th className="py-2">Corresponding Link</th>
                       {/* <th className="py-2"></th> */}
                     </tr>
@@ -440,14 +447,17 @@ const Page = () => {
                       .map((item: any, i: number) => (
                         <tr key={i} className="mb-4 rounded-lg">
                           <td className="py-3">{i + 1}</td>
-                          <td className="py-3 capitalize">{item.title}</td>
+                          <td className="hidden sm:block py-3 pl-4 capitalize text-start font-semibold">
+                            {item.title}
+                          </td>
                           <td className="py-3 capitalize">
                             {" "}
                             <Link
                               href={item.link}
                               className="hover:text-brand-main"
                             >
-                              {item.link}
+                              {item.link.slice(0, 35)}
+                              {item.link.length > 35 && "..."}
                             </Link>
                           </td>
                           {/* <td className="py-3 capitalize">

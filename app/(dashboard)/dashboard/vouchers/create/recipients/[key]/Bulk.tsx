@@ -80,10 +80,10 @@ const Bulk = ({ setDisplay }: any) => {
 
   return (
     <>
-      <div className="flex gap-2 items-start justify-between">
+      <div className="max-w-3xl flex gap-2 items-start justify-between">
         {/* left */}
-        <div className="flex flex-col w-max lg:w-[50%]">
-          <div className="rounded-xl bg-brand-white p-4 flex flex-col gap-4 justify-start h-[80vh]">
+        <div className="flex flex-col w-full">
+          <div className="rounded-xl bg-brand-white p-4 flex flex-col gap-4 justify-start h-[80vh] min-h-screen sm:min-h-max">
             <div className="flex flex-col gap-2 justify-start w-full">
               <div className="p-2 px-4 bg-brand-main text-brand-white font-normal text-xs w-max font-geistsans rounded-2xl">
                 Step 3 of 3
@@ -97,7 +97,7 @@ const Bulk = ({ setDisplay }: any) => {
               onSubmit={onSubmit}
               className="flex flex-col gap-4 justify-start"
             >
-              <div className="flex p-4 justify-between items-center border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs">
+              <div className="flex p-4 flex-col sm:flex-row justify-between items-center border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs space-y-2.5 sm:space-y-0">
                 <div className="flex gap-2 items-center">
                   <svg
                     width="28"
@@ -139,7 +139,7 @@ const Bulk = ({ setDisplay }: any) => {
                   name="recipients"
                   id="recipients"
                   onChange={onFileChange}
-                  className="px-2 py-[12px] flex items-center justify-center border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs cursor-pointer"
+                  className="w-full px-2 py-[12px] flex items-center justify-center border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs cursor-pointer"
                 />
               </div>
               {createVoucherLoading ? (
@@ -149,7 +149,7 @@ const Bulk = ({ setDisplay }: any) => {
               ) : (
                 <span
                   onClick={onSubmit}
-                  className="transition-fx w-max flex items-center gap-2 p-2 px-4 rounded-3xl bg-brand-main text-brand-white font-geistsans text-base font-normal cursor-pointer hover:bg-brand-main/50"
+                  className="transition-fx w-max flex items-center place-self-end gap-2 p-1 sm:p-2 px-2.5 sm:px-4 rounded-3xl bg-brand-main text-brand-white font-geistsans text-base font-normal cursor-pointer hover:bg-brand-main/50"
                 >
                   <svg
                     width="12"
@@ -171,7 +171,7 @@ const Bulk = ({ setDisplay }: any) => {
             <div className="rounded-b-xl bg-brand-white p-4 flex justify-between items-center border border-brand-grayish/15 mt-auto">
               <span
                 onClick={handleBack}
-                className="py-3 px-8 bg-transparent text-[#DE2626] border-[0.3px] border-[#DE2626] font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-[#DE2626] hover:text-brand-white"
+                className="py-1.5 sm:py-3 px-6 sm:px-8 bg-transparent text-[#DE2626] border-[0.3px] border-[#DE2626] font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-[#DE2626] hover:text-brand-white"
               >
                 Back
               </span>

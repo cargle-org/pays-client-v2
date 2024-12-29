@@ -32,15 +32,12 @@ const Redeem = ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <div
-        className="max-w-[2560px] mx-auto w-full min-h-screen flex items-center justify-center py-16
-lg:pt-32"
-      >
+      <div className="max-w-md lg:max-w-[2560px] mx-auto w-full min-h-screen flex items-center justify-center py-16 lg:pt-32">
         {/* content */}
         <div className="min-h-[60%] w-[80%] flex flex-col items-center lg:min-h-[80%]">
           {/* divider */}
           <div className="w-[95%] h-[0.1px] mb-8 bg-brand-grayish/30"></div>
-          <div className="w-full flex flex-col-reverse justify-between items-start gap-8 h-[100%] lg:gap-6 lg:flex-row">
+          <div className="w-full flex flex-col-reverse justify-between items-start gap-6 h-[100%] lg:flex-row lg:space-x-5">
             {/* left */}
             <form
               onSubmit={handlePayToLink}
@@ -68,7 +65,7 @@ lg:pt-32"
                     id="name"
                     placeholder="Enter your name"
                     onChange={onchangeHandler}
-                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-grayish bg-transparent"
+                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
                 <div className="flex flex-col justify-start">
@@ -81,7 +78,7 @@ lg:pt-32"
                     id="email"
                     placeholder="Enter Email Address"
                     onChange={onchangeHandler}
-                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-grayish bg-transparent"
+                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
                 {/* <div className="flex flex-col justify-start">
@@ -107,13 +104,13 @@ lg:pt-32"
                 ) : (
                   <button
                     type="submit"
-                    className="transition-fx w-[353px] h-[44px] capitalize bg-brand-main/20 cursor-pointer rounded-3xl flex items-center justify-center text-brand-white hover:bg-brand-main"
+                    className="transition-fx w-auto xl:w-[353px] h-[44px] capitalize bg-brand-main/20 cursor-pointer rounded-3xl flex items-center justify-center text-brand-white hover:bg-brand-main"
                   >
                     NEXT
                   </button>
                 )}
                 {/* divider */}
-                <div className="w-full h-[0.1px] mt-4 bg-brand-grayish lg:w-[90%]"></div>
+                <div className="w-full h-[0.1px] mt-4 bg-brand-grayish"></div>
               </div>
             </form>
             {/* right */}

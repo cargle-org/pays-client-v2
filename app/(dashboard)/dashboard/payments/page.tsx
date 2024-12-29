@@ -60,7 +60,7 @@ const Page = () => {
   return (
     <>
       <div className="flex flex-col gap-4">
-        <div className="flex justify-between items-center pb-2 border-b-[0.3px]">
+        <div className="flex justify-between flex-col lg:flex-row items-center pb-2 border-b-[0.3px]">
           <div className="flex flex-col justify-start gap-2 font-geistsans mb-4">
             <span className="font-bold text-4xl text-brand-dark">
               Payment Links
@@ -71,7 +71,7 @@ const Page = () => {
           </div>
           <Link
             href={"/dashboard/payments/create"}
-            className="transition-fx flex items-center gap-2 p-2 px-4 rounded-3xl bg-brand-main text-brand-white font-geistsans text-base font-normal cursor-pointer hover:bg-brand-main/50"
+            className="transition-fx flex items-center gap-2 p-1 sm:p-2 px-2 sm:px-4 rounded-3xl bg-brand-main text-brand-white font-geistsans text-base font-normal cursor-pointer hover:bg-brand-main/50"
           >
             <svg
               width="12"
@@ -90,7 +90,7 @@ const Page = () => {
         </div>
       </div>
       <div className="flex flex-col justify-start gap-4 my-6">
-        <div className="w-full flex justify-between items-center">
+        <div className="w-full flex flex-col lg:flex-row justify-between items-center">
           <span className="font-geistmono font-normal text-2xl">
             Existing Payment Links
           </span>
@@ -150,7 +150,7 @@ const Page = () => {
               </svg>
             </div>
           </div> */}
-          <div className="flex items-end gap-4">
+          <div className="flex flex-col sm:flex-row items-end gap-1 sm:gap-4">
             {/* Amount Dropdown */}
             <div className="relative">
               <button
@@ -276,19 +276,19 @@ const Page = () => {
             </div>
           </div>
         </div>
-        <div className="bg-brand-white rounded-lg p-8 flex flex-col gap-6 justify-start mb-8">
+        <div className="bg-brand-white rounded-lg lg:p-8 flex flex-col gap-3 lg:gap-6 justify-start mb-8">
           {/* links */}
           {paymentLInksByUser?.length > 0 ? (
             <table className="text-center p-2 rounded-lg w-full overflow-y-auto">
               <thead className="divide-y divide-gray-200 font-bold text-sm text-brand-grayish py-2 px-4 mb-2">
                 <tr className="rounded-lg">
                   <th className="py-2">S/N</th>
-                  <th className="py-2">Title</th>
-                  <th className="py-2">Description</th>
+                  <th className="py-2 hidden sm:table-cell">Title</th>
+                  <th className="py-2 hidden lg:table-cell">Description</th>
                   <th className="py-2">Corresponding Link</th>
-                  <th className="py-2">Category</th>
-                  <th className="py-2">Status</th>
-                  <th className="py-2">Amount</th>
+                  <th className="py-2 hidden lg:table-cell">Category</th>
+                  <th className="py-2 hidden sm:table-cell">Status</th>
+                  <th className="py-2 hidden sm:table-cell">Amount</th>
                   <th className="py-2"></th>
                 </tr>
               </thead>
@@ -296,29 +296,34 @@ const Page = () => {
                 {paymentLInksByUser.map((item: any, i: number) => (
                   <tr key={i} className="mb-4 rounded-lg">
                     <td className="py-3">{i + 1}</td>
-                    <td className="py-3 capitalize">{item.title}</td>
-                    <td className="py-3 capitalize">
-                      {item.description.slice(0, 30)}
-                      {item.description.length > 30 && "..."}
+                    <td className="hidden sm:table-cell py-3 pl-4 capitalize text-start xl:text-center font-semibold">
+                      {item.title}
+                    </td>
+                    <td className="hidden lg:table-cell py-3 capitalize pl-4 text-start xl:text-center">
+                      {item.description.slice(0, 20)}
+                      {item.description.length > 20 && "..."}
                     </td>
                     <td className="py-3">
                       <Link href={item.link} className="hover:text-brand-main">
-                        {item.link}
+                        {item.link.slice(0, 30)}
+                        {item.link.length > 30 && "..."}
                       </Link>
                     </td>
-                    <td className="py-3 capitalize">{item.category}</td>
-                    <td className="py-3 capitalize">
+                    <td className="py-3 capitalize hidden lg:table-cell">
+                      {item.category}
+                    </td>
+                    <td className="hidden sm:table-cell py-3 capitalize">
                       {new Date(item.linkExpiry) < new Date() ? (
-                        <span className="p-2 rounded-lg text-red-500 bg-red-200/80">
+                        <span className="p-1 lg:p-2 rounded-lg text-red-500 bg-red-200/80">
                           expired
                         </span>
                       ) : (
-                        <span className="p-2 rounded-lg text-green-500 bg-green-200/80">
+                        <span className="p-1 lg:p-2 rounded-lg text-green-500 bg-green-200/80">
                           active
                         </span>
                       )}
                     </td>
-                    <td className="py-3 capitalize">
+                    <td className="hidden sm:table-cell py-3 capitalize">
                       {item.amount} {item.currency}
                     </td>
                     <td className="py-3 capitalize flex items-center gap-4">

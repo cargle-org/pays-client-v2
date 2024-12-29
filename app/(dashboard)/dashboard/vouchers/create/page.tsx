@@ -176,7 +176,7 @@ const Page = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-4 justify-start w-full mx-auto">
+      <div className="max-w-xl lg:max-w-[2560px] flex flex-col gap-4 justify-start w-full mx-auto">
         {/* breadcumb */}
         <div className="flex items-center gap-2 font-geistsans font-normal text-[10px] text-brand-grayish">
           <Link
@@ -203,10 +203,10 @@ const Page = () => {
         </div>
         <form
           onSubmit={onSubmit}
-          className="flex gap-2 items-start justify-between"
+          className="flex flex-col lg:flex-row gap-2 items-start justify-between"
         >
           {/* left */}
-          <div className="flex flex-col w-max lg:w-[50%]">
+          <div className="flex flex-col w-fit lg:w-[50%]">
             <div className="rounded-xl bg-brand-white p-4 flex flex-col gap-4 justify-start">
               <div className="flex flex-col gap-2 justify-start w-full">
                 <div className="p-2 px-4 bg-brand-main text-brand-white font-normal text-xs w-max font-geistsans rounded-2xl">
@@ -222,7 +222,7 @@ const Page = () => {
                   <span className="font-medium text-sm text-brand-grayish">
                     Select Voucher Design
                   </span>
-                  <div className="grid grid-cols-3 gap-2 max-h-[200px] overflow-y-auto p-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 max-h-[200px] overflow-y-auto p-2">
                     {voucherCards.map((card) => (
                       <div
                         key={card.name}
@@ -254,7 +254,7 @@ const Page = () => {
                     id="title"
                     placeholder="Enter voucher title"
                     onChange={onchangeHandler}
-                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
                 <div className="flex flex-col justify-start">
@@ -267,7 +267,7 @@ const Page = () => {
                     placeholder="Enter a brief description"
                     onChange={onchangeHandler}
                     rows={3}
-                    className="w-[353px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    className="w-full sm:w-[353px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   ></textarea>
                 </div>
                 <div className="flex flex-col justify-start">
@@ -280,14 +280,14 @@ const Page = () => {
                     id="voucherKey"
                     placeholder="Enter voucher key"
                     onChange={onchangeHandler}
-                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
               </div>
             </div>
           </div>
           {/* right */}
-          <div className="flex flex-col w-max lg:w-[50%]">
+          <div className="flex flex-col w-full lg:w-[50%]">
             <div className="rounded-t-xl bg-brand-white p-4 flex flex-col gap-4 justify-start">
               <div className="flex flex-col gap-2 justify-start w-full">
                 <div className="p-2 px-4 bg-brand-main text-brand-white font-normal text-xs w-max font-geistsans rounded-2xl">
@@ -309,7 +309,7 @@ const Page = () => {
                     id="amountPerVoucher"
                     placeholder="Enter voucher amount"
                     onChange={onchangeHandler}
-                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
                 <div className="flex flex-col justify-start">
@@ -322,12 +322,12 @@ const Page = () => {
                     id="totalNumberOfVouchers"
                     placeholder="Enter Number of Vouchers"
                     onChange={onchangeHandler}
-                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
               </div>
               {/* Summation part */}
-              <div className="flex flex-col gap-2 w-[353px] my-10 font-geistsans">
+              <div className="flex flex-col gap-2 w-full sm:w-[353px] my-10 font-geistsans">
                 <div className="flex justify-between items-center">
                   <span className="font-medium text-xs text-brand-grayish">
                     Sub Total
@@ -367,18 +367,19 @@ const Page = () => {
             <div className="rounded-b-xl bg-brand-white p-4 flex justify-between items-center border border-brand-grayish/15">
               <Link
                 href={"/dashboard/vouchers"}
-                className="py-3 px-8 bg-transparent text-[#DE2626] border-[0.3px] border-[#DE2626] font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-[#DE2626] hover:text-brand-white"
+                className="py-1.5 sm:py-3 px-6 sm:px-8 bg-transparent text-[#DE2626] border-[0.3px] border-[#DE2626] font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-[#DE2626] hover:text-brand-white"
               >
                 Back
               </Link>
+
               {createVoucherLoading ? (
-                <span className="w-[150px] p-3 px-8 h-[44px] flex items-center justify-center text-brand-white">
+                <span className="w-[150px] p-1.5 sm:p-3 px-6 sm:px-8 h-[44px] flex items-center justify-center text-brand-white">
                   <Spinner />
                 </span>
               ) : (
                 <button
                   type="submit"
-                  className="p-3 px-8 bg-brand-main text-brand-white font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-brand-main/25"
+                  className="p-1.5 sm:p-3 px-6 sm:px-8 bg-brand-main text-brand-white font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-brand-main/25"
                 >
                   Continue
                 </button>

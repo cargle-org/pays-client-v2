@@ -88,7 +88,7 @@ const SideNavBar = () => {
   const navBar = user?.role === "super" ? navItemsSuperAdmin : navItemsMdaAdmin;
 
   return (
-    <div className=" sticky inset-y-0 w-[240px]  h-full border-r-[1px] ">
+    <div className="hidden md:block sticky inset-y-0 w-[240px]  h-full border-r-[1px] ">
       <div className="flex flex-col h-screen py-3 gap-4 justify-between">
         <div className="flex flex-col gap-4">
           <Link href="/" className="flex gap-2 items-center justify-center p-4">

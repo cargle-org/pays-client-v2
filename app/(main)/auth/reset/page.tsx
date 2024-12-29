@@ -48,12 +48,12 @@ const Page = () => {
 
   return (
     <>
-      <div className="max-w-[2560px] mx-auto w-full h-screen flex items-center justify-center">
+      <div className="max-w-md lg:max-w-[2560px] mx-auto w-full min-h-screen flex items-center justify-center py-16 lg:pt-32">
         {/* content */}
         <div className="min-h-[60%] w-[80%] flex flex-col items-center lg:min-h-[80%]">
           {/* divider */}
           <div className="w-[95%] h-[0.1px] mb-8 bg-brand-grayish"></div>
-          <div className="w-full flex justify-between items-start">
+          <div className="w-full flex flex-col-reverse justify-between items-start gap-6 h-[100%] lg:flex-row lg:space-x-5">
             {/* left */}
             <form
               onSubmit={handleResetPassword}
@@ -63,7 +63,7 @@ const Page = () => {
               <div className="flex flex-col gap-6 justify-start">
                 {/* title-bytext */}
                 <div className="flex flex-col justify-start font-geistsans mb-4">
-                  <span className="font-bold text-4xl text-brand-dark">
+                  <span className="font-bold text-[32px] lg:text-4xl text-brand-dark leading-[43.71px] tracking-tight md:tracking-normal">
                     Reset Password
                   </span>
                   <span className="font-normal text-xs text-brand-dark">
@@ -76,14 +76,14 @@ const Page = () => {
                   <span className="font-medium text-sm text-gray-500 font-geistsans mb-2">
                     New Password
                   </span>
-                  <div className="relative w-[353px]">
+                  <div className="relative max-w-full xl:max-w-fit">
                     <input
                       type={showPassword ? "text" : "password"}
                       name="newPassword"
                       id="newPassword"
                       placeholder="New Password"
                       onChange={onchangeHandler}
-                      className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-grayish bg-transparent"
+                      className="w-full xl:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-grayish bg-transparent"
                     />
                     <svg
                       width="20"
@@ -109,14 +109,14 @@ const Page = () => {
                   <span className="font-medium text-sm text-gray-500 font-geistsans mb-2">
                     Confirm Password
                   </span>
-                  <div className="relative w-[353px]">
+                  <div className="relative max-w-full xl:max-w-fit">
                     <input
                       type={showPassword1 ? "text" : "password"}
                       name="confirmPassword"
                       id="confirmPassword"
                       placeholder="Confirm Password"
                       onChange={onchangeHandler}
-                      className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-grayish bg-transparent"
+                      className="w-full xl:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-grayish bg-transparent"
                     />
                     <svg
                       width="20"
@@ -149,19 +149,18 @@ const Page = () => {
                   <button
                     type="submit"
                     // onClick={() => handleResetPassword(email)}
-                    className="transition-fx w-[353px] h-[44px] capitalize bg-brand-main/20 cursor-pointer rounded-3xl flex items-center justify-center text-brand-white hover:bg-brand-main"
+                    className="transition-fx w-auto xl:w-[353px] h-[44px] capitalize bg-brand-main/20 cursor-pointer rounded-3xl flex items-center justify-center text-brand-white hover:bg-brand-main"
                   >
                     PROCEED
                   </button>
                 )}
                 {/* divider */}
-                <div className="w-[90%] h-[0.1px] mt-4 bg-brand-grayish"></div>
-                <span className="font-geistsans text-sm font-normal flex items-center gap-2 w-full lg:text-base">
+                <div className="w-full max-w-lg h-[0.1px] mt-4 bg-brand-grayish"></div>
+                <span className="font-Manrope text-[#262626] text-base font-normal flex justify-around items-center gap-3 w-auto xl:w-[353px] tracking-tighter leading-5">
                   If you already have an account{" "}
                   <Link
                     href={"/auth/login"}
-                    className="flex items-center
-                  text-blue-700"
+                    className="flex items-center text-[#3B82F6] text-base"
                   >
                     Login Here{" "}
                     <svg
