@@ -113,7 +113,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <div className="flex flex-col gap-4 justify-start w-full mx-auto">
+      <div className="max-w-md sm:max-w-2xl lg:max-w-[1440px] flex flex-col gap-4 justify-start w-full mx-auto">
         {/* breadcumb */}
         <div className="flex items-center gap-2 font-geistsans font-normal text-[10px] text-brand-grayish">
           <Link
@@ -155,28 +155,29 @@ const Page = ({ params }: { params: { id: string } }) => {
               </div>
             </div>
             <div className="rounded-t-xl bg-brand-white p-4 flex flex-col gap-4 justify-between items-center">
-              <div className="flex flex-col gap-4 w-full justify-between items-start lg:flex-row lg:gap-0">
-                <div className="relative w-[720px] h-[360px]">
+              <div className="flex flex-col gap-4 w-full justify-between items-start xl:flex-row">
+                <div className="max-w-sm sm:max-w-full lg:max-w-xl relative w-full h-[250px] sm:h-[360px]">
                   <Image
                     src={getVoucherImage(oneVoucher)}
                     layout="fill"
-                    objectFit="cover"
+                    // objectFit="cover"
                     alt={oneVoucher?.title || "voucher thumbnail"}
+                    className="object-contain sm:object-fill"
                   />
                   {selectedCoupon && (
-                    <div className="absolute flex items-center justify-center right-20 bottom-14">
-                      <span className="text-2xl font-bold text-white bg-brand-main/80 p-2 rounded-lg">
+                    <div className="absolute flex items-center justify-center right-[22px] sm:right-10 bottom-[68px] sm:bottom-[70px]">
+                      <span className="text-sm sm:text-2xl font-bold text-white bg-brand-main/80 p-0.5 sm:p-2 rounded-lg">
                         {selectedCoupon.couponCode}
                       </span>
                     </div>
                   )}
                 </div>
-                <div className="flex flex-col w-max lg:w-[50%]">
-                  <div className="rounded-xl bg-brand-white p-4 flex flex-col gap-4 justify-start">
-                    <div className="flex items-center gap-4">
+                <div className="flex flex-col w-full">
+                  <div className="rounded-xl bg-brand-white sm:p-4 flex flex-col gap-4 justify-start">
+                    <div className="flex items-center gap-1.5 sm:gap-4">
                       <span
                         onClick={() => setDisplay("vouchers")}
-                        className={`transition-fx font-bold text-base text-brand-main p-2 rounded-lg cursor-pointer ${
+                        className={`transition-fx font-semibold sm:font-bold sm:text-base text-brand-main p-1.5 sm:p-2 rounded-lg cursor-pointer leading-4 tracking-tighter ${
                           display === "vouchers" &&
                           "bg-brand-main text-brand-white hover:bg-brand-main"
                         } hover:bg-brand-main/30`}
@@ -185,7 +186,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                       </span>
                       <span
                         onClick={() => setDisplay("recipients")}
-                        className={`transition-fx font-bold text-base text-brand-main p-2 rounded-lg cursor-pointer ${
+                        className={`transition-fx font-semibold sm:font-bold sm:text-base text-brand-main p-1.5 sm:p-2 rounded-lg cursor-pointer leading-4 tracking-tighter ${
                           display === "recipients" &&
                           "bg-brand-main text-brand-white hover:bg-brand-main"
                         } hover:bg-brand-main/30 `}
@@ -194,7 +195,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                       </span>
                       <span
                         onClick={() => setDisplay("description")}
-                        className={`transition-fx font-bold text-base text-brand-main p-2 rounded-lg cursor-pointer ${
+                        className={`transition-fx font-semibold sm:font-bold sm:text-base text-brand-main p-1.5 sm:p-2 rounded-lg cursor-pointer leading-4 tracking-tighter ${
                           display === "description" &&
                           "bg-brand-main text-brand-white hover:bg-brand-main"
                         } hover:bg-brand-main/30 `}
@@ -227,10 +228,13 @@ const Page = ({ params }: { params: { id: string } }) => {
                                   onClick={() => setSelectedCoupon(item)}
                                 >
                                   <td className="py-2">{i + 1}</td>
-                                  <td className="py-2">{item.couponCode}</td>
-                                  <td className="py-2 capitalize">
+                                  <td className="py-2 tracking-tighter">
+                                    {item.couponCode}
+                                  </td>
+                                  <td className="py-2 capitalize tracking-tighter">
                                     {item.status}
                                   </td>
+
                                   <td className="py-2">
                                     <div className="relative flex justify-center">
                                       <span
@@ -363,13 +367,13 @@ const Page = ({ params }: { params: { id: string } }) => {
               <div className="w-full rounded-xl bg-brand-white p-4 flex justify-between items-center border border-brand-grayish/15">
                 <Link
                   href={"/dashboard/vouchers"}
-                  className="py-3 px-8 bg-transparent text-[#DE2626] border-[0.3px] border-[#DE2626] font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-[#DE2626] hover:text-brand-white"
+                  className="p-1 sm:p-3 px-4 sm:px-8 bg-transparent text-[#DE2626] border-[0.3px] border-[#DE2626] font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-[#DE2626] hover:text-brand-white"
                 >
                   Back
                 </Link>
                 <Link
                   href={"/dashboard/vouchers/create"}
-                  className="p-3 px-8 bg-brand-main text-brand-white font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-brand-main/25"
+                  className="p-1 sm:p-3 px-3 sm:px-8 bg-brand-main text-brand-white font-normal text-sm sm:text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-brand-main/25"
                 >
                   create voucher
                 </Link>
