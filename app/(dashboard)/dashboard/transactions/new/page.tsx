@@ -20,7 +20,7 @@ const NewTransaction = ({ params }: { params: { key: string } }) => {
         {/* breadcumb */}
         <div className="flex items-center gap-2 font-geistsans font-normal text-[10px] text-brand-grayish">
           <Link
-            href={"/dashboaard/transactions"}
+            href={"/dashboaard/transactions/new"}
             className="transition-fx cursor-pointer hover:text-brand-main"
           >
             Transactions
