@@ -54,11 +54,11 @@ const Recipients = () => {
             className="flex gap-2 items-start justify-between"
           >
             {/* left */}
-            <div className="flex flex-col w-max lg:w-[50%]">
+            <div className="flex flex-col w-full">
               <div className="rounded-xl bg-brand-white p-4 flex flex-col gap-4 justify-start min-h-[80vh]">
                 <div className="flex flex-col gap-2 justify-start w-full">
                   <div className="p-2 px-4 bg-brand-main text-brand-white font-normal text-xs w-max font-geistsans rounded-2xl">
-                    Step 3 of 3
+                    hello Step 3 of 3
                   </div>
                   <span className="font-bold font-geistsans text-3xl text-brand-dark">
                     Add Voucher Recipients
@@ -127,7 +127,7 @@ const Recipients = () => {
                 <div className="rounded-b-xl bg-brand-white p-4 flex justify-between items-center border border-brand-grayish/15 mt-auto">
                   <Link
                     href={"/dashboard/vouchers"}
-                    className="py-3 px-8 bg-transparent text-[#DE2626] border-[0.3px] border-[#DE2626] font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-[#DE2626] hover:text-brand-white"
+                    className="py-1.5 sm:py-3 px-6 sm:px-8 bg-transparent text-[#DE2626] border-[0.3px] border-[#DE2626] font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-[#DE2626] hover:text-brand-white"
                   >
                     Back
                   </Link>
