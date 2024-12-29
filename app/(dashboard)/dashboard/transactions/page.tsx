@@ -498,32 +498,32 @@ const Transactions = () => {
             </div>
           </div>
         </div>
-        <div className="bg-brand-white rounded-lg p-4 sm:p-8 flex flex-col gap-6 justify-start mb-8">
+        <div className="bg-brand-white rounded-lg p-1 sm:p-8 flex flex-col gap-6 justify-start mb-8">
           {/* voucher */}
           {allUserTransactions?.length > 0 ? (
-            <table className="text-center p-2 rounded-lg w-full overflow-y-auto">
+            <table className="text-center sm:p-2 rounded-lg w-full overflow-y-auto">
               <thead className="divide-y divide-gray-200 font-bold text-sm text-brand-grayish py-2 px-4 mb-2">
                 <tr className="rounded-lg">
-                  <th className="py-2 tracking-tighter sm:tracking-normal">
+                  <th className="py-2 hidden sm:block tracking-tighter sm:tracking-normal">
                     S/N
                   </th>
                   <th className="py-2 tracking-tighter sm:tracking-normal leading-5 sm:leading-normal">
-                    Transaction Reference
+                    Transaction Ref
                   </th>
                   <th className="py-2 tracking-tighter sm:tracking-normal">
                     Type
                   </th>
                   <th className="py-2 tracking-tighter sm:tracking-normal">
-                    Amount
+                    Amt
                   </th>
-                  <th className="py-2 hidden sm:block">Status</th>
+                  <th className="py-2">Status</th>
                   <th className="py-2">Date</th>
                 </tr>
               </thead>
               <tbody className="font-normal text-sm text-brand-grayish/80 tracking-tighter sm:tracking-normal">
                 {allUserTransactions.map((item: any, i: number) => (
                   <tr key={i} className="mb-4 rounded-lg">
-                    <td className="py-3">{i + 1}</td>
+                    <td className="py-3 hidden sm:table-cell">{i + 1}</td>
                     <td className="py-3 capitalize tracking-tighter sm:tracking-normal">
                       {item.tx_ref}
                     </td>
@@ -531,11 +531,11 @@ const Transactions = () => {
                       {item.type}
                     </td>
                     <td className="py-3 capitalize tracking-tighter sm:tracking-normal">
-                      {item.amount} {item.currency}
+                      {item.amount}
                     </td>
-                    <td className="py-3 capitalize items-center justify-center gap-4 hidden sm:flex tracking-tighter sm:tracking-normal">
+                    <td className="py-3 capitalize flex items-center justify-center gap-1 lg:gap-4 tracking-tighter sm:tracking-normal">
                       <span
-                        className={`p-2 rounded-lg ${
+                        className={`p-1 lg:p-2 rounded-lg ${
                           item.status === "successful"
                             ? "text-green-500 bg-green-200/80"
                             : "text-red-500 bg-red-200/80"
@@ -546,7 +546,7 @@ const Transactions = () => {
                       {item.status === "initiated" && (
                         <>
                           {fetchTransactionsLoading && verifyIndex === i ? (
-                            <RefreshCcw className="animate-spin" />
+                            <RefreshCcw className="w-3.5 h-3.5 lg:w-5 lg:h-5 animate-spin" />
                           ) : (
                             // <Spinner />
                             <RefreshCcw
@@ -557,14 +557,14 @@ const Transactions = () => {
                                   i
                                 )
                               }
-                              className="cursor-pointer hover:text-green-500"
+                              className="w-3.5 h-3.5 lg:w-5 lg:h-5 cursor-pointer hover:text-green-500"
                             />
                           )}
                         </>
                       )}
                     </td>
                     <td className="py-3 capitalize tracking-tighter sm:tracking-normal">
-                      {item.createdAt.slice(0, 10)}
+                      {item.createdAt.slice(5, 10)}
                     </td>
                   </tr>
                 ))}
