@@ -22,6 +22,7 @@ const Page = () => {
   const router = useRouter();
   const checkToken = async () => {
     const token = localStorage.getItem("auth_token");
+    console.log("token: ", token);
 
     if (!token) {
       router.push(`/auth/login`);

@@ -80,7 +80,7 @@ const Page = () => {
       <div className="w-full min-h-screen pt-16 pb-12 flex items-center justify-center gap-8 lg:pt-32">
         <div className="w-[90%] flex flex-col gap-8 lg:w-[80%]">
           <div className="flex flex-col gap-4 items-center justify-center">
-            <span className="w-full text-center text-brand dark font-medium text-3xl font-geistsans lg:w-[80%] lg:text-6xl">
+            <span className="w-full text-center text-brand dark font-medium text-2xl font-geistsans lg:w-[80%] lg:text-5xl">
               Gift, unwrap, and indulge in unforgettable adventures with our
               exclusive vouchers today.
             </span>
@@ -187,7 +187,7 @@ const Page = () => {
                 <div className="w-full flex flex-col gap-2 font-geistsans">
                   <span className="text-sm font-light">Active Users</span>
                   <span className="text-xl font-medium lg:text-3xl">
-                    {formatNumberToK(homepageStats?.users || 3200)}
+                    {formatNumberToK(homepageStats?.users || 0)}
                   </span>
                 </div>
               </div>
@@ -205,7 +205,7 @@ const Page = () => {
                       <span>Vouchers</span> Created
                     </span>
                     <span className="text-xl font-medium lg:text-3xl">
-                      {formatNumberToK(homepageStats?.vouchersCreated || 15000)}
+                      {formatNumberToK(homepageStats?.vouchersCreated || 0)}
                     </span>
                   </div>
                 </div>
@@ -222,7 +222,7 @@ const Page = () => {
                       <span>Amount</span> Cashed
                     </span>
                     <span className="text-xl font-medium lg:text-3xl">
-                      ₦{formatNumberToK(homepageStats?.amountCashed || 73420)}
+                      {formatNumberToK(homepageStats?.amountCashed || 0)}
                     </span>
                   </div>
                 </div>

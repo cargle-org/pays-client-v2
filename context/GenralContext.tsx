@@ -411,11 +411,11 @@ const GeneralProvider = (props: any) => {
       }
     } catch (err: any) {
       console.log("🚀 ~ getOneUser ~ err:", err);
-      error(
-        err.response?.data?.message
-          ? err?.response?.data?.message
-          : err.response?.data?.error
-      );
+      // error(
+      //   err.response?.data?.message
+      //     ? err?.response?.data?.message
+      //     : err.response?.data?.error
+      // );
     }
   };
 
@@ -452,11 +452,11 @@ const GeneralProvider = (props: any) => {
     } catch (err: any) {
       setFetchVouchersLoading(false);
       console.log("🚀 ~ getAllVouchersByUser ~ err:", err);
-      error(
-        err.response?.data?.message
-          ? err?.response?.data?.message
-          : err.response?.data?.error
-      );
+      // error(
+      //   err.response?.data?.message
+      //     ? err?.response?.data?.message
+      //     : err.response?.data?.error
+      // );
     }
   };
 
@@ -665,12 +665,13 @@ const GeneralProvider = (props: any) => {
     } catch (err: any) {
       setFetchTransactionsLoading(false);
       console.log("🚀 ~ getAllTransactionsByUser ~ err:", err);
-      error(
-        err.response?.data?.message
-          ? err?.response?.data?.message
-          : err.response?.data?.error
-      );
+      // error(
+      //   err.response?.data?.message
+      //     ? err?.response?.data?.message
+      //     : err.response?.data?.error
+      // );
       if (err?.response?.data?.message === "No transactions found") {
+        // error("No transactions found!");
         setAllUserTransactions(err?.response?.data?.data);
       }
     }
@@ -819,11 +820,11 @@ const GeneralProvider = (props: any) => {
     } catch (err: any) {
       setFetchPaymentLinksLoading(false);
       console.log("🚀 ~ getAllPaymentLinksByUser ~ err:", err);
-      error(
-        err.response?.data?.message
-          ? err?.response?.data?.message
-          : err.response?.data?.error
-      );
+      // error(
+      //   err.response?.data?.message
+      //     ? err?.response?.data?.message
+      //     : err.response?.data?.error
+      // );
     }
   };
 
@@ -847,11 +848,11 @@ const GeneralProvider = (props: any) => {
     } catch (err: any) {
       console.log("🚀 ~ getAllPaymentLinkCategories ~ err:", err);
       setFetchPaymentLinksLoading(false);
-      error(
-        err.response?.data?.message
-          ? err?.response?.data?.message
-          : err.response?.data?.error
-      );
+      // error(
+      //   err.response?.data?.message
+      //     ? err?.response?.data?.message
+      //     : err.response?.data?.error
+      // );
     }
   };
 

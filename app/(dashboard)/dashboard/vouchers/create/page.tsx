@@ -64,9 +64,13 @@ const Page = () => {
   ];
 
   const onchangeHandler = (e: any) => {
+    const { name, value } = e.target;
+    if (name === "voucherKey" && value.length > 5) {
+      return; // Prevent setting voucherKey if it exceeds 5 characters
+    }
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }));
   };
 
@@ -278,8 +282,9 @@ const Page = () => {
                     type="text"
                     name="voucherKey"
                     id="voucherKey"
-                    placeholder="Enter voucher key"
+                    placeholder="Enter voucher key (5 characters max)"
                     onChange={onchangeHandler}
+                    maxLength={5} // Limit input to 5 characters
                     className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
@@ -320,8 +325,9 @@ const Page = () => {
                     type="number"
                     name="totalNumberOfVouchers"
                     id="totalNumberOfVouchers"
-                    placeholder="Enter Number of Vouchers"
+                    placeholder="Enter Number of Vouchers (max 20)"
                     onChange={onchangeHandler}
+                    max={20} // Limit input to 20 vouchers
                     className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
