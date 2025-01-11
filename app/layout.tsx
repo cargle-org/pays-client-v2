@@ -20,9 +20,9 @@ export default function RootLayout({
     <>
       <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
         <head>
-          {/* <Script
+          <Script
             async
-            src={`https://www.googletagmanager.com/gtag/js?id=G-X0WYX329V6`}
+            src={`https://www.googletagmanager.com/gtag/js?id=G-636938PFTH`}
           />
 
           <Script id="google-analytics" strategy="afterInteractive">
@@ -30,18 +30,9 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-X0WYX329V6');
+            gtag('config', 'G-636938PFTH');
           `}
-          </Script> */}
-          {/* <!-- Google tag (gtag.js) --> */}
-          {/* <script async src="https://www.googletagmanager.com/gtag/js?id=G-X0WYX329V6"></script>
-          <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-X0WYX329V6');
-          </script> */}
+          </Script>
         </head>
         <body>
           <GeneralProvider>
