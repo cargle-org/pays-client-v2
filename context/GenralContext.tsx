@@ -462,7 +462,6 @@ const GeneralProvider = (props: any) => {
 
   const getVoucherById = async () => {
     try {
-      if (oneVoucherStatus) {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/user/vouchers/one?status=${oneVoucherStatus}&voucherId=${oneVoucherId}`,
           {
@@ -477,7 +476,6 @@ const GeneralProvider = (props: any) => {
           setOneVoucher(response.data.data.voucher);
           // return response;
         }
-      }
     } catch (err: any) {
       console.log("🚀 ~ getVoucherById ~ err:", err);
       // error(
@@ -1005,7 +1003,7 @@ const GeneralProvider = (props: any) => {
 
   useEffect(() => {
     console.log("🚀 ~ useEffect ~ oneVoucherStatus:", oneVoucherStatus);
-    if (oneVoucherId && oneVoucherStatus) getVoucherById();
+    if (oneVoucherId) getVoucherById();
   }, [oneVoucherId]);
 
   useEffect(() => {

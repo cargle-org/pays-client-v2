@@ -13,7 +13,7 @@ import Bulk from "./Bulk";
 // import CompanyLogin from "./company/page";
 
 const Recipients = ({ params }: { params: { key: string } }) => {
-  console.log("🚀 ~ Recipients ~ params:", params);
+  // console.log("🚀 ~ Recipients ~ params:", params);
   const {
     token,
     oneVoucherId,
