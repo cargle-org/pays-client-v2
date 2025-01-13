@@ -27,6 +27,7 @@ const Recipients = ({ params }: { params: { key: string } }) => {
   useEffect(() => {
     params?.key && setVoucherSpecialKey(params?.key);
   }, []);
+
   return (
     <>
       <div className="max-w-xl lg:max-w-[2560px] flex flex-col gap-4 justify-start w-full mx-auto">

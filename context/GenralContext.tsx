@@ -422,7 +422,7 @@ const GeneralProvider = (props: any) => {
   // VOUCHER
   const getAllVouchersByUser = async () => {
     try {
-      console.log("🚀 ~ getAllVouchersByUser ~ userId:", userId, token);
+      // console.log("🚀 ~ getAllVouchersByUser ~ userId:", userId, token);
       setFetchVouchersLoading(true);
       const response = await axios.get(
         `${
@@ -444,7 +444,7 @@ const GeneralProvider = (props: any) => {
           },
         }
       );
-      console.log("🚀 ~ getAllVouchersByUser ~ response:", response);
+      // console.log("🚀 ~ getAllVouchersByUser ~ response:", response);
       setFetchVouchersLoading(false);
       if (response.status === 200) {
         setAllUserVouchers(response.data.data.vouchers);
@@ -462,28 +462,29 @@ const GeneralProvider = (props: any) => {
 
   const getVoucherById = async () => {
     try {
-      console.log("🚀 ~ getVoucherById ~ oneVoucherId:", oneVoucherId);
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/user/vouchers/one?status=${oneVoucherStatus}&voucherId=${oneVoucherId}`,
-        {
-          headers: {
-            "content-type": "application/json",
-            "x-access-token": token,
-          },
+      if (oneVoucherStatus) {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/user/vouchers/one?status=${oneVoucherStatus}&voucherId=${oneVoucherId}`,
+          {
+            headers: {
+              "content-type": "application/json",
+              "x-access-token": token,
+            },
+          }
+        );
+        // console.log("🚀 ~ getVoucherById ~ response:", response);
+        if (response.status === 200) {
+          setOneVoucher(response.data.data.voucher);
+          // return response;
         }
-      );
-      // console.log("🚀 ~ getVoucherById ~ response:", response);
-      if (response.status === 200) {
-        setOneVoucher(response.data.data.voucher);
-        return response;
       }
     } catch (err: any) {
       console.log("🚀 ~ getVoucherById ~ err:", err);
-      error(
-        err.response?.data?.message
-          ? err?.response?.data?.message
-          : err.response?.data?.error
-      );
+      // error(
+      //   err.response?.data?.message
+      //     ? err?.response?.data?.message
+      //     : err.response?.data?.error
+      // );
     }
   };
 
@@ -543,11 +544,11 @@ const GeneralProvider = (props: any) => {
     } catch (err: any) {
       setCreateVoucherLoading(false);
       console.log("🚀 ~ updateVoucherRecipients ~ err: ", err);
-      error(
-        err.response?.data?.message
-          ? err?.response?.data?.message
-          : err.response?.data?.error
-      );
+      // error(
+      //   err.response?.data?.message
+      //     ? err?.response?.data?.message
+      //     : err.response?.data?.error
+      // );
     }
   };
 
@@ -993,7 +994,7 @@ const GeneralProvider = (props: any) => {
 
   useEffect(() => {
     if (userId) {
-      console.log("🚀 ~ useEffect ~ userId:", userId);
+      // console.log("🚀 ~ useEffect ~ userId:", userId);
       getOneUser();
       getAllVouchersByUser();
       getAllTransactionsByUser();
@@ -1003,7 +1004,8 @@ const GeneralProvider = (props: any) => {
   }, [userId]);
 
   useEffect(() => {
-    if (oneVoucherId) getVoucherById();
+    console.log("🚀 ~ useEffect ~ oneVoucherStatus:", oneVoucherStatus);
+    if (oneVoucherId && oneVoucherStatus) getVoucherById();
   }, [oneVoucherId]);
 
   useEffect(() => {

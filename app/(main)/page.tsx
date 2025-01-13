@@ -59,9 +59,11 @@ const Page = () => {
     return () => clearTimeout(timer);
   }, [currentImageIndex]);
 
-  function formatNumberToK(number: any) {
-    if (number >= 1000) {
-      return `${(number / 1000).toFixed(1).replace(/\.0$/, "")}k`;
+  function formatNumber(number: number) {
+    if (number >= 1e6) {
+      return `${(number / 1e6).toFixed(1).replace(/\.0$/, "")}M`;
+    } else if (number >= 1e3) {
+      return `${(number / 1e3).toFixed(1).replace(/\.0$/, "")}K`;
     }
     return number.toLocaleString("en-NG");
   }
@@ -187,7 +189,7 @@ const Page = () => {
                 <div className="w-full flex flex-col gap-2 font-geistsans">
                   <span className="text-sm font-light">Active Users</span>
                   <span className="text-xl font-medium lg:text-3xl">
-                    {formatNumberToK(homepageStats?.users || 0)}
+                    {formatNumber(homepageStats?.users || 0)}
                   </span>
                 </div>
               </div>
@@ -205,7 +207,7 @@ const Page = () => {
                       <span>Vouchers</span> Created
                     </span>
                     <span className="text-xl font-medium lg:text-3xl">
-                      {formatNumberToK(homepageStats?.vouchersCreated || 0)}
+                      {formatNumber(homepageStats?.vouchersCreated || 0)}
                     </span>
                   </div>
                 </div>
@@ -222,7 +224,7 @@ const Page = () => {
                       <span>Amount</span> Cashed
                     </span>
                     <span className="text-xl font-medium lg:text-3xl">
-                      {formatNumberToK(homepageStats?.amountCashed || 0)}
+                      {formatNumber(homepageStats?.amountCashed || 0)}
                     </span>
                   </div>
                 </div>
