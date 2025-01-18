@@ -29,6 +29,7 @@ const Page = () => {
   const router = useRouter();
   const {
     token,
+    getOneUser,
     setOneVoucherId,
     createVoucherLoading,
     setCreateVoucherLoading,
@@ -43,7 +44,7 @@ const Page = () => {
     totalNumberOfVouchers: "",
   });
   const [newAmount, setNewAmount] = useState(0);
-  console.log("🚀 ~ Page ~ newAmount:", newAmount);
+  // // console.log("🚀 ~ Page ~ newAmount:", newAmount);
   const [paysFee, setPaysFee] = useState(0);
 
   const voucherCards = [
@@ -86,7 +87,7 @@ const Page = () => {
         totalNumberOfVouchers: formData.totalNumberOfVouchers,
         thumbnail: thumbnail,
       };
-      console.log("🚀 ~ onSubmit ~ data:", data);
+      // console.log("🚀 ~ onSubmit ~ data:", data);
 
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/utils/voucher/create`,
@@ -98,21 +99,23 @@ const Page = () => {
           },
         }
       );
-      setCreateVoucherLoading(false);
+      // setCreateVoucherLoading(false);
 
-      console.log("Response:", response.data);
+      // console.log("Response:", response.data);
       setOneVoucherId(response.data.data.voucher._id);
       setOneVoucherId(response.data.data.voucher.specialKey);
       if (response.status === 200) {
+        getOneUser();
         getAllVouchersByUser();
         success("Voucher created successfully.");
+        setCreateVoucherLoading(false);
         router.push(
           `/dashboard/vouchers/create/recipients/${response.data.data.voucher.specialKey}`
         );
       }
     } catch (err: any) {
       setCreateVoucherLoading(false);
-      console.log("🚀 ~ onSubmit ~ err: ", err);
+      // console.log("🚀 ~ onSubmit ~ err: ", err);
       error(
         err?.response?.data?.message
           ? err?.response?.data?.message

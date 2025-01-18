@@ -280,6 +280,9 @@ const GeneralProvider = (props: any) => {
       setAuthLoading(false);
       if (response.status === 200) {
         success("Login Successful");
+        // Remove existing userId and auth_token from localStorage if they exist
+        localStorage.removeItem("userId");
+        localStorage.removeItem("auth_token");
         // setAuthCookie(token, "auth_token");
         // setAuthCookie(userId, "user_id");
         localStorage.setItem("auth_token", token);
@@ -462,20 +465,20 @@ const GeneralProvider = (props: any) => {
 
   const getVoucherById = async () => {
     try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/user/vouchers/one?status=${oneVoucherStatus}&voucherId=${oneVoucherId}`,
-          {
-            headers: {
-              "content-type": "application/json",
-              "x-access-token": token,
-            },
-          }
-        );
-        // console.log("🚀 ~ getVoucherById ~ response:", response);
-        if (response.status === 200) {
-          setOneVoucher(response.data.data.voucher);
-          // return response;
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/user/vouchers/one?status=${oneVoucherStatus}&voucherId=${oneVoucherId}`,
+        {
+          headers: {
+            "content-type": "application/json",
+            "x-access-token": token,
+          },
         }
+      );
+      // console.log("🚀 ~ getVoucherById ~ response:", response);
+      if (response.status === 200) {
+        setOneVoucher(response.data.data.voucher);
+        // return response;
+      }
     } catch (err: any) {
       console.log("🚀 ~ getVoucherById ~ err:", err);
       // error(
@@ -734,6 +737,7 @@ const GeneralProvider = (props: any) => {
       setFetchTransactionsLoading(false);
       if (response.status === 200) {
         getAllTransactionsByUser();
+        getOneUser();
       }
     } catch (err: any) {
       console.log("🚀 ~ verifyFundWal ~ err:", err);
@@ -1122,11 +1126,12 @@ const GeneralProvider = (props: any) => {
         user,
         token,
         allBanks,
+        setAllBanks,
         homepageStats,
         airtimeBillers,
         setName,
         setUser,
-        setAllBanks,
+        getOneUser,
         setHomepageStats,
         setAirtimeBillers,
         getAirtimeBillerInfo,
