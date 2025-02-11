@@ -25,6 +25,31 @@ import gift_light from "@/assets/imgs/vouchers/gift_light.png";
 import gift_dark from "@/assets/imgs/vouchers/gift_dark.png";
 import gift_gradient from "@/assets/imgs/vouchers/gift_gradient.png";
 
+//Abstract colors
+import abstract_one from "@/assets/imgs/vouchers/abstract_one.svg";
+import abstract_two from "@/assets/imgs/vouchers/abstract_two.svg";
+import abstract_three from "@/assets/imgs/vouchers/abstract_three.svg";
+import abstract_four from "@/assets/imgs/vouchers/abstract_four.svg";
+import abstract_five from "@/assets/imgs/vouchers/abstract_five.svg";
+import abstract_six from "@/assets/imgs/vouchers/abstract_six.svg";
+import abstract_seven from "@/assets/imgs/vouchers/abstract_seven.svg";
+import abstract_eight from "@/assets/imgs/vouchers/abstract_eight.svg";
+import abstract_nine from "@/assets/imgs/vouchers/abstract_nine.svg";
+import abstract_ten from "@/assets/imgs/vouchers/abstract_ten.svg";
+
+//Silk colors
+import silk_one from "@/assets/imgs/vouchers/silk_one.svg";
+import silk_two from "@/assets/imgs/vouchers/silk_two.svg";
+import silk_three from "@/assets/imgs/vouchers/silk_three.svg";
+import silk_four from "@/assets/imgs/vouchers/silk_four.svg";
+import silk_five from "@/assets/imgs/vouchers/silk_five.svg";
+import silk_six from "@/assets/imgs/vouchers/silk_six.svg";
+import silk_seven from "@/assets/imgs/vouchers/silk_seven.svg";
+import silk_eight from "@/assets/imgs/vouchers/silk_eight.svg";
+import silk_nine from "@/assets/imgs/vouchers/silk_nine.svg";
+import silk_ten from "@/assets/imgs/vouchers/silk_ten.svg";
+import { extractBackgroundUrl } from "@/helpers/extractBackgroundUrl";
+
 const Page = () => {
   const router = useRouter();
   const {
@@ -46,6 +71,33 @@ const Page = () => {
   const [newAmount, setNewAmount] = useState(0);
   // // console.log("🚀 ~ Page ~ newAmount:", newAmount);
   const [paysFee, setPaysFee] = useState(0);
+  const [selectedStyle, setSelectedStyle] = useState("");
+
+  const abstractColors = [
+    { type: abstract_one },
+    { type: abstract_two },
+    { type: abstract_three },
+    { type: abstract_four },
+    { type: abstract_five },
+    { type: abstract_six },
+    { type: abstract_seven },
+    { type: abstract_eight },
+    { type: abstract_nine },
+    { type: abstract_ten },
+  ];
+
+  const silkColors = [
+    { type: silk_one },
+    { type: silk_two },
+    { type: silk_three },
+    { type: silk_four },
+    { type: silk_five },
+    { type: silk_six },
+    { type: silk_seven },
+    { type: silk_eight },
+    { type: silk_nine },
+    { type: silk_ten },
+  ];
 
   const voucherCards = [
     { name: "birthday_light", image: birthday_light },
@@ -64,6 +116,49 @@ const Page = () => {
     { name: "gift_gradient", image: gift_gradient },
   ];
 
+  const colorPalettes = [
+    { bgColor: "#FFF" },
+    { bgColor: "#E7DAF4" },
+    { bgColor: "#AEE8FF" },
+    { bgColor: "#D2B1FE" },
+    { bgColor: "#FDA096" },
+    { bgColor: "#ACEBB2" },
+    { bgColor: "#D3EAFE" },
+    { bgColor: "#E0B088" },
+    { bgColor: "#A2C3F6" },
+    { bgColor: "#FBDB7D" },
+    { bgColor: "#FFF" },
+    { bgColor: "#F2ECF9" },
+    { bgColor: "#D6F3FF" },
+    { bgColor: "#E8D7FE" },
+    { bgColor: "#FDCFCA" },
+    { bgColor: "#D5F4D8" },
+    { bgColor: "#E8F4FE" },
+    { bgColor: "#EFD7C3" },
+    { bgColor: "#D0E0FA" },
+    { bgColor: "#FCECBD" },
+    { bgColor: "#FFF" },
+    { bgColor: "#F8F5FB" },
+    { bgColor: "#EAF8FF" },
+    { bgColor: "#F3EAFE" },
+    { bgColor: "#FDE6E4" },
+    { bgColor: "#E9F9EB" },
+    { bgColor: "#E8F4FE" },
+    { bgColor: "#F6EAE0" },
+    { bgColor: "#E7EFFC" },
+    { bgColor: "#FDF5DD" },
+    { bgColor: "#FFF" },
+    { bgColor: "#F8F5FB7F" },
+    { bgColor: "#F4FBFF" },
+    { bgColor: "#F3EAFE7F" },
+    { bgColor: "#FDE6E47F" },
+    { bgColor: "#E9F9EB7F" },
+    { bgColor: "#E8F4FE7F" },
+    { bgColor: "#F6EAE07F" },
+    { bgColor: "#E7EFFC7F" },
+    { bgColor: "#FDF5DD7F" },
+  ];
+
   const onchangeHandler = (e: any) => {
     const { name, value } = e.target;
     if (name === "voucherKey" && value.length > 5) {
@@ -75,7 +170,19 @@ const Page = () => {
     }));
   };
 
+  const onBackgroundClick = (bgStyle: string) => {
+    setSelectedStyle(bgStyle);
+  };
+
   const onSubmit = async (e: any) => {
+    let bgStyle;
+
+    if (typeof selectedStyle === "object") {
+      bgStyle = extractBackgroundUrl(selectedStyle);
+    } else {
+      bgStyle = selectedStyle;
+    }
+
     try {
       e.preventDefault();
       setCreateVoucherLoading(true);
@@ -85,7 +192,7 @@ const Page = () => {
         voucherKey: formData.voucherKey,
         amountPerVoucher: formData.amountPerVoucher,
         totalNumberOfVouchers: formData.totalNumberOfVouchers,
-        thumbnail: thumbnail,
+        thumbnail: bgStyle,
       };
       // console.log("🚀 ~ onSubmit ~ data:", data);
 
@@ -229,67 +336,133 @@ const Page = () => {
                   <span className="font-medium text-sm text-brand-grayish">
                     Select Voucher Design
                   </span>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 max-h-[200px] overflow-y-auto p-2">
-                    {voucherCards.map((card) => (
-                      <div
-                        key={card.name}
-                        onClick={() => setThumbnail(card.name)}
-                        className={`relative cursor-pointer rounded-lg overflow-hidden border-2 ${
-                          thumbnail === card.name
-                            ? "border-brand-main"
-                            : "border-transparent"
-                        }`}
-                      >
-                        <Image
-                          src={card.image}
-                          alt={card.name}
-                          width={100}
-                          height={60}
-                          className="w-full h-auto"
-                        />
-                      </div>
-                    ))}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-10 gap-2 bg-[#CCC] max-h-[200px] overflow-y-auto p-2">
+                    <div className="col-span-10 bg-brand-white max-w-full px-3 py-1 rounded-md">
+                      <span className="font-semibold text-center text-[10px] p-0.5 bg-[#CCC] rounded-md border border-black tracking-tighter leading-[-0.32px]">
+                        Background Color
+                      </span>
+                    </div>
+                    {colorPalettes.map(
+                      (palette: { bgColor: string }, index: React.Key) => (
+                        <div
+                          key={index}
+                          style={{ backgroundColor: palette.bgColor }}
+                          onClick={() => onBackgroundClick(palette.bgColor)}
+                          className={`relative cursor-pointer w-8 h-8 rounded-full overflow-hidden ${
+                            selectedStyle === palette.bgColor
+                              ? "border-2 border-brand-white" // persistent border when selected
+                              : "hover:border-2 hover:border-brand-white" // hover effect otherwise
+                          }`}
+                        ></div>
+                      )
+                    )}
+
+                    <div className="col-span-10 bg-brand-white max-w-full px-3 py-1 rounded-md">
+                      <span className="font-semibold text-center text-[10px] p-0.5 bg-[#CCC] rounded-md border border-black tracking-tighter leading-[-0.32px]">
+                        Frame Design
+                      </span>
+                    </div>
+
+                    <div className="flex col-span-10 gap-2">
+                      {abstractColors.map(
+                        (color: { type: string }, index: React.Key) => (
+                          <div
+                            key={index}
+                            // style={{ backgroundImage: `url(${color.type})` }}
+                            onClick={() => onBackgroundClick(color.type)}
+                            className={`relative cursor-pointer w-20 h-auto rounded-none overflow-hidden 
+                               ${
+                                 selectedStyle === color.type
+                                   ? "border-2 border-brand-white" // persistent border when selected
+                                   : "hover:border-2 hover:border-brand-white" // hover effect otherwise
+                               }`}
+                          >
+                            <Image
+                              src={color.type}
+                              alt={color.type}
+                              width={100}
+                              height={60}
+                              className="w-full h-auto"
+                              priority
+                            />
+                          </div>
+                        )
+                      )}
+                    </div>
+
+                    <div className="col-span-10 bg-brand-white max-w-full px-3 py-1 rounded-md">
+                      <span className="font-semibold text-center text-[10px] p-0.5 bg-[#CCC] rounded-md border border-black tracking-tighter leading-[-0.32px]">
+                        Silk Design
+                      </span>
+                    </div>
+
+                    <div className="flex col-span-10 gap-2">
+                      {silkColors.map(
+                        (color: { type: string }, index: React.Key) => (
+                          <div
+                            key={index}
+                            // style={{ backgroundImage: `url(${color.type})` }}
+                            onClick={() => onBackgroundClick(color.type)}
+                            className={`relative cursor-pointer w-20 h-auto rounded-none overflow-hidden ${
+                              selectedStyle === color.type
+                                ? "border-2 border-brand-white" // persistent border when selected
+                                : "hover:border-2 hover:border-brand-white" // hover effect otherwise
+                            }`}
+                          >
+                            <Image
+                              src={color.type}
+                              alt={color.type}
+                              width={100}
+                              height={60}
+                              className="w-full"
+                              priority
+                            />
+                          </div>
+                        )
+                      )}
+                    </div>
                   </div>
-                </div>
-                <div className="flex flex-col justify-start">
-                  <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
-                    Voucher Title <span className="text-red-400">*</span>
-                  </span>
-                  <input
-                    type="text"
-                    name="title"
-                    id="title"
-                    placeholder="Enter voucher title"
-                    onChange={onchangeHandler}
-                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
-                  />
-                </div>
-                <div className="flex flex-col justify-start">
-                  <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
-                    Voucher Description <span className="text-red-400">*</span>
-                  </span>
-                  <textarea
-                    name="description"
-                    id="description"
-                    placeholder="Enter a brief description"
-                    onChange={onchangeHandler}
-                    rows={3}
-                    className="w-full sm:w-[353px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
-                  ></textarea>
-                </div>
-                <div className="flex flex-col justify-start">
-                  <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
-                    Voucher Key <span className="text-red-400">*</span>
-                  </span>
-                  <input
-                    type="text"
-                    name="voucherKey"
-                    id="voucherKey"
-                    placeholder="Enter voucher key (5 characters max)"
-                    onChange={onchangeHandler}
-                    maxLength={5} // Limit input to 5 characters
-                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
-                  />
+                  <div className="flex flex-col justify-start">
+                    <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
+                      Voucher Title <span className="text-red-400">*</span>
+                    </span>
+                    <input
+                      type="text"
+                      name="title"
+                      id="title"
+                      placeholder="Enter voucher title"
+                      onChange={onchangeHandler}
+                      className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    />
+                  </div>
+                  <div className="flex flex-col justify-start">
+                    <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
+                      Voucher Description{" "}
+                      <span className="text-red-400">*</span>
+                    </span>
+                    <textarea
+                      name="description"
+                      id="description"
+                      placeholder="Enter a brief description"
+                      onChange={onchangeHandler}
+                      rows={3}
+                      className="w-full sm:w-[353px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    ></textarea>
+                  </div>
+                  <div className="flex flex-col justify-start">
+                    <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
+                      Voucher Key <span className="text-red-400">*</span>
+                    </span>
+                    <input
+                      type="text"
+                      name="voucherKey"
+                      id="voucherKey"
+                      placeholder="Enter voucher key (5 characters max)"
+                      onChange={onchangeHandler}
+                      maxLength={5} // Limit input to 5 characters
+                      className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
