@@ -1,25 +1,10 @@
 "use client";
 
-import { useGeneralContext } from "@/context/GenralContext";
-import Image from "next/image";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
-// Voucher cards
-import birthday_light from "@/assets/imgs/vouchers/birthday_light.png";
-import birthday_dark from "@/assets/imgs/vouchers/birthday_dark.png";
-import birthday_gradient from "@/assets/imgs/vouchers/birthday_gradient.png";
-import bonus_light from "@/assets/imgs/vouchers/bonus_light.png";
-import bonus_dark from "@/assets/imgs/vouchers/bonus_dark.png";
-import bonus_gradient from "@/assets/imgs/vouchers/bonus_gradient.png";
-import wedding_light from "@/assets/imgs/vouchers/wedding_light.png";
-import wedding_dark from "@/assets/imgs/vouchers/wedding_dark.png";
-import wedding_gradient from "@/assets/imgs/vouchers/wedding_gradient.png";
-import seasons_light from "@/assets/imgs/vouchers/seasons_light.png";
-import seasons_dark from "@/assets/imgs/vouchers/seasons_dark.png";
-import gift_light from "@/assets/imgs/vouchers/gift_light.png";
-import gift_dark from "@/assets/imgs/vouchers/gift_dark.png";
-import gift_gradient from "@/assets/imgs/vouchers/gift_gradient.png";
+import FlipCard from "@/components/FlipCard";
+import { useGeneralContext } from "@/context/GenralContext";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const { oneVoucher, setOneVoucherId }: any = useGeneralContext();
@@ -28,27 +13,6 @@ const Page = ({ params }: { params: { id: string } }) => {
   const [activeShareCoupon, setActiveShareCoupon] = useState<string | null>(
     null
   );
-
-  const getVoucherImage = (voucher: any) => {
-    const imageMap: { [key: string]: any } = {
-      birthday_light,
-      birthday_dark,
-      birthday_gradient,
-      bonus_light,
-      bonus_dark,
-      bonus_gradient,
-      wedding_light,
-      wedding_dark,
-      wedding_gradient,
-      seasons_light,
-      seasons_dark,
-      gift_light,
-      gift_dark,
-      gift_gradient,
-    };
-
-    return imageMap[voucher?.thumbnail] || gift_light;
-  };
 
   const handleShare = async (platform: string, couponCode: string) => {
     const shareData = {
@@ -156,21 +120,8 @@ const Page = ({ params }: { params: { id: string } }) => {
             </div>
             <div className="rounded-t-xl bg-brand-white p-4 flex flex-col gap-4 justify-between items-center">
               <div className="flex flex-col gap-4 w-full justify-between items-start xl:flex-row">
-                <div className="max-w-sm sm:max-w-full lg:max-w-xl relative w-full h-[250px] sm:h-[360px]">
-                  <Image
-                    src={getVoucherImage(oneVoucher)}
-                    layout="fill"
-                    // objectFit="cover"
-                    alt={oneVoucher?.title || "voucher thumbnail"}
-                    className="object-contain sm:object-fill"
-                  />
-                  {selectedCoupon && (
-                    <div className="absolute flex items-center justify-center right-[22px] sm:right-10 bottom-[68px] sm:bottom-[70px]">
-                      <span className="text-sm sm:text-2xl font-bold text-white bg-brand-main/80 p-0.5 sm:p-2 rounded-lg">
-                        {selectedCoupon.couponCode}
-                      </span>
-                    </div>
-                  )}
+                <div className="max-w-sm sm:max-w-full lg:max-w-xl relative w-full h-[250px] sm:h-3/4">
+                  <FlipCard voucherDetails={oneVoucher} />
                 </div>
                 <div className="flex flex-col w-full">
                   <div className="rounded-xl bg-brand-white sm:p-4 flex flex-col gap-4 justify-start">
@@ -367,7 +318,7 @@ const Page = ({ params }: { params: { id: string } }) => {
               <div className="w-full rounded-xl bg-brand-white p-4 flex justify-between items-center border border-brand-grayish/15">
                 <Link
                   href={"/dashboard/vouchers"}
-                  className="p-1 sm:p-3 px-4 sm:px-8 bg-transparent text-[#DE2626] border-[0.3px] border-[#DE2626] font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-[#DE2626] hover:text-brand-white"
+                  className="p-1 sm:p-3 px-3 sm:px-8 bg-transparent text-[#DE2626] border-[0.3px] border-[#DE2626] font-normal text-sm sm:text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-[#DE2626] hover:text-brand-white"
                 >
                   Back
                 </Link>
