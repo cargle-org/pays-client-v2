@@ -13,8 +13,9 @@ const FlipCard = ({
   voucherDetails,
 }: {
   voucherDetails: {
+    logo: string;
     title: string;
-    thumbnail: string;
+    backgroundStyle: string;
     amountPerVoucher: string;
     voucherCoupons: Array<{ couponCode: string }>;
   };
@@ -29,7 +30,7 @@ const FlipCard = ({
     return () => clearInterval(interval);
   }, []);
 
-  const bgStyle = voucherDetails?.thumbnail;
+  const bgStyle = voucherDetails?.backgroundStyle;
 
   // Generate QR Code URL
   const qrUrl = "https://www.usepays.co/cashout";
@@ -45,7 +46,11 @@ const FlipCard = ({
           {/* Front Card (Barcode) */}
           <div
             style={{
-              backgroundImage: `url(/assets/voucher/${bgStyle}.svg)` || "",
+              backgroundImage: `${
+                bgStyle?.includes("_")
+                  ? `url(/assets/voucher/${bgStyle}.svg)`
+                  : ""
+              }`,
               backgroundSize: "cover",
             }}
             className={`absolute w-full h-full bg-white shadow-lg rounded-lg flex items-center justify-center backface-hidden ${
@@ -79,10 +84,10 @@ const FlipCard = ({
                     </span>
                   </div>
                 )}
-                {voucherDetails?.thumbnail && (
+                {voucherDetails?.backgroundStyle && (
                   <div className="absolute flex left-7 bottom-4 sm:bottom-8">
                     <Image
-                      src={spikk_logo}
+                      src={voucherDetails?.logo ?? ""}
                       alt="brand_logo"
                       height={30}
                       width={66}
@@ -96,7 +101,7 @@ const FlipCard = ({
           {/* Back Card (White Background) */}
           <div
             style={{
-              backgroundImage: `url(/assets/voucher/${voucherDetails?.thumbnail}.svg)`,
+              backgroundImage: `url(/assets/voucher/${voucherDetails?.backgroundStyle}.svg)`,
               backgroundSize: "cover",
             }}
             className={`absolute w-full h-full bg-white shadow-lg rounded-lg flex items-center justify-center rotate-y-180 backface-hidden ${
@@ -129,10 +134,10 @@ const FlipCard = ({
                       </span>
                     </div>
                   )}
-                {voucherDetails?.thumbnail && (
+                {voucherDetails?.backgroundStyle && (
                   <div className="absolute flex left-7 bottom-4 sm:bottom-7">
                     <Image
-                      src={spikk_logo}
+                      src={voucherDetails?.logo ?? ""}
                       alt="brand_logo"
                       height={30}
                       width={66}
