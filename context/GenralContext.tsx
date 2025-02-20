@@ -1060,7 +1060,7 @@ const GeneralProvider = (props: any) => {
   }, [transactionDateRange]);
 
   // ****************** //
-  // VOUCHER STUFF
+  // VOUCHER STUFF..
   // ****************** //
 
   useEffect(() => {
