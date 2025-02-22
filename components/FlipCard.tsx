@@ -21,20 +21,21 @@ const FlipCard = ({
   };
 }) => {
   const [flipped, setFlipped] = useState(false);
-  console.log(voucherDetails);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setFlipped((prev) => !prev);
-    }, 5000); // Flips every 5 seconds
+    }, 4000); // Flips every 4 seconds
 
     return () => clearInterval(interval);
   }, []);
 
-  const bgStyle = voucherDetails?.backgroundStyle;
+  const bgColor = voucherDetails?.backgroundStyle;
+  const bgStyle = bgColor?.includes(".png");
 
   // Generate QR Code URL
   const qrUrl = "https://www.usepays.co/cashout";
-
+  console.log(voucherDetails);
   return (
     <div className="flex items-center justify-center bg-gray-100">
       <div className="relative w-[300px] h-[240px] sm:w-[313px] sm:h-[370px] perspective">
@@ -46,16 +47,11 @@ const FlipCard = ({
           {/* Front Card (Barcode) */}
           <div
             style={{
-              backgroundImage: `${
-                bgStyle?.includes("_")
-                  ? `url(/assets/voucher/${bgStyle}.svg)`
-                  : ""
-              }`,
+              backgroundImage: `${bgStyle ? `url(${bgColor})` : ""}`,
               backgroundSize: "cover",
+              backgroundColor: bgStyle ? "" : bgColor,
             }}
-            className={`absolute w-full h-full bg-white shadow-lg rounded-lg flex items-center justify-center backface-hidden ${
-              bgStyle?.includes("_") ? "bg-[]" : `bg-[${bgStyle}]`
-            }`}
+            className={`absolute w-full h-full bg-white shadow-lg rounded-lg flex items-center justify-center backface-hidden`}
           >
             {!voucherDetails ? (
               <Image
@@ -68,31 +64,33 @@ const FlipCard = ({
             ) : (
               <>
                 {voucherDetails && (
-                  <div className="absolute flex text-center top-7 left-7">
-                    <Image
-                      src={pays_logo}
-                      alt="pays_logo"
-                      height={14}
-                      width={46}
-                    />
-                  </div>
-                )}
-                {voucherDetails && (
-                  <div className="absolute flex items-center justify-center left-6 sm:left-7 bottom-10 sm:bottom-14">
-                    <span className="text-base sm:text-lg font-semibold px-0.5 tracking-wider">
-                      &#8358;{voucherDetails.amountPerVoucher}
-                    </span>
-                  </div>
-                )}
-                {voucherDetails?.backgroundStyle && (
-                  <div className="absolute flex left-7 bottom-4 sm:bottom-8">
-                    <Image
-                      src={voucherDetails?.logo ?? ""}
-                      alt="brand_logo"
-                      height={30}
-                      width={66}
-                    />
-                  </div>
+                  <>
+                    <div className="absolute flex text-center top-7 left-7">
+                      <Image
+                        src={pays_logo}
+                        alt="pays_logo"
+                        height={14}
+                        width={46}
+                      />
+                    </div>
+
+                    <div className="absolute flex items-center justify-center left-6 sm:left-7 bottom-10 sm:bottom-14">
+                      <span className="text-base sm:text-lg font-semibold px-0.5 tracking-wider">
+                        &#8358;{voucherDetails.amountPerVoucher}
+                      </span>
+                    </div>
+
+                    <div className="absolute flex left-7 bottom-4 sm:bottom-8">
+                      {voucherDetails?.logo !== "null" && (
+                        <Image
+                          src={voucherDetails?.logo ?? ""}
+                          alt="brand_logo"
+                          height={30}
+                          width={66}
+                        />
+                      )}
+                    </div>
+                  </>
                 )}
               </>
             )}
@@ -101,12 +99,11 @@ const FlipCard = ({
           {/* Back Card (White Background) */}
           <div
             style={{
-              backgroundImage: `url(/assets/voucher/${voucherDetails?.backgroundStyle}.svg)`,
+              backgroundImage: `${bgStyle ? `url(${bgColor})` : ""}`,
               backgroundSize: "cover",
+              backgroundColor: bgStyle ? "" : bgColor,
             }}
-            className={`absolute w-full h-full bg-white shadow-lg rounded-lg flex items-center justify-center rotate-y-180 backface-hidden ${
-              bgStyle?.includes("_") ? "bg-[]" : `bg-[${bgStyle}]`
-            }`}
+            className={`absolute w-full h-full bg-white shadow-lg rounded-lg flex items-center justify-center rotate-y-180 backface-hidden`}
           >
             {!voucherDetails ? (
               <Image
@@ -118,7 +115,7 @@ const FlipCard = ({
               />
             ) : (
               <>
-                {voucherDetails?.title && (
+                {voucherDetails && (
                   <div className="absolute flex left-7 top-4 sm:top-7">
                     <span className="text-sm sm:text-lg font-semibold px-0.5 tracking-tight">
                       {voucherDetails.title}
@@ -136,12 +133,14 @@ const FlipCard = ({
                   )}
                 {voucherDetails?.backgroundStyle && (
                   <div className="absolute flex left-7 bottom-4 sm:bottom-7">
-                    <Image
-                      src={voucherDetails?.logo ?? ""}
-                      alt="brand_logo"
-                      height={30}
-                      width={66}
-                    />
+                    {voucherDetails?.logo !== "null" && (
+                      <Image
+                        src={voucherDetails?.logo ?? ""}
+                        alt="brand_logo"
+                        height={30}
+                        width={66}
+                      />
+                    )}
                   </div>
                 )}
                 {voucherDetails && (
