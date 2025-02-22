@@ -17,7 +17,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   const handleShare = async (platform: string, couponCode: string) => {
     const shareData = {
       title: `${oneVoucher?.title} Voucher`,
-      text: `Check out this voucher coupon: ${couponCode}`,
+      text: `You've recieved a voucher - ${couponCode}, visit https://www.usepays.co/cashout to redeem it.`,
       url: window.location.href,
     };
 

@@ -9,7 +9,6 @@ import axios from "axios";
 import { useGeneralContext } from "@/context/GenralContext";
 
 import { success, error } from "@/helpers/Alert";
-import { extractBackgroundUrl } from "@/helpers/extractBackgroundUrl";
 
 import Spinner from "@/components/spinner/Spinner";
 
