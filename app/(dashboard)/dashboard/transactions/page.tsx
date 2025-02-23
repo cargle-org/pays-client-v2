@@ -68,14 +68,16 @@ const Transactions = () => {
     const tx_ref = searchParams.get("tx_ref");
     const transaction_id = searchParams.get("transaction_id");
     const status = searchParams.get("status");
+    const paymentReference = searchParams.get("paymentReference");
     setTransactionDetails({});
     // if (tx_ref && transaction_id) {
-    if (tx_ref && status) {
+    if ((tx_ref && status) || paymentReference) {
       setTransactionDetails((item: any) => ({
         ...item,
         tx_ref: tx_ref,
         transaction_id: transaction_id,
         status: status,
+        paymentReference: paymentReference,
       }));
     }
   }, []);
