@@ -688,10 +688,10 @@ const GeneralProvider = (props: any) => {
         `${process.env.NEXT_PUBLIC_BASE_URL}/utils/wallet/fund`,
         {
           amount: amount,
-          // portal: process.env.NEXT_PUBLIC_PAYMENT_PORTAL || "monnify",
-          portal:
-            process.env.NEXT_PUBLIC_PAYMENT_PORTAL ||
-            process.env.PAYMENT_PORTAL,
+          portal: process.env.NEXT_PUBLIC_PAYMENT_PORTAL || "monnify",
+          // portal:
+          //   process.env.NEXT_PUBLIC_PAYMENT_PORTAL ||
+          //   process.env.PAYMENT_PORTAL,
         },
         {
           headers: {
