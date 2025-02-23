@@ -1,32 +1,25 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useGeneralContext } from "@/context/GenralContext";
 import Link from "next/link";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { success, error } from "@/helpers/Alert";
-import Spinner from "@/components/spinner/Spinner";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-// Voucher cards
-import birthday_light from "@/assets/imgs/vouchers/birthday_light.png";
-import birthday_dark from "@/assets/imgs/vouchers/birthday_dark.png";
-import birthday_gradient from "@/assets/imgs/vouchers/birthday_gradient.png";
-import bonus_light from "@/assets/imgs/vouchers/bonus_light.png";
-import bonus_dark from "@/assets/imgs/vouchers/bonus_dark.png";
-import bonus_gradient from "@/assets/imgs/vouchers/bonus_gradient.png";
-import wedding_light from "@/assets/imgs/vouchers/wedding_light.png";
-import wedding_dark from "@/assets/imgs/vouchers/wedding_dark.png";
-import wedding_gradient from "@/assets/imgs/vouchers/wedding_gradient.png";
-import seasons_light from "@/assets/imgs/vouchers/seasons_light.png";
-import seasons_dark from "@/assets/imgs/vouchers/seasons_dark.png";
-import gift_light from "@/assets/imgs/vouchers/gift_light.png";
-import gift_dark from "@/assets/imgs/vouchers/gift_dark.png";
-import gift_gradient from "@/assets/imgs/vouchers/gift_gradient.png";
+import axios from "axios";
+import { useGeneralContext } from "@/context/GenralContext";
+
+import { success, error } from "@/helpers/Alert";
+
+import Spinner from "@/components/spinner/Spinner";
 
 const Page = () => {
   const router = useRouter();
+  const [logo, setLogo] = useState<File | null>(null);
+  const [newAmount, setNewAmount] = useState(0);
+  // // console.log("🚀 ~ Page ~ newAmount:", newAmount);
+  const [paysFee, setPaysFee] = useState(0);
+  const [selectedStyle, setSelectedStyle] = useState("");
+
   const {
     token,
     getOneUser,
@@ -35,33 +28,83 @@ const Page = () => {
     setCreateVoucherLoading,
     getAllVouchersByUser,
   }: any = useGeneralContext();
-  const [thumbnail, setThumbnail] = useState<string>("");
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     voucherKey: "",
+    logo: "",
+    backgroundStyle: "",
     amountPerVoucher: "",
     totalNumberOfVouchers: "",
   });
-  const [newAmount, setNewAmount] = useState(0);
-  // // console.log("🚀 ~ Page ~ newAmount:", newAmount);
-  const [paysFee, setPaysFee] = useState(0);
 
-  const voucherCards = [
-    { name: "birthday_light", image: birthday_light },
-    { name: "birthday_dark", image: birthday_dark },
-    { name: "birthday_gradient", image: birthday_gradient },
-    { name: "bonus_light", image: bonus_light },
-    { name: "bonus_dark", image: bonus_dark },
-    { name: "bonus_gradient", image: bonus_gradient },
-    { name: "wedding_light", image: wedding_light },
-    { name: "wedding_dark", image: wedding_dark },
-    { name: "wedding_gradient", image: wedding_gradient },
-    { name: "seasons_light", image: seasons_light },
-    { name: "seasons_dark", image: seasons_dark },
-    { name: "gift_light", image: gift_light },
-    { name: "gift_dark", image: gift_dark },
-    { name: "gift_gradient", image: gift_gradient },
+  const silkColors = [
+    "https://res.cloudinary.com/dpz3rs8ay/image/upload/v1740001594/usepays/pexels-artempodrez-7232406_rtlkqr.png",
+    "https://res.cloudinary.com/dpz3rs8ay/image/upload/v1740001574/usepays/susan-wilkinson-6H1mPtpsJFw-unsplash_obnnbx.png",
+    "https://res.cloudinary.com/dpz3rs8ay/image/upload/v1740001565/usepays/susan-wilkinson-eCU6DPgiTM8-unsplash_djn7l6.png",
+    "https://res.cloudinary.com/dpz3rs8ay/image/upload/v1740001325/usepays/susan-wilkinson-MEz8RjRaP3I-unsplash_sd4oyt.png",
+    "https://res.cloudinary.com/dpz3rs8ay/image/upload/v1740001270/usepays/pexels-artempodrez-7232394_h5osfj.png",
+    "https://res.cloudinary.com/dpz3rs8ay/image/upload/v1740001209/usepays/pexels-artempodrez-7232413_b4xbnu.png",
+    "https://res.cloudinary.com/dpz3rs8ay/image/upload/v1740001192/usepays/susan-wilkinson-1uxQuWskin8-unsplash_zxpkt4.png",
+    "https://res.cloudinary.com/dpz3rs8ay/image/upload/v1740001178/usepays/pexels-artempodrez-7232402_h31klw.png",
+    "https://res.cloudinary.com/dpz3rs8ay/image/upload/v1740001166/usepays/susan-wilkinson-RLfNW5CBmx0-unsplash_mdbrxi.png",
+    "https://res.cloudinary.com/dpz3rs8ay/image/upload/v1740001152/usepays/susan-wilkinson-Hrgv_0fmOI4-unsplash_dczrjs.png",
+  ];
+
+  const abstractColors = [
+    "https://res.cloudinary.com/dpz3rs8ay/image/upload/usepays/avinash-kumar-4Clpyufl_B4-unsplash_jlcdkg.png",
+    "https://res.cloudinary.com/dpz3rs8ay/image/upload/v1739983724/usepays/pawel-czerwinski-P5065oKc1b0-unsplash_xzlcwf.png",
+    "https://res.cloudinary.com/dpz3rs8ay/image/upload/v1739983760/usepays/Rectangle_5_bkutec.png",
+    "https://res.cloudinary.com/dpz3rs8ay/image/upload/v1739983832/usepays/Rectangle_7_bdmrny.png",
+    "https://res.cloudinary.com/dpz3rs8ay/image/upload/v1739983876/usepays/Rectangle_9_dkx1kl.png",
+    "https://res.cloudinary.com/dpz3rs8ay/image/upload/v1739983900/usepays/Rectangle_10_rgwl5j.png",
+    "https://res.cloudinary.com/dpz3rs8ay/image/upload/v1739984011/usepays/Rectangle_8_w9vjn2.png",
+    "https://res.cloudinary.com/dpz3rs8ay/image/upload/v1739984117/usepays/Rectangle_4_yoghzz.png",
+    "https://res.cloudinary.com/dpz3rs8ay/image/upload/v1739984148/usepays/plufow-le-studio-KLPPlmqrXh4-unsplash_ff0fvu.png",
+  ];
+
+  const colorPalettes = [
+    { bgColor: "#FFF" },
+    { bgColor: "#E7DAF4" },
+    { bgColor: "#AEE8FF" },
+    { bgColor: "#D2B1FE" },
+    { bgColor: "#FDA096" },
+    { bgColor: "#ACEBB2" },
+    { bgColor: "#D3EAFE" },
+    { bgColor: "#E0B088" },
+    { bgColor: "#A2C3F6" },
+    { bgColor: "#FBDB7D" },
+    { bgColor: "#FFF" },
+    { bgColor: "#F2ECF9" },
+    { bgColor: "#D6F3FF" },
+    { bgColor: "#E8D7FE" },
+    { bgColor: "#FDCFCA" },
+    { bgColor: "#D5F4D8" },
+    { bgColor: "#E8F4FE" },
+    { bgColor: "#EFD7C3" },
+    { bgColor: "#D0E0FA" },
+    { bgColor: "#FCECBD" },
+    { bgColor: "#FFF" },
+    { bgColor: "#F8F5FB" },
+    { bgColor: "#EAF8FF" },
+    { bgColor: "#F3EAFE" },
+    { bgColor: "#FDE6E4" },
+    { bgColor: "#E9F9EB" },
+    { bgColor: "#E8F4FE" },
+    { bgColor: "#F6EAE0" },
+    { bgColor: "#E7EFFC" },
+    { bgColor: "#FDF5DD" },
+    { bgColor: "#FFF" },
+    { bgColor: "#F8F5FB7F" },
+    { bgColor: "#F4FBFF" },
+    { bgColor: "#F3EAFE7F" },
+    { bgColor: "#FDE6E47F" },
+    { bgColor: "#E9F9EB7F" },
+    { bgColor: "#E8F4FE7F" },
+    { bgColor: "#F6EAE07F" },
+    { bgColor: "#E7EFFC7F" },
+    { bgColor: "#FDF5DD7F" },
   ];
 
   const onchangeHandler = (e: any) => {
@@ -75,26 +118,38 @@ const Page = () => {
     }));
   };
 
+  const onBackgroundClick = (bgStyle: string) => {
+    setSelectedStyle(bgStyle);
+  };
+
   const onSubmit = async (e: any) => {
+    let bgStyle = selectedStyle;
+
     try {
       e.preventDefault();
       setCreateVoucherLoading(true);
-      const data = {
-        title: formData.title,
-        description: formData.description,
-        voucherKey: formData.voucherKey,
-        amountPerVoucher: formData.amountPerVoucher,
-        totalNumberOfVouchers: formData.totalNumberOfVouchers,
-        thumbnail: thumbnail,
-      };
-      // console.log("🚀 ~ onSubmit ~ data:", data);
+      const data = new FormData();
+
+      data.append("title", formData.title);
+      data.append("description", formData.description);
+      data.append("voucherKey", formData.voucherKey);
+      data.append("amountPerVoucher", formData.amountPerVoucher);
+      data.append("totalNumberOfVouchers", formData.totalNumberOfVouchers);
+      data.append("backgroundStyle", bgStyle);
+      if (logo) {
+        data.append("logo", logo);
+      }
+
+      // for (const [key, value] of data.entries()) {
+      //   console.log(key, value);
+      // }
 
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/utils/voucher/create`,
         data,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             "x-access-token": token,
           },
         }
@@ -210,6 +265,7 @@ const Page = () => {
         </div>
         <form
           onSubmit={onSubmit}
+          encType="multipart/form-data"
           className="flex flex-col lg:flex-row gap-2 items-start justify-between"
         >
           {/* left */}
@@ -229,67 +285,132 @@ const Page = () => {
                   <span className="font-medium text-sm text-brand-grayish">
                     Select Voucher Design
                   </span>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 max-h-[200px] overflow-y-auto p-2">
-                    {voucherCards.map((card) => (
-                      <div
-                        key={card.name}
-                        onClick={() => setThumbnail(card.name)}
-                        className={`relative cursor-pointer rounded-lg overflow-hidden border-2 ${
-                          thumbnail === card.name
-                            ? "border-brand-main"
-                            : "border-transparent"
-                        }`}
-                      >
-                        <Image
-                          src={card.image}
-                          alt={card.name}
-                          width={100}
-                          height={60}
-                          className="w-full h-auto"
-                        />
-                      </div>
-                    ))}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-10 gap-2 bg-[#CCC] max-h-[200px] overflow-y-auto p-2">
+                    <div className="col-span-10 bg-brand-white max-w-full px-3 py-1 rounded-md">
+                      <span className="font-semibold text-center text-[10px] p-0.5 bg-[#CCC] rounded-md border border-black tracking-tighter leading-[-0.32px]">
+                        Background Color
+                      </span>
+                    </div>
+                    {colorPalettes.map(
+                      (palette: { bgColor: string }, index: React.Key) => (
+                        <div
+                          key={index}
+                          style={{ backgroundColor: palette.bgColor }}
+                          onClick={() => onBackgroundClick(palette.bgColor)}
+                          className={`relative cursor-pointer w-8 h-8 rounded-full overflow-hidden ${
+                            selectedStyle === palette.bgColor
+                              ? "border-2 border-brand-white" // persistent border when selected
+                              : "hover:border-2 hover:border-brand-white" // hover effect otherwise
+                          }`}
+                        ></div>
+                      )
+                    )}
+
+                    <div className="col-span-10 bg-brand-white max-w-full px-3 py-1 rounded-md">
+                      <span className="font-semibold text-center text-[10px] p-0.5 bg-[#CCC] rounded-md border border-black tracking-tighter leading-[-0.32px]">
+                        Frame Design
+                      </span>
+                    </div>
+
+                    <div className="flex col-span-10 gap-2">
+                      {abstractColors.map(
+                        (abstractImage: string, index: React.Key) => (
+                          <div
+                            key={index}
+                            // style={{ backgroundImage: `url(${abstractImage.type})` }}
+                            onClick={() => onBackgroundClick(abstractImage)}
+                            className={`relative cursor-pointer w-20 h-auto rounded-none overflow-hidden 
+                               ${
+                                 selectedStyle === abstractImage
+                                   ? "border-2 border-brand-white" // persistent border when selected
+                                   : "hover:border-2 hover:border-brand-white" // hover effect otherwise
+                               }`}
+                          >
+                            <Image
+                              src={abstractImage}
+                              alt="abstract image"
+                              width={100}
+                              height={60}
+                              className="w-full h-auto"
+                              priority
+                            />
+                          </div>
+                        )
+                      )}
+                    </div>
+
+                    <div className="col-span-10 bg-brand-white max-w-full px-3 py-1 rounded-md">
+                      <span className="font-semibold text-center text-[10px] p-0.5 bg-[#CCC] rounded-md border border-black tracking-tighter leading-[-0.32px]">
+                        Silk Design
+                      </span>
+                    </div>
+
+                    <div className="flex col-span-10 gap-2">
+                      {silkColors.map((silkImage: string, index: React.Key) => (
+                        <div
+                          key={index}
+                          // style={{ backgroundImage: `url(${silkImage.type})` }}
+                          onClick={() => onBackgroundClick(silkImage)}
+                          className={`relative cursor-pointer w-20 h-auto rounded-none overflow-hidden ${
+                            selectedStyle === silkImage
+                              ? "border-2 border-brand-white" // persistent border when selected
+                              : "hover:border-2 hover:border-brand-white" // hover effect otherwise
+                          }`}
+                        >
+                          <Image
+                            src={silkImage}
+                            alt="silk image"
+                            width={100}
+                            height={60}
+                            className="w-full"
+                            priority
+                          />
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <div className="flex flex-col justify-start">
-                  <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
-                    Voucher Title <span className="text-red-400">*</span>
-                  </span>
-                  <input
-                    type="text"
-                    name="title"
-                    id="title"
-                    placeholder="Enter voucher title"
-                    onChange={onchangeHandler}
-                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
-                  />
-                </div>
-                <div className="flex flex-col justify-start">
-                  <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
-                    Voucher Description <span className="text-red-400">*</span>
-                  </span>
-                  <textarea
-                    name="description"
-                    id="description"
-                    placeholder="Enter a brief description"
-                    onChange={onchangeHandler}
-                    rows={3}
-                    className="w-full sm:w-[353px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
-                  ></textarea>
-                </div>
-                <div className="flex flex-col justify-start">
-                  <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
-                    Voucher Key <span className="text-red-400">*</span>
-                  </span>
-                  <input
-                    type="text"
-                    name="voucherKey"
-                    id="voucherKey"
-                    placeholder="Enter voucher key (5 characters max)"
-                    onChange={onchangeHandler}
-                    maxLength={5} // Limit input to 5 characters
-                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
-                  />
+                  <div className="flex flex-col justify-start">
+                    <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
+                      Voucher Title <span className="text-red-400">*</span>
+                    </span>
+                    <input
+                      type="text"
+                      name="title"
+                      id="title"
+                      maxLength={23}
+                      placeholder="Enter voucher title"
+                      onChange={onchangeHandler}
+                      className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    />
+                  </div>
+                  <div className="flex flex-col justify-start">
+                    <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
+                      Voucher Description{" "}
+                      <span className="text-red-400">*</span>
+                    </span>
+                    <textarea
+                      name="description"
+                      id="description"
+                      placeholder="Enter a brief description"
+                      onChange={onchangeHandler}
+                      rows={3}
+                      className="w-full sm:w-[353px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    ></textarea>
+                  </div>
+                  <div className="flex flex-col justify-start">
+                    <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
+                      Voucher Key <span className="text-red-400">*</span>
+                    </span>
+                    <input
+                      type="text"
+                      name="voucherKey"
+                      id="voucherKey"
+                      placeholder="Enter voucher key (5 characters max)"
+                      onChange={onchangeHandler}
+                      maxLength={5} // Limit input to 5 characters
+                      className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -331,6 +452,24 @@ const Page = () => {
                     placeholder="Enter Number of Vouchers (max 20)"
                     onChange={onchangeHandler}
                     max={20} // Limit input to 20 vouchers
+                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                  />
+                </div>
+                <div className="flex flex-col justify-start">
+                  <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
+                    Upload Logo<span className="text-red-400">*</span>
+                  </span>
+                  <input
+                    type="file"
+                    name="logo"
+                    id="logo"
+                    placeholder="Upload Logo"
+                    accept="image/*"
+                    onChange={(e) => {
+                      if (e.target.files) {
+                        setLogo(e.target.files?.[0]);
+                      }
+                    }}
                     className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
