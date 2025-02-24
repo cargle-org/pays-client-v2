@@ -67,8 +67,8 @@ const FlipCard = ({
                       <Image
                         src="https://res.cloudinary.com/dpz3rs8ay/image/upload/v1740418577/usepays/payslogo_zgnvlb.png"
                         alt="pays_logo"
-                        height={14}
-                        width={46}
+                        height={16.32}
+                        width={48.97}
                       />
                     </div>
 
@@ -136,7 +136,7 @@ const FlipCard = ({
                         src={voucherDetails?.logo ?? ""}
                         alt="brand_logo"
                         height={30}
-                        width={66}
+                        width={90}
                       />
                     )}
                   </div>
