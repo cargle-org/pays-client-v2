@@ -57,7 +57,7 @@ const Manual = ({ setDisplay }: any) => {
 
   return (
     <>
-      <div className="flex flex-col lg:flex-row gap-2 items-start justify-between">
+      <div className="flex flex-col lg:flex-row gap-2 items-start justify-between h-screen">
         {/* left */}
         <div className="flex flex-col w-full lg:w-1/2">
           <div className="rounded-xl bg-brand-white p-4 flex flex-col gap-4 justify-start h-[80vh]">
