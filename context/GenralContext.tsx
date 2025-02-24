@@ -85,6 +85,7 @@ const GeneralProvider = (props: any) => {
     tx_ref: "",
     transaction_id: "",
     status: "",
+    paymentReference: "",
   });
 
   // PAYMENT LINKS
@@ -685,7 +686,13 @@ const GeneralProvider = (props: any) => {
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/utils/wallet/fund`,
-        { amount: amount },
+        {
+          amount: amount,
+          portal: process.env.NEXT_PUBLIC_PAYMENT_PORTAL || "monnify",
+          // portal:
+          //   process.env.NEXT_PUBLIC_PAYMENT_PORTAL ||
+          //   process.env.PAYMENT_PORTAL,
+        },
         {
           headers: {
             "content-type": "application/json",
@@ -725,7 +732,7 @@ const GeneralProvider = (props: any) => {
     try {
       setFetchTransactionsLoading(true);
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/wallet/verifyTrx?tx_ref=${transactionDetails?.tx_ref}&transaction_id=${transactionDetails?.transaction_id}&status=${transactionDetails?.status}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/wallet/verifyTrx?tx_ref=${transactionDetails?.tx_ref}&transaction_id=${transactionDetails?.transaction_id}&status=${transactionDetails?.status}&paymentReference=${transactionDetails?.paymentReference}`,
         {
           headers: {
             "content-type": "application/json",
@@ -733,7 +740,7 @@ const GeneralProvider = (props: any) => {
           },
         }
       );
-      console.log("🚀 ~ verifyFundWal ~ response:", response);
+      // console.log("🚀 ~ verifyFundWal ~ response:", response);
       setFetchTransactionsLoading(false);
       if (response.status === 200) {
         getAllTransactionsByUser();
@@ -1028,6 +1035,9 @@ const GeneralProvider = (props: any) => {
       console.log("🚀 ~ useEffect ~ transactionDetails:", transactionDetails);
       // if (transactionDetails?.tx_ref && transactionDetails?.status) {
       if (transactionDetails?.tx_ref && transactionDetails?.transaction_id) {
+        verifyFundWallet();
+      }
+      if (transactionDetails?.paymentReference) {
         verifyFundWallet();
       }
     }
