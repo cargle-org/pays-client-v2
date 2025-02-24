@@ -285,90 +285,96 @@ const Page = () => {
                   <span className="font-medium text-sm text-brand-grayish">
                     Select Voucher Design
                   </span>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-10 gap-2 bg-[#CCC] max-h-[200px] overflow-y-auto p-2">
-                    <div className="col-span-10 bg-brand-white max-w-full px-3 py-1 rounded-md">
+                  <div className=" bg-[#CCC] max-h-[200px] overflow-y-auto p-2 space-y-2">
+                    <div className=" bg-brand-white max-w-full px-3 py-1 rounded-md">
                       <span className="font-semibold text-center text-[10px] p-0.5 bg-[#CCC] rounded-md border border-black tracking-tighter leading-[-0.32px]">
                         Background Color
                       </span>
                     </div>
-                    {colorPalettes.map(
-                      (palette: { bgColor: string }, index: React.Key) => (
-                        <div
-                          key={index}
-                          style={{ backgroundColor: palette.bgColor }}
-                          onClick={() => onBackgroundClick(palette.bgColor)}
-                          className={`relative cursor-pointer w-8 h-8 rounded-full overflow-hidden ${
-                            selectedStyle === palette.bgColor
-                              ? "border-2 border-brand-white" // persistent border when selected
-                              : "hover:border-2 hover:border-brand-white" // hover effect otherwise
-                          }`}
-                        ></div>
-                      )
-                    )}
-
-                    <div className="col-span-10 bg-brand-white max-w-full px-3 py-1 rounded-md">
-                      <span className="font-semibold text-center text-[10px] p-0.5 bg-[#CCC] rounded-md border border-black tracking-tighter leading-[-0.32px]">
-                        Frame Design
-                      </span>
-                    </div>
-
-                    <div className="flex col-span-10 gap-2">
-                      {abstractColors.map(
-                        (abstractImage: string, index: React.Key) => (
+                    <div className="xl:mx-3 flex flex-wrap gap-1.5 sm:gap-3 justify-center">
+                      {colorPalettes.map(
+                        (palette: { bgColor: string }, index: React.Key) => (
                           <div
                             key={index}
-                            // style={{ backgroundImage: `url(${abstractImage.type})` }}
-                            onClick={() => onBackgroundClick(abstractImage)}
-                            className={`relative cursor-pointer w-20 h-auto rounded-none overflow-hidden 
+                            style={{ backgroundColor: palette.bgColor }}
+                            onClick={() => onBackgroundClick(palette.bgColor)}
+                            className={`relative cursor-pointer w-8 sm:w-9 h-8 sm:h-9 rounded-full overflow-hidden ${
+                              selectedStyle === palette.bgColor
+                                ? "border-2 border-brand-white" // persistent border when selected
+                                : "hover:border-2 hover:border-brand-white" // hover effect otherwise
+                            }`}
+                          ></div>
+                        )
+                      )}
+                    </div>
+                    <div className="grid grid-cols-10 md:grid-cols-10 gap-2">
+                      <div className="col-span-10 bg-brand-white max-w-full px-3 py-1 rounded-md">
+                        <span className="font-semibold text-center text-[10px] p-0.5 bg-[#CCC] rounded-md border border-black tracking-tighter leading-[-0.32px]">
+                          Frame Design
+                        </span>
+                      </div>
+
+                      <div className="flex col-span-10 gap-2">
+                        {abstractColors.map(
+                          (abstractImage: string, index: React.Key) => (
+                            <div
+                              key={index}
+                              // style={{ backgroundImage: `url(${abstractImage.type})` }}
+                              onClick={() => onBackgroundClick(abstractImage)}
+                              className={`relative cursor-pointer w-20 h-auto rounded-none overflow-hidden 
                                ${
                                  selectedStyle === abstractImage
                                    ? "border-2 border-brand-white" // persistent border when selected
                                    : "hover:border-2 hover:border-brand-white" // hover effect otherwise
                                }`}
-                          >
-                            <Image
-                              src={abstractImage}
-                              alt="abstract image"
-                              width={100}
-                              height={60}
-                              className="w-full h-auto"
-                              priority
-                            />
-                          </div>
-                        )
-                      )}
-                    </div>
+                            >
+                              <Image
+                                src={abstractImage}
+                                alt="abstract image"
+                                width={100}
+                                height={60}
+                                className="w-full h-auto"
+                                priority
+                              />
+                            </div>
+                          )
+                        )}
+                      </div>
 
-                    <div className="col-span-10 bg-brand-white max-w-full px-3 py-1 rounded-md">
-                      <span className="font-semibold text-center text-[10px] p-0.5 bg-[#CCC] rounded-md border border-black tracking-tighter leading-[-0.32px]">
-                        Silk Design
-                      </span>
-                    </div>
+                      <div className="col-span-10 bg-brand-white max-w-full px-3 py-1 rounded-md">
+                        <span className="font-semibold text-center text-[10px] p-0.5 bg-[#CCC] rounded-md border border-black tracking-tighter leading-[-0.32px]">
+                          Silk Design
+                        </span>
+                      </div>
 
-                    <div className="flex col-span-10 gap-2">
-                      {silkColors.map((silkImage: string, index: React.Key) => (
-                        <div
-                          key={index}
-                          // style={{ backgroundImage: `url(${silkImage.type})` }}
-                          onClick={() => onBackgroundClick(silkImage)}
-                          className={`relative cursor-pointer w-20 h-auto rounded-none overflow-hidden ${
-                            selectedStyle === silkImage
-                              ? "border-2 border-brand-white" // persistent border when selected
-                              : "hover:border-2 hover:border-brand-white" // hover effect otherwise
-                          }`}
-                        >
-                          <Image
-                            src={silkImage}
-                            alt="silk image"
-                            width={100}
-                            height={60}
-                            className="w-full"
-                            priority
-                          />
-                        </div>
-                      ))}
+                      <div className="flex col-span-10 gap-2">
+                        {silkColors.map(
+                          (silkImage: string, index: React.Key) => (
+                            <div
+                              key={index}
+                              // style={{ backgroundImage: `url(${silkImage.type})` }}
+                              onClick={() => onBackgroundClick(silkImage)}
+                              className={`relative cursor-pointer w-20 h-auto rounded-none overflow-hidden ${
+                                selectedStyle === silkImage
+                                  ? "border-2 border-brand-white" // persistent border when selected
+                                  : "hover:border-2 hover:border-brand-white" // hover effect otherwise
+                              }`}
+                            >
+                              <Image
+                                src={silkImage}
+                                alt="silk image"
+                                width={100}
+                                height={60}
+                                className="w-full"
+                                priority
+                              />
+                            </div>
+                          )
+                        )}
+                      </div>
                     </div>
                   </div>
+
                   <div className="flex flex-col justify-start">
                     <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
                       Voucher Title <span className="text-red-400">*</span>
@@ -457,7 +463,8 @@ const Page = () => {
                 </div>
                 <div className="flex flex-col justify-start">
                   <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
-                    Upload Logo<span className="text-red-400">*</span>
+                    Upload Logo
+                    <small className="text-brand-main ml-1">(optional)</small>
                   </span>
                   <input
                     type="file"

@@ -6,8 +6,6 @@ import { QRCodeSVG } from "qrcode.react";
 
 import voucher_preview_one from "@/assets/imgs/vouchers/voucher_preview_one.jpg";
 import voucher_preview_two from "@/assets/imgs/vouchers/voucher_preview_two.jpg";
-import spikk_logo from "@/assets/imgs/vouchers/spikk_logo.svg";
-import pays_logo from "@/assets/imgs/auth/pays_logo.png";
 
 const FlipCard = ({
   voucherDetails,
@@ -35,7 +33,7 @@ const FlipCard = ({
 
   // Generate QR Code URL
   const qrUrl = "https://www.usepays.co/cashout";
-  console.log(voucherDetails);
+
   return (
     <div className="flex items-center justify-center bg-gray-100">
       <div className="relative w-[300px] h-[240px] sm:w-[313px] sm:h-[370px] perspective">
@@ -67,7 +65,7 @@ const FlipCard = ({
                   <>
                     <div className="absolute flex text-center top-7 left-7">
                       <Image
-                        src={pays_logo}
+                        src="https://res.cloudinary.com/dpz3rs8ay/image/upload/v1740418577/usepays/payslogo_zgnvlb.png"
                         alt="pays_logo"
                         height={14}
                         width={46}
