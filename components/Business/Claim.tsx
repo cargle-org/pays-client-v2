@@ -1,8 +1,14 @@
 import React from "react";
 import CustomButton from "../atoms/CustomButton";
 import ArrowRightUp from "../atoms/Icons/ArrowRightUp";
+import { useRouter } from "next/navigation";
 
 const Claim = () => {
+  const router = useRouter();
+
+  const handleNavigate = (path: string) => {
+    router.push(path);
+  };
   return (
     <div
       style={{
@@ -21,7 +27,11 @@ const Claim = () => {
           Effortlessly reward employees, engage customers, and drive growth with our voucher creation and redemption
           services.
         </p>
-        <CustomButton isSecondary onClick={() => {}} borderRadius='rounded-[50px]' className='w-[250px]'>
+        <CustomButton
+          isSecondary
+          onClick={() => handleNavigate("/auth/login")}
+          borderRadius='rounded-[50px]'
+          className='w-[250px]'>
           Create your Gift Card <ArrowRightUp />
         </CustomButton>
       </div>

@@ -3,8 +3,14 @@ import React from "react";
 import find from "@/assets/imgs/landing/findRight.png";
 import ArrowRightUp from "../atoms/Icons/ArrowRightUp";
 import CustomButton from "../atoms/CustomButton";
+import { useRouter } from "next/navigation";
 
 const Find = () => {
+  const router = useRouter();
+
+  const handleNavigate = (path: string) => {
+    router.push(path);
+  };
   return (
     <div className='w-full max-w-[1200px] mx-auto mt-10 my-24 flex justify-between items-center rounded-xl bg-brand-pink100 sm:flex-col-reverse sm:justify-center sm:px-4 sm:py-8 border border-brand-gray700'>
       <div className='sm:w-full l:w-[40%] md:w-[50%] md:px-16 flex flex-col gap-4 sm:pt-10 sm:text-center sm:gap-2'>
@@ -14,7 +20,10 @@ const Find = () => {
         <p className='text-brand-gray200 pb-6 sm:w-[80%] sm:mx-auto'>
           Select the occasion (birthday, anniversary, thank you, etc.), and get recommendations gift card designs.
         </p>
-        <CustomButton borderRadius={`sm:rounded-[20px] rounded-xl`} className='sm:w-[230px] sm:mx-auto w-fit'>
+        <CustomButton
+          onClick={() => handleNavigate("/auth/login")}
+          borderRadius={`sm:rounded-[20px] rounded-xl`}
+          className='sm:w-[230px] sm:mx-auto w-fit'>
           Create your Gift Card <ArrowRightUp />
         </CustomButton>
       </div>

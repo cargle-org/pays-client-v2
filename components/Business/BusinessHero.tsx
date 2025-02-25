@@ -8,6 +8,7 @@ import qr from "@/assets/svgs/Qr-code.svg";
 import pays from "@/assets/svgs/Pays.svg";
 import Image from "next/image";
 import useResponsive from "@/hooks/useResponsive";
+import { useRouter } from "next/navigation";
 
 const BusinessHero = () => {
   const templateData = [
@@ -46,6 +47,12 @@ const BusinessHero = () => {
 
   const { isTablet } = useResponsive();
 
+  const router = useRouter();
+
+  const handleNavigate = (path: string) => {
+    router.push(path);
+  };
+
   return (
     <div className='w-full max-w-[1300px] mx-auto px-4 py-14 sm:py-6'>
       <div className='md:gap-4 flex items-center justify-center sm:flex-col sm:gap-4'>
@@ -62,10 +69,17 @@ const BusinessHero = () => {
             className={
               "flex gap-4 items-center justify-start mt-4 lg:flex-row md:flex-col md:items-start sm:flex-col-reverse"
             }>
-            <CustomButton isSecondary borderRadius={`sm:rounded-[40px] rounded-xl`} className='w-[210px]'>
+            <CustomButton
+              onClick={() => handleNavigate("/auth/login")}
+              isSecondary
+              borderRadius={`sm:rounded-[40px] rounded-xl`}
+              className='w-[210px]'>
               Create Gift Card <ArrowRightUp fill={colors.gray200} />{" "}
             </CustomButton>
-            <CustomButton borderRadius={`sm:rounded-[40px] rounded-xl`} className='w-[210px]'>
+            <CustomButton
+              onClick={() => handleNavigate("/cashout")}
+              borderRadius={`sm:rounded-[40px] rounded-xl`}
+              className='w-[210px]'>
               Redeem a Gift Card <ArrowRightUp />
             </CustomButton>
           </div>

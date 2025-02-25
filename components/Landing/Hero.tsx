@@ -4,8 +4,14 @@ import ArrowRightUp from "../atoms/Icons/ArrowRightUp";
 import { colors } from "@/constants/colors";
 import heroImage from "@/assets/imgs/landing/heroLeft.png";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const Hero = () => {
+  const router = useRouter();
+
+  const handleNavigate = (path: string) => {
+    router.push(path);
+  };
   return (
     <div className='w-full md:gap-4 flex items-center justify-center sm:flex-col sm:gap-4 max-w-[1300px] mx-auto px-4 py-14 sm:py-6'>
       <div className='w-[40%] flex items-center justify-center'>
@@ -23,10 +29,17 @@ const Hero = () => {
           className={
             "flex gap-4 items-center justify-start mt-4 lg:flex-row md:flex-col md:items-start sm:flex-col-reverse"
           }>
-          <CustomButton isSecondary borderRadius={`sm:rounded-[40px] rounded-xl`} className='w-[240px]'>
+          <CustomButton
+            onClick={() => handleNavigate("/auth/login")}
+            isSecondary
+            borderRadius={`sm:rounded-[40px] rounded-xl`}
+            className='w-[240px]'>
             Create Gift Card <ArrowRightUp fill={colors.gray200} />{" "}
           </CustomButton>
-          <CustomButton borderRadius={`sm:rounded-[40px] rounded-xl`} className='w-[240px]'>
+          <CustomButton
+            onClick={() => handleNavigate("/cashout")}
+            borderRadius={`sm:rounded-[40px] rounded-xl`}
+            className='w-[240px]'>
             Redeem a Gift Card <ArrowRightUp />
           </CustomButton>
         </div>

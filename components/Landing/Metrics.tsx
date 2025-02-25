@@ -6,6 +6,7 @@ import useResponsive from "@/hooks/useResponsive";
 const Metrics = () => {
   const { isMobile } = useResponsive();
   const [isClient, setIsClient] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   useEffect(() => {
     setIsClient(true);
@@ -40,14 +41,26 @@ const Metrics = () => {
             {metricsData.map((data, index) => (
               <div
                 key={index}
-                className={`flex flex-col items-start justify-between gap-8 p-4 rounded-xl ${data.color} h-[195px] sm:h-[150px] w-full`}>
-                <div className='text-[12px] font-light'>
+                className={`relative flex flex-col items-start justify-between gap-8 p-4 rounded-xl ${
+                  data.color
+                } h-[195px] sm:h-[150px] w-full transition-all duration-300 ${hoveredIndex === index ? "hovered" : ""}`}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}>
+                <div
+                  className={`text-[12px] font-light transition-opacity duration-100 ${
+                    hoveredIndex === index ? "opacity-0" : "opacity-100"
+                  }`}>
                   <div>{data.titleTop}</div>
                   <div>{data.titleDown}</div>
                 </div>
-                <div>
-                  <h3 className='text-[30px] font-semibold whitespace-nowrap xs:text-[24px]'>{data.value}</h3>
-                </div>
+                <h3
+                  className={`text-[30px] font-semibold whitespace-nowrap xs:text-[24px] transition-all duration-300 ${
+                    hoveredIndex === index
+                      ? "absolute inset-0 flex items-center justify-center text-[40px] sm:text-[30px]"
+                      : ""
+                  }`}>
+                  {data.value}
+                </h3>
               </div>
             ))}
           </div>
