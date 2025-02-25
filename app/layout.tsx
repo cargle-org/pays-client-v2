@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import GeneralProvider from "@/context/GenralContext";
 import { ToastContainer } from "react-toastify";
 import Script from "next/script";
+import { Manrope } from "next/font/google";
+
+// Initialize Manrope font
+const manrope = Manrope({
+  subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
+  variable: "--font-manrope",
+});
 
 export const metadata: Metadata = {
   title: "Pays",
@@ -18,14 +24,11 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+      <html lang='en' className={`${manrope.variable}`}>
         <head>
-          <Script
-            async
-            src={`https://www.googletagmanager.com/gtag/js?id=G-636938PFTH`}
-          />
+          <Script async src={`https://www.googletagmanager.com/gtag/js?id=G-636938PFTH`} />
 
-          <Script id="google-analytics" strategy="afterInteractive">
+          <Script id='google-analytics' strategy='afterInteractive'>
             {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -34,10 +37,10 @@ export default function RootLayout({
           `}
           </Script>
         </head>
-        <body>
+        <body className='font-manrope'>
           <GeneralProvider>
             <ToastContainer
-              position="top-right"
+              position='top-right'
               autoClose={5000}
               hideProgressBar={false}
               newestOnTop={false}
