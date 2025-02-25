@@ -16,7 +16,7 @@ export const faqs = [
   },
   {
     question: "How can I contact customer support?",
-    answer: "You can reach us at hi@usepays.co for any inquiries or assistance. We are also located at 6, fadunsin avenue, Ikeja, Lagos, Nigeria.",
+    answer: "You can mail us at hi@usepays.co or give us a call at +2347060920886 for any inquiries or assistance",
   },
   {
     question: "Is my personal information secure?",

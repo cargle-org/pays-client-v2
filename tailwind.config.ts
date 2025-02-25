@@ -48,6 +48,7 @@ const config: Config = {
           gray400: "#E9E9E9",
           gray500: "#262626",
           gray600: "#F5F5F5",
+          gray700: "#D9D9D9",
           lightBlue: "#EAF8FF",
           lightGreen: "#E9F9EB",
           pink100: "#FDE6E4",

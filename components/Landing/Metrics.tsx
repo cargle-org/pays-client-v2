@@ -1,17 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import metricRight from "@/assets/imgs/landing/metricsRight.png";
 import Image from "next/image";
 import useResponsive from "@/hooks/useResponsive";
 
 const Metrics = () => {
   const { isMobile } = useResponsive();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const metricsData = [
     { titleTop: "Total", titleDown: "Active Users", value: "12,540 +", color: "bg-brand-pink200" },
     { titleTop: "Redeemed", titleDown: "Vouchers", value: "8,987 +", color: "bg-brand-lightBlue" },
     {
       titleTop: "Total",
       titleDown: "Amount Cashed",
-      value: `${isMobile ? "₦2.5M" : "₦2,007,987"}`,
+      value: isClient && isMobile ? "₦2.5M" : "₦2,007,987",
       color: "bg-brand-lightGreen",
     },
     { titleTop: "Total", titleDown: "Issued Vouchers", value: "5,987 +", color: "bg-brand-pink100" },

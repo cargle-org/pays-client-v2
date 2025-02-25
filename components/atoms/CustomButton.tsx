@@ -22,7 +22,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   children,
   onClick,
   className = "",
-  padding = "px-6 py-4",
+  padding = "px-6 py-[13px]",
   bgColor = "bg-brand-main",
   color = "text-white",
   fontSize = "text-base",
@@ -36,10 +36,17 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 }) => {
   const buttonStyles = `
     ${padding}
-    ${isSecondary ? "bg-white text-brand-gray200 border-brand-gray200" : `${bgColor} ${color}`}
+    cursor-pointer
+    ${
+      isSecondary
+        ? "bg-white text-brand-gray200 border-brand-gray200 hover:bg-brand-gray300 hover:bg-opacity-70"
+        : `${bgColor} ${color}`
+    }
     ${fontSize}
     ${fontWeight}
     ${borderRadius}
+    transition-all duration-300 ease-in-out
+    hover:bg-opacity-70
     ${isSecondary ? "border" : borderColor ? `border ${borderColor}` : `border ${bgColor}`}
     flex items-center justify-center gap-2
     ${disabled || isLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}

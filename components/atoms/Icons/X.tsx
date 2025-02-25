@@ -19,7 +19,7 @@ const X = ({
     fill='none'
     xmlns='http://www.w3.org/2000/svg'>
     <circle cx='12.8418' cy='12' r='12' fill='#1F0047' />
-    <g clip-path='url(#clip0_3838_2402)'>
+    <g clipPath='url(#clip0_3838_2402)'>
       <path
         d='M6.9178 6H10.4518L13.5968 10.498L17.3718 6H18.5008L14.0268 11.114L18.8418 18H15.3098L12.0248 13.303L7.9698 18H6.8418L11.5948 12.688L6.9178 6Z'
         fill={fill || "white"}

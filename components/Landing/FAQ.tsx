@@ -20,10 +20,10 @@ const FAQCard = ({
   return (
     <div className='w-full bg-white text-brand-gray200 p-4 mb-4 rounded-lg shadow-sm'>
       <div className='flex items-center justify-between cursor-pointer gap-4' onClick={onClick}>
-        <h3 className='text-lg font-medium text-brand-grayish'>{question}</h3>
+        <h3 className='text-base text-brand-grayish'>Q: {question}</h3>
         {open ? <MinusIcon /> : <PlusIcon />}
       </div>
-      {open && <p className='mt-6 text-brand-gray500 text-[14px]'>{answer}</p>}
+      {open && <p className='mt-6 text-brand-gray500 text-[14px]'>A: {answer}</p>}
     </div>
   );
 };

@@ -22,7 +22,7 @@ const Claim = () => {
           services.
         </p>
         <CustomButton isSecondary onClick={() => {}} borderRadius='rounded-[50px]' className='w-[250px]'>
-          Create your Gift card <ArrowRightUp />
+          Create your Gift Card <ArrowRightUp />
         </CustomButton>
       </div>
     </div>

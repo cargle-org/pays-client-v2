@@ -17,9 +17,9 @@ const Footer = () => {
   ];
   const footerNav2 = [
     { title: "Home", route: "/" },
-    { title: "About", route: "/" },
-    { title: "Contact", route: "" },
-    { title: "Business on Usepays", route: "/" },
+    { title: "About", route: "/faqs" },
+    { title: "Contact", route: "/faqs" },
+    { title: "Business on Usepays", route: "/business" },
   ];
 
   return (
@@ -63,10 +63,25 @@ const Footer = () => {
           <div>
             <h6 className={"font-medium text-brand-gray500"}>Socials</h6>
             <div className='flex flex-col gap-2 items-start mt-2 sm:flex-row sm:gap-4'>
-              <Facebook />
-              <X />
-              <Instagram />
-              <Tiktok />
+              <Link href={"/"}>
+                {" "}
+                <Facebook />
+              </Link>
+              <Link href={"/"}>
+                {" "}
+                <X />
+              </Link>
+              <Link
+                href={"https://www.instagram.com/usepays_co?igsh=YXNwODdlMzZiYjI4"}
+                target='_blank'
+                rel='noreferrer'>
+                {" "}
+                <Instagram />
+              </Link>
+              <Link href={"/"}>
+                {" "}
+                <Tiktok />
+              </Link>
             </div>
           </div>
         </div>
