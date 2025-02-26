@@ -35,7 +35,7 @@ const Page = () => {
   }, []);
   return (
     <>
-      <div className="max-w-md sm:max-w-[1440px] flex flex-col gap-6 mx-auto">
+      <div className="max-w-md md:max-w-[1440px] flex flex-col gap-6 mx-auto">
         <div className="flex justify-between items-center pb-2 border-b-[0.3px]">
           <div className="flex flex-col justify-start gap-2 font-geistsans mb-4">
             <span className="font-bold text-4xl text-brand-dark">
@@ -46,9 +46,9 @@ const Page = () => {
             </span>
           </div>
         </div>
-        <div className="w-full bg-brand-white rounded-lg p-3 lg:p-8 flex flex-col sm:flex-row gap-2 lg:gap-6 justify-evenly items-center">
+        <div className="w-full bg-brand-white rounded-lg p-3 lg:p-8 flex flex-col md:flex-row gap-2 lg:gap-6 justify-evenly items-center">
           {/* Item */}
-          <div className="w-full flex space-x-5 sm:space-x-0 border-b-2 sm:border-none border-brand-gray py-1 sm:py-0 gap-2 lg:gap-6">
+          <div className="w-full flex space-x-5 md:space-x-0 border-b-2 md:border-none border-brand-gray py-1 md:py-0 gap-2 lg:gap-6">
             <div className="w-full h-[107px] flex flex-col items-start justify-start gap-2">
               <svg
                 width="32"
@@ -141,7 +141,7 @@ const Page = () => {
             <span className="h-[107px] bg-brand-ash w-[1px]"></span>
           </div>
           {/* Item */}
-          <div className="w-full flex space-x-5 sm:space-x-0 border-b-2 sm:border-none border-brand-gray py-1 sm:py-0 gap-2 lg:gap-6">
+          <div className="w-full flex space-x-5 md:space-x-0 border-b-2 md:border-none border-brand-gray py-1 md:py-0 gap-2 lg:gap-6">
             <div className="w-full h-[107px] flex flex-col items-start justify-start gap-2">
               <svg
                 width="32"
@@ -235,7 +235,7 @@ const Page = () => {
             <span className="h-[107px] bg-brand-ash w-[1px]"></span>
           </div>
           {/* item */}
-          <div className="h-[107px] flex flex-col items-center sm:items-start justify-start gap-2">
+          <div className="h-[107px] flex flex-col items-center md:items-start justify-start gap-2">
             <svg
               width="32"
               height="33"
@@ -321,9 +321,9 @@ const Page = () => {
                     className="border-[0.3px] rounded-xl p-4 w-full bg-brand-white mb-2"
                   >
                     <div className="flex w-full items-center justify-between">
-                      <div className="flex flex-col sm:flex-row items-center gap-4 w-full xl:w-4/5 h-auto sm:h-[74px]">
+                      <div className="flex flex-col md:flex-row items-center gap-4 w-full xl:w-5/6 h-auto sm:h-[74px]">
                         {/* left */}
-                        <div className="flex w-full sm:w-auto gap-4 sm:pr-4">
+                        <div className="flex w-full md:w-auto gap-4 md:pr-4">
                           {item.thumbnail ? (
                             <Image
                               src={item?.thumbnail}
@@ -346,12 +346,12 @@ const Page = () => {
                           <div className="w-full flex flex-col justify-center gap-2">
                             <Link
                               href={`/dashboard/vouchers/${item._id}`}
-                              className="font-geistsans text-2xl font-medium capitalize hover:animate-bounce"
+                              className="font-geistsans text-xl md:text-2xl font-medium capitalize hover:animate-bounce"
                             >
                               {item.title}
                             </Link>
                             {/* middle */}
-                            <div className="flex justify-evenly gap-4 xl:gap-8 items-center sm:px-4 border-l-[0.3px] w-full">
+                            <div className="flex justify-evenly gap-4 xl:gap-8 items-center md:px-4 border-l-[0.3px] w-full">
                               <div className="flex flex-col items-center justify-center gap-2">
                                 <span className="text-brand-grayish font-normal text-xs font-geistsans">
                                   Amount
@@ -360,7 +360,7 @@ const Page = () => {
                                   ₦{item.amountPerVoucher}
                                 </span>
                               </div>
-                              <div className="sm:flex flex-col items-center justify-center gap-2 hidden">
+                              <div className="md:flex flex-col items-center justify-center gap-2 hidden">
                                 <span className="w-max text-brand-grayish font-normal text-xs font-geistsans">
                                   Cashed Vouchers
                                 </span>
@@ -435,7 +435,7 @@ const Page = () => {
                   <thead className="divide-y divide-gray-200 font-bold text-sm text-brand-grayish py-2 px-4 mb-2">
                     <tr className="rounded-lg">
                       <th className="py-2">S/N</th>
-                      <th className="py-2 text-start pl-4 hidden sm:block">
+                      <th className="py-2 text-start pl-4 hidden md:block">
                         Title
                       </th>
                       <th className="py-2">Corresponding Link</th>
@@ -448,7 +448,7 @@ const Page = () => {
                       .map((item: any, i: number) => (
                         <tr key={i} className="mb-4 rounded-lg">
                           <td className="py-3">{i + 1}</td>
-                          <td className="hidden sm:block py-3 pl-4 capitalize text-start font-semibold">
+                          <td className="hidden md:block py-3 pl-4 capitalize text-start font-semibold">
                             {item.title}
                           </td>
                           <td className="py-3 capitalize">
