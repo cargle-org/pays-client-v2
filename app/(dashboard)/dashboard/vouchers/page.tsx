@@ -95,7 +95,7 @@ const Page = () => {
   return (
     <>
       <div className="flex flex-col gap-4">
-        <div className="flex justify-between flex-col sm:flex-row items-center pb-2 border-b-[0.3px]">
+        <div className="flex justify-between flex-col md:flex-row items-center pb-2 border-b-[0.3px]">
           <div className="flex flex-col justify-start gap-2 font-geistsans mb-4">
             <span className="font-bold text-4xl text-brand-dark">
               My Vouchers
@@ -106,7 +106,7 @@ const Page = () => {
           </div>
           <Link
             href={"/dashboard/vouchers/create"}
-            className="transition-fx flex items-center gap-2 p-1 sm:p-2 px-2 sm:px-4 rounded-3xl bg-brand-main text-brand-white font-geistsans text-base text-nowrap font-normal cursor-pointer hover:bg-brand-main/50"
+            className="transition-fx flex items-center gap-2 p-1 md:p-2 px-2 md:px-4 rounded-3xl bg-brand-main text-brand-white font-geistsans text-base text-nowrap font-normal cursor-pointer hover:bg-brand-main/50"
           >
             <svg
               width="12"
@@ -167,7 +167,7 @@ const Page = () => {
               </svg>
             </div>
           </div> */}
-          <div className="flex flex-col sm:flex-row items-end gap-4">
+          <div className="flex flex-col md:flex-row items-end gap-4">
             {/* Amount Dropdown */}
             <div className="relative">
               <button
@@ -293,7 +293,7 @@ const Page = () => {
             </div>
           </div>
         </div>
-        <div className="max-w-md sm:max-w-[1440px] mx-auto w-full bg-brand-white rounded-lg p-3 lg:p-8 flex flex-col gap-3 xl:gap-6 justify-start">
+        <div className="max-w-md md:max-w-[1440px] mx-auto w-full bg-brand-white rounded-lg p-3 lg:p-8 flex flex-col gap-3 xl:gap-6 justify-start">
           {/* voucher */}
           {allUserVouchers?.length > 0 ? (
             allUserVouchers.map((item: any, i: number) => (
@@ -302,9 +302,9 @@ const Page = () => {
                 className="border-[0.3px] rounded-xl p-2 lg:p-4 w-full"
               >
                 <div className="flex w-full items-center justify-between">
-                  <div className="flex flex-col sm:flex-row flex-grow items-center gap-4 w-full xl:w-4/5 h-auto sm:h-[74px]">
+                  <div className="flex flex-grow items-center md:gap-4 w-full xl:w-4/5 h-auto sm:h-[74px]">
                     {/* left */}
-                    <div className="flex w-full sm:w-auto gap-4 pr-4">
+                    <div className="flex w-full md:w-auto gap-2 md:gap-4 md:pr-4">
                       {item.thumbnail ? (
                         <Image
                           src={getVoucherImage(item)}
@@ -325,7 +325,7 @@ const Page = () => {
                         />
                       )}
                       <div className="flex flex-col justify-center lg:gap-2 w-[135px] xl:w-[158px] ">
-                        <span className="font-geistsans text-nowrap text-base lg:text-lg xl:text-2xl font-medium capitalize">
+                        <span className="font-geistsans text-nowrap text-sm md:text-base lg:text-lg xl:text-2xl font-medium capitalize">
                           {item.title.slice(0, 10)}
                           {item.title.length > 10 && "..."}
                         </span>
@@ -335,25 +335,25 @@ const Page = () => {
                       </div>
                     </div>
                     {/* middle */}
-                    <div className="flex lg:justify-evenly gap-3 xl:gap-8 items-center lg:px-4 w-full">
+                    <div className="flex lg:justify-evenly gap-1.5 md:gap-3 xl:gap-8 items-center lg:px-4 w-full">
                       <div className="flex flex-col items-center justify-center gap-2">
-                        <span className="text-brand-grayish font-normal text-xs font-geistsans tracking-tighter sm:tracking-normal">
+                        <span className="text-brand-grayish font-normal text-xs font-geistsans tracking-tighter md:tracking-normal">
                           Amount
                         </span>
-                        <span className="text-brand-grayish font-normal text-xs font-geistsans border-[0.3px] rounded-xl px-[6px] py-[2px] tracking-tighter sm:tracking-normal">
+                        <span className="text-brand-grayish font-normal text-xs font-geistsans border-[0.3px] rounded-xl px-[6px] py-[2px] tracking-tighter md:tracking-normal">
                           ₦{item.amountPerVoucher}
                         </span>
                       </div>
                       <div className="flex flex-col items-center justify-center gap-2">
-                        <span className="w-max  text-brand-grayish font-normal text-xs font-geistsans tracking-tighter sm:tracking-normal">
+                        <span className="w-max  text-brand-grayish font-normal text-xs font-geistsans tracking-tighter md:tracking-normal">
                           Cashed Vouchers
                         </span>
-                        <span className="text-brand-grayish font-normal text-xs w-max font-geistsans border-[0.3px] rounded-xl px-[6px] py-[2px] tracking-tighter sm:tracking-normal">
+                        <span className="text-brand-grayish font-normal text-xs w-max font-geistsans border-[0.3px] rounded-xl px-[6px] py-[2px] tracking-tighter md:tracking-normal">
                           {item.vouchersCashed} / {item.totalNumberOfVouchers}{" "}
                           Vouchers
                         </span>
                       </div>
-                      <div className="sm:flex flex-col items-center justify-center gap-2 hidden">
+                      <div className="md:flex flex-col items-center justify-center gap-2 hidden">
                         <span className="text-brand-grayish font-normal text-xs font-geistsans">
                           Description of Voucher
                         </span>
