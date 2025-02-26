@@ -51,7 +51,7 @@ const Metrics = () => {
           : formatMetricsAmount(
               parseInt(homepageStats?.amountCashed ?? ""),
               false
-            ),
+            ) + " +",
       color: "bg-brand-lightGreen",
     },
     {
