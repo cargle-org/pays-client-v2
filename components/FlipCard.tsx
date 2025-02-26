@@ -72,21 +72,21 @@ const FlipCard = ({
                       />
                     </div>
 
-                    <div className="absolute flex items-center justify-center left-6 sm:left-7 bottom-10 md:bottom-14">
+                    <div className="absolute flex items-center justify-center left-7 bottom-10 md:bottom-14">
                       <span className="text-lg font-semibold px-0.5 tracking-wider">
                         &#8358;{voucherDetails.amountPerVoucher}
                       </span>
                     </div>
 
-                    <div className="absolute flex left-7 bottom-4 sm:bottom-8">
-                      {voucherDetails?.logo !== "null" && (
-                        <Image
-                          src={voucherDetails?.logo ?? ""}
-                          alt="brand_logo"
-                          height={30}
-                          width={66}
-                        />
-                      )}
+                    <div className="absolute flex left-7 bottom-6 sm:bottom-[14px]">
+                      {voucherDetails?.logo !== "null" &&
+                        voucherDetails?.logo !== "undefined" && (
+                          <img
+                            src={voucherDetails?.logo ?? ""}
+                            alt="brand_logo"
+                            className="h-full max-h-[30px] w-full max-w-[90px]"
+                          />
+                        )}
                     </div>
                   </>
                 )}
@@ -130,15 +130,15 @@ const FlipCard = ({
                     </div>
                   )}
                 {voucherDetails?.backgroundStyle && (
-                  <div className="absolute flex left-7 bottom-4 sm:bottom-7">
-                    {voucherDetails?.logo !== "null" && (
-                      <Image
-                        src={voucherDetails?.logo ?? ""}
-                        alt="brand_logo"
-                        height={30}
-                        width={90}
-                      />
-                    )}
+                  <div className="absolute flex left-7 bottom-6 sm:bottom-[14px]">
+                    {voucherDetails?.logo !== "null" &&
+                      voucherDetails?.logo !== "undefined" && (
+                        <img
+                          src={voucherDetails?.logo ?? ""}
+                          alt="brand_logo"
+                          className="h-full max-h-[30px] w-full max-w-[90px]"
+                        />
+                      )}
                   </div>
                 )}
                 {voucherDetails && (

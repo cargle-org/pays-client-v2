@@ -464,7 +464,9 @@ const Page = () => {
                 <div className="flex flex-col justify-start">
                   <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
                     Upload Logo
-                    <small className="text-brand-main ml-1">(optional)</small>
+                    <small className="text-red-500 ml-1">
+                      (PNG and JPG formats only)
+                    </small>
                   </span>
                   <input
                     type="file"
