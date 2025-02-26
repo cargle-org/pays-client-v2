@@ -120,15 +120,15 @@ const Page = ({ params }: { params: { id: string } }) => {
             </div>
             <div className="rounded-t-xl bg-brand-white p-4 flex flex-col gap-4 justify-between items-center">
               <div className="flex flex-col gap-4 w-full justify-between items-start xl:flex-row">
-                <div className="max-w-sm sm:max-w-full lg:max-w-xl relative w-full h-[250px] sm:h-3/4">
+                <div className="max-w-sm sm:max-w-full lg:max-w-xl relative w-full h-[250px] md:h-[400px]">
                   <FlipCard voucherDetails={oneVoucher} />
                 </div>
-                <div className="flex flex-col w-full">
-                  <div className="rounded-xl bg-brand-white sm:p-4 flex flex-col gap-4 justify-start">
-                    <div className="flex items-center gap-1.5 sm:gap-4">
+                <div className="flex flex-col w-full my-4">
+                  <div className="rounded-xl bg-brand-white flex flex-col gap-4 justify-start">
+                    <div className="flex items-center gap-1.5 md:gap-4">
                       <span
                         onClick={() => setDisplay("vouchers")}
-                        className={`transition-fx font-semibold sm:font-bold sm:text-base text-brand-main p-1.5 sm:p-2 rounded-lg cursor-pointer leading-4 tracking-tighter ${
+                        className={`transition-fx font-semibold sm:font-bold sm:text-base text-brand-main p-1.5  md:p-2 rounded-lg cursor-pointer leading-4 tracking-tighter ${
                           display === "vouchers" &&
                           "bg-brand-main text-brand-white hover:bg-brand-main"
                         } hover:bg-brand-main/30`}
@@ -137,7 +137,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                       </span>
                       <span
                         onClick={() => setDisplay("recipients")}
-                        className={`transition-fx font-semibold sm:font-bold sm:text-base text-brand-main p-1.5 sm:p-2 rounded-lg cursor-pointer leading-4 tracking-tighter ${
+                        className={`transition-fx font-semibold md:font-bold md:text-base text-brand-main p-1.5 md:p-2 rounded-lg cursor-pointer leading-4 tracking-tighter ${
                           display === "recipients" &&
                           "bg-brand-main text-brand-white hover:bg-brand-main"
                         } hover:bg-brand-main/30 `}
@@ -146,7 +146,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                       </span>
                       <span
                         onClick={() => setDisplay("description")}
-                        className={`transition-fx font-semibold sm:font-bold sm:text-base text-brand-main p-1.5 sm:p-2 rounded-lg cursor-pointer leading-4 tracking-tighter ${
+                        className={`transition-fx font-semibold md:font-bold md:text-base text-brand-main p-1.5 md:p-2 rounded-lg cursor-pointer leading-4 tracking-tighter ${
                           display === "description" &&
                           "bg-brand-main text-brand-white hover:bg-brand-main"
                         } hover:bg-brand-main/30 `}
@@ -315,16 +315,16 @@ const Page = ({ params }: { params: { id: string } }) => {
                 </div>
               </div>
               {/* bottom buttons */}
-              <div className="w-full rounded-xl bg-brand-white p-4 flex justify-between items-center border border-brand-grayish/15">
+              <div className="w-full rounded-xl bg-brand-white p-3 flex justify-between items-center border border-brand-grayish/15">
                 <Link
                   href={"/dashboard/vouchers"}
-                  className="p-1 sm:p-3 px-3 sm:px-8 bg-transparent text-[#DE2626] border-[0.3px] border-[#DE2626] font-normal text-sm sm:text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-[#DE2626] hover:text-brand-white"
+                  className="sm:p-1 p-3 sm:px-3 px-6 bg-transparent text-[#DE2626] border-[0.3px] border-[#DE2626] font-normal text-sm sm:text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-[#DE2626] hover:text-brand-white"
                 >
                   Back
                 </Link>
                 <Link
                   href={"/dashboard/vouchers/create"}
-                  className="p-1 sm:p-3 px-3 sm:px-8 bg-brand-main text-brand-white font-normal text-sm sm:text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-brand-main/25"
+                  className="sm:p-1 p-3 sm:px-3 px-6 bg-brand-main text-brand-white font-normal text-sm sm:text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-brand-main/25"
                 >
                   create voucher
                 </Link>

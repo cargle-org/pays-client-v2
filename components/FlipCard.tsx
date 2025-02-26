@@ -35,8 +35,8 @@ const FlipCard = ({
   const qrUrl = "https://www.usepays.co/cashout";
 
   return (
-    <div className="flex items-center justify-center bg-gray-100">
-      <div className="relative w-[300px] h-[240px] sm:w-[313px] sm:h-[370px] perspective">
+    <div className="md:py-2 flex items-center justify-center bg-gray-100">
+      <div className="relative sm:w-[250px] sm:h-[270px] md:w-[313px] md:h-[370px] perspective">
         <div
           className={`w-full h-full transition-transform duration-700 transform-style-preserve-3d ${
             flipped ? "rotate-y-180" : ""
@@ -65,15 +65,15 @@ const FlipCard = ({
                   <>
                     <div className="absolute flex text-center top-7 left-7">
                       <Image
-                        src="https://res.cloudinary.com/dpz3rs8ay/image/upload/v1740418577/usepays/payslogo_zgnvlb.png"
+                        src="https://res.cloudinary.com/dpz3rs8ay/image/upload/v1740519503/usepays/pays-logo_gpqzyp.svg"
                         alt="pays_logo"
                         height={16.32}
                         width={48.97}
                       />
                     </div>
 
-                    <div className="absolute flex items-center justify-center left-6 sm:left-7 bottom-10 sm:bottom-14">
-                      <span className="text-base sm:text-lg font-semibold px-0.5 tracking-wider">
+                    <div className="absolute flex items-center justify-center left-6 sm:left-7 bottom-10 md:bottom-14">
+                      <span className="text-lg font-semibold px-0.5 tracking-wider">
                         &#8358;{voucherDetails.amountPerVoucher}
                       </span>
                     </div>
@@ -114,8 +114,8 @@ const FlipCard = ({
             ) : (
               <>
                 {voucherDetails && (
-                  <div className="absolute flex left-7 top-4 sm:top-7">
-                    <span className="text-sm sm:text-lg font-semibold px-0.5 tracking-tight">
+                  <div className="absolute flex left-7 top-4 sm:top-5 md:top-7">
+                    <span className="text-lg font-semibold px-0.5">
                       {voucherDetails.title}
                     </span>
                   </div>
@@ -123,8 +123,8 @@ const FlipCard = ({
 
                 {voucherDetails &&
                   voucherDetails?.voucherCoupons.length > 0 && (
-                    <div className="absolute flex items-center justify-center bottom-[70px] sm:bottom-[92px]">
-                      <span className="text-[10px] sm:text-base text-center font-normal px-0.5 tracking-tight">
+                    <div className="absolute flex items-center justify-center bottom-[60px] md:bottom-[89px]">
+                      <span className="text-[10px] sm:text-sm md:text-base text-center font-normal px-0.5 tracking-tight">
                         {voucherDetails.voucherCoupons[0].couponCode}
                       </span>
                     </div>
@@ -142,8 +142,8 @@ const FlipCard = ({
                   </div>
                 )}
                 {voucherDetails && (
-                  <div className="absolute flex items-center justify-center right-7 bottom-4 sm:bottom-7">
-                    <span className="text-base sm:text-lg font-semibold px-0.5 tracking-wider">
+                  <div className="absolute flex items-center justify-center right-7 bottom-4 sm:bottom-4 md:bottom-7">
+                    <span className="text-lg font-semibold px-0.5 tracking-wider">
                       &#8358;{voucherDetails.amountPerVoucher}
                     </span>
                   </div>
@@ -155,9 +155,9 @@ const FlipCard = ({
             <div className="absolute flex flex-col items-center justify-center">
               <QRCodeSVG
                 value={qrUrl}
-                size={140}
+                size={150}
                 bgColor="transparent"
-                className="rounded-md shadow-lg"
+                className="rounded-md shadow-lg sm:w-[140px] sm:h-[110px] md:size-[150px]"
               />
             </div>
           </div>
