@@ -16,7 +16,8 @@ export const faqs = [
   },
   {
     question: "How can I contact customer support?",
-    answer: "You can mail us at hi@usepays.co or give us a call at +2347060920886 for any inquiries or assistance",
+    answer:
+      "You can e-mail us at hi@usepays.co or give us a call at +2347034560055 for any inquiries or assistance. Our office address: 6, Fadunsin avenue, Ikeja, Lagos, Nigeria.",
   },
   {
     question: "Is my personal information secure?",
@@ -25,6 +26,7 @@ export const faqs = [
   },
   {
     question: "What fees are associated with using UsePays?",
-    answer: "Please refer to our pricing page for detailed information on any fees that may apply.",
+    answer:
+      "Please refer to our pricing page for detailed information on any fees that may apply.",
   },
 ];
