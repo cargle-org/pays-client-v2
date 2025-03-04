@@ -2,33 +2,63 @@ import React from "react";
 import spikk from "@/assets/svgs/Spikk.svg";
 import qr from "@/assets/svgs/Qr-code.svg";
 import pays from "@/assets/svgs/Pays.svg";
+import moniepoint from "@/assets/svgs/Moniepoint.svg";
+import jumia from "@/assets/svgs/Jumia.svg";
+import konga from "@/assets/svgs/Konga.svg";
+import nestle from "@/assets/svgs/Nestle.svg";
+import netflix from "@/assets/svgs/Netflix.svg";
 import Image from "next/image";
 
 const Template = () => {
   const templateData = [
     {
-      titleTop: "Birthdays & Anniversaries",
-      titleDown: "Make their day extra special with a customized gift voucher.",
+      titleTop: "For HR",
+      titleDown: "Delight your team or whole company with thoughtful gifts ",
+      logo: moniepoint,
       bgImage: "/imgs/lightBlueSilk.png",
       color: "bg-brand-lightBlue",
     },
     {
-      titleTop: "Festive Seasons",
-      titleDown: "Spread joy during Christmas, Eid, or other celebrations with pre-scheduled gifts.",
+      titleTop: "For Sales",
+      titleDown: "Incentivize and reward customers with gifts they'Il love ",
+      logo: spikk,
       bgImage: "/imgs/roseSilk.png",
       color: "bg-brand-pink200",
     },
     {
-      titleTop: "Random Acts of Kindness",
-      titleDown: "Brighten someone’s day with an unexpected token of appreciation.",
+      titleTop: "For Marketing",
+      titleDown: "Efficiently drive growth with incentives and gifts",
+      logo: jumia,
       bgImage: "/imgs/goldSilk.png",
       color: "bg-brand-yellow100",
     },
     {
-      titleTop: "Reward Hardwork",
-      titleDown: "Celebrate your child's achievements with Usepays vouchers, perfect for rewarding.",
+      titleTop: "For Platforms",
+      titleDown: "Integrate branded payments into your product or UX ",
+      logo: konga,
       bgImage: "/imgs/violetSilk.png",
       color: "bg-brand-lightBlue",
+    },
+    {
+      titleTop: "For Customer Service",
+      titleDown: "Empower your team to send gifts to customers  ",
+      logo: nestle,
+      bgImage: "/imgs/skyBlueMarble.png",
+      color: "bg-brand-lightBlue",
+    },
+    {
+      titleTop: "For Holiday",
+      titleDown: "Gifts Give great gifts to your team, clients, and colleagues.",
+      logo: netflix,
+      bgImage: "/imgs/orange.png",
+      color: "bg-brand-pink200",
+    },
+    {
+      titleTop: "For Products",
+      titleDown: "Engage your customers with user research programs and reward them for their valuable input.",
+      logo: spikk,
+      bgImage: "/imgs/goldSilk.png",
+      color: "bg-brand-yellow100",
     },
   ];
 
@@ -55,7 +85,7 @@ const Template = () => {
                   <div style={{ backgroundImage: `url(${data.bgImage})` }} className={`w-full h-full card-front`}>
                     <div className='overlay'></div>
                     <div className='z-10 text-center'>
-                      <Image src={spikk} alt='Center Logo' width={110} height={40} />
+                      <Image src={data.logo} alt='Center Logo' width={110} height={40} />
                       <p className='pt-2 text-brand-gray200'>₦2000</p>
                     </div>
                     <Image src={pays} alt='Bottom Logo' width={50} height={40} className='z-10 absolute bottom-4' />
@@ -73,8 +103,8 @@ const Template = () => {
                       30%
                     </div>
                     <Image
-                      className='absolute bottom-6 left-10 z-10'
-                      src={spikk}
+                      className='absolute bottom-6 left-10 z-10 max-h-[60px]'
+                      src={data.logo}
                       alt='Center Logo'
                       width={100}
                       height={40}

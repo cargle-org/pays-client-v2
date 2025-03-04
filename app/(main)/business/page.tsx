@@ -3,12 +3,12 @@
 import BusinessHero from "@/components/Business/BusinessHero";
 import Claim from "@/components/Business/Claim";
 import Features from "@/components/Business/Features";
+import Template from "@/components/Business/Template";
 import Brand from "@/components/Landing/Brand";
 import FAQ from "@/components/Landing/FAQ";
 import Find from "@/components/Landing/Find";
 import Hero from "@/components/Landing/Hero";
 import Metrics from "@/components/Landing/Metrics";
-import Template from "@/components/Landing/Template";
 import React from "react";
 
 const Page = () => {
