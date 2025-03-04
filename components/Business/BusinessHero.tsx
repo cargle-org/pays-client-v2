@@ -59,11 +59,10 @@ const BusinessHero = () => {
         <div className='w-[50%] xs:w-full sm:text-center sm:w-full sm:px-4 sm:pt-8 md:mt-[-100px] mb-[100px] px-2'>
           <div className='mt-8'> 🎁 ✉️ 💰 🎉 </div>
           <h1 className='l:text-[64px] sm:max-w-[400px] sm:text-center sm:mx-auto lg:text-[50px] lg:leading-[60px] text-[40px] font-medium l:leading-[84px] sm:leading-[40px] xs:text-[34px] mt-4'>
-            Effortless Gifting, Anytime, Anywhere!
+            Easily Send Coperate Gifts & Rewards
           </h1>
           <p className='md:max-w-[80%] text-[20px] sm:max-w-[400px] sm:text-center sm:mx-auto text-brand-gray200 sm:text-brand-grayish xs:text-[16px] sm:pt-3'>
-            The best way to create vouchers your friends and loved ones can turn into cash, because the best gift is
-            choice.
+            Celebrate milestones, reward employees or impress clients with customizable vouchers.
           </p>
           <div
             className={

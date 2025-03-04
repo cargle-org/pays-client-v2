@@ -31,7 +31,7 @@ const Claim = () => {
           isSecondary
           onClick={() => handleNavigate("/auth/login")}
           borderRadius='rounded-[50px]'
-          className='w-[250px]'>
+          className='w-[250px] z-30'>
           Create your Gift Card <ArrowRightUp />
         </CustomButton>
       </div>
