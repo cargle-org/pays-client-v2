@@ -44,6 +44,14 @@ const GeneralProvider = (props: any) => {
     confirmPassword: "",
   });
 
+  // VOUCHERS DRAFTS
+  const [draftId, setDraftId] = useState("");
+  const [oneVoucherDraft, setOneVoucherDraft] = useState("");
+  const [fetchVoucherDraftsLoading, setFetchVoucherDraftsLoading] =
+    useState(false);
+  const [allUserVoucherDrafts, setAllUserVoucherDrafts] = useState([]);
+  useState(false);
+
   // VOUCHERS
   const [allUserVouchers, setAllUserVouchers] = useState();
   const [oneVoucherId, setOneVoucherId] = useState();
@@ -464,6 +472,38 @@ const GeneralProvider = (props: any) => {
     }
   };
 
+  const getAllDraftsByUser = async () => {
+    try {
+      // console.log("🚀 ~ getAllVouchersByUser ~ userId:", userId, token);
+      setFetchVoucherDraftsLoading(true);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/voucher/all-drafts?userId=${userId}`,
+        {
+          headers: {
+            "content-type": "application/json",
+            "x-access-token": token,
+          },
+        }
+      );
+      console.log(
+        "🚀 ~ getAllVoucherDraftsByUser ~ response:",
+        response.data.data
+      );
+      setFetchVoucherDraftsLoading(false);
+      if (response.status === 200) {
+        setAllUserVoucherDrafts(response.data.data);
+      }
+    } catch (err: any) {
+      setFetchVoucherDraftsLoading(false);
+      console.log("🚀 ~ getAllDraftsByUser ~ err:", err);
+      error(
+        err.response?.data?.message
+          ? err?.response?.data?.message
+          : err.response?.data?.error
+      );
+    }
+  };
+
   const getVoucherById = async () => {
     try {
       const response = await axios.get(
@@ -487,6 +527,32 @@ const GeneralProvider = (props: any) => {
       //     ? err?.response?.data?.message
       //     : err.response?.data?.error
       // );
+    }
+  };
+
+  const getVoucherDraftById = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/voucher/find-draft/${draftId}?userId=${userId}`,
+        {
+          headers: {
+            "content-type": "application/json",
+            "x-access-token": token,
+          },
+        }
+      );
+      console.log("🚀 ~ getVoucherById ~ response:", response);
+      if (response.status === 200) {
+        setOneVoucherDraft(response.data.data.voucher);
+        // return response;
+      }
+    } catch (err: any) {
+      console.log("🚀 ~ getVoucherById ~ err:", err);
+      error(
+        err.response?.data?.message
+          ? err?.response?.data?.message
+          : err.response?.data?.error
+      );
     }
   };
 
@@ -994,6 +1060,11 @@ const GeneralProvider = (props: any) => {
     console.log("__3d1k4N.init");
     const cachedUserId = localStorage.getItem("userId");
     const cachedToken = localStorage.getItem("auth_token");
+    if (!cachedUserId || !cachedToken) {
+      localStorage.removeItem("auth_token");
+      localStorage.removeItem("userId");
+      router.push("/auth/login");
+    }
     if (cachedUserId) setUserId(cachedUserId);
     if (cachedToken) setToken(cachedToken);
     getAllBanks();
@@ -1240,6 +1311,17 @@ const GeneralProvider = (props: any) => {
         setCreatePaymentLinkLoading,
         setFetchPaymentLinksLoading,
         setSelectedPaymentLinkStatus,
+
+        //Voucher Drafts
+        getAllDraftsByUser,
+        allUserVoucherDrafts,
+        fetchVoucherDraftsLoading,
+        setAllUserVoucherDrafts,
+        setFetchVoucherDraftsLoading,
+        getVoucherDraftById,
+        oneVoucherDraft,
+        setDraftId,
+        draftId,
       }}
     >
       {props.children}
