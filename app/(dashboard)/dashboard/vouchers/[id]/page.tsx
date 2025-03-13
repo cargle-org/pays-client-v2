@@ -5,14 +5,23 @@ import Link from "next/link";
 
 import FlipCard from "@/components/FlipCard";
 import { useGeneralContext } from "@/context/GenralContext";
+import { useRouter } from "next/navigation";
 
 const Page = ({ params }: { params: { id: string } }) => {
+  const router = useRouter();
+
   const { oneVoucher, setOneVoucherId }: any = useGeneralContext();
   const [display, setDisplay] = useState("vouchers");
   const [selectedCoupon, setSelectedCoupon] = useState<any>(null);
   const [activeShareCoupon, setActiveShareCoupon] = useState<string | null>(
     null
   );
+
+  const handleAddRecipient = () => {
+    router.push(
+      `/dashboard/vouchers/create/recipients/${oneVoucher?.specialKey}`
+    );
+  };
 
   const handleShare = async (platform: string, couponCode: string) => {
     const shareData = {
@@ -297,11 +306,24 @@ const Page = ({ params }: { params: { id: string } }) => {
                               )
                             )
                           ) : (
-                            <tr className="mb-4 rounded-lg">
-                              <td className="py-2" colSpan={4}>
-                                No Recipients available.
-                              </td>
-                            </tr>
+                            <>
+                              <tr className="mb-4 rounded-lg">
+                                <td className="py-2" colSpan={4}>
+                                  No Recipients available.
+                                </td>
+                              </tr>
+                              <tr>
+                                <td colSpan={4} className="py-4">
+                                  <button
+                                    type="button"
+                                    onClick={handleAddRecipient}
+                                    className="sm:p-1 p-3 sm:px-3 px-6 bg-brand-main text-brand-white font-normal text-sm sm:text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-brand-main/25"
+                                  >
+                                    Add Recipient
+                                  </button>
+                                </td>
+                              </tr>
+                            </>
                           )}
                         </tbody>
                       </table>
