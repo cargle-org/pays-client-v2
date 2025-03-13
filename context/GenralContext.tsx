@@ -605,6 +605,7 @@ const GeneralProvider = (props: any) => {
       setCreateVoucherLoading(false);
       if (response.status === 200) {
         setOneVoucher(response.data.data.voucher);
+        setRecipients([]);
         success("Voucher updated successfully.");
         getAllVouchersByUser();
         router.push(`/dashboard/vouchers/${response.data.data.voucher._id}`);
