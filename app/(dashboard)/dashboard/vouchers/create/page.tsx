@@ -4,37 +4,26 @@ import React, { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { Eye, NotebookPen } from "lucide-react";
 
 import axios from "axios";
 import { useGeneralContext } from "@/context/GenralContext";
 
 import { success, error } from "@/helpers/Alert";
-
 import Spinner from "@/components/spinner/Spinner";
 import {
   abstractColors,
   colorPalettes,
   silkColors,
 } from "@/constants/voucherstyles";
-import VoucherTemplates from "./_components/VoucherTemplates";
-import { Eye, Loader, NotebookPen, Trash2 } from "lucide-react";
 import { LogoUploader } from "@/components/LogoUploader";
+import ViewDrafts from "@/components/Vouchers/ViewDrafts";
+import VoucherTemplates from "./_components/VoucherTemplates";
 import VoucherPreviewModal from "@/components/modals/VoucherPreviewModal";
-import VoucherPreviewCard from "@/components/VoucherPreviewCard";
-import ViewDrafts from "@/components/ViewDrafts";
+import VoucherPreviewCard from "@/components/Vouchers/VoucherPreviewCard";
 
 const Page = () => {
   const router = useRouter();
-
-  const [newAmount, setNewAmount] = useState(0);
-  const [showPreviewModal, setShowPreviewModal] = useState(false);
-  const [showVoucherDraftsModal, setShowVoucherDraftsModal] = useState(false);
-
-  // // console.log("🚀 ~ Page ~ newAmount:", newAmount);
-  const [paysFee, setPaysFee] = useState(0);
-  const [selectedStyle, setSelectedStyle] = useState("");
-  const [createVoucherDraftLoading, setCreateVoucherDraftLoading] =
-    useState(false);
 
   const {
     user,
@@ -48,22 +37,37 @@ const Page = () => {
     allUserVoucherDrafts,
     fetchVoucherDraftsLoading = true,
     oneVoucherDraft,
-    setAllUserVoucherDrafts,
-    setFetchVoucherDraftsLoading,
   }: any = useGeneralContext();
-  console.log(oneVoucherDraft);
+
+  const [newAmount, setNewAmount] = useState(0);
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
+  const [showVoucherDraftsModal, setShowVoucherDraftsModal] = useState(false);
+
+  // // console.log("🚀 ~ Page ~ newAmount:", newAmount);
+  const [paysFee, setPaysFee] = useState(0);
+  const [selectedStyle, setSelectedStyle] = useState(
+    oneVoucherDraft?.backgroundStyle ?? ""
+  );
+  const [createVoucherDraftLoading, setCreateVoucherDraftLoading] =
+    useState(false);
+
+  //set date
+  const startDate = new Date();
   const [logo, setLogo] = useState<File | null>(null);
-  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  const [logoUrl, setLogoUrl] = useState<string>(oneVoucherDraft?.logo);
 
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    voucherKey: "",
-    logo: "",
-    backgroundStyle: "",
-    amountPerVoucher: "",
-    totalNumberOfVouchers: "",
+    title: oneVoucherDraft?.title || "",
+    description: oneVoucherDraft?.description || "",
+    voucherKey: oneVoucherDraft?.voucherKey || "",
+    logo: oneVoucherDraft?.logo || "",
+    backgroundStyle: oneVoucherDraft?.backgroundStyle || "",
+    amountPerVoucher: oneVoucherDraft?.amountPerVoucher || "",
+    totalNumberOfVouchers: oneVoucherDraft?.totalNumberOfVouchers || "",
+    expiryDate: oneVoucherDraft?.expiryDate || "",
   });
+
+  const voucherData = { ...formData, ...oneVoucherDraft };
 
   //Cloudinary logo upload succcess handler
   const handleUploadSuccess = (url: string) => {
@@ -77,13 +81,17 @@ const Page = () => {
     }
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [e.target.name]: e.target.value,
     }));
   };
 
   //Change background state
   const onBackgroundClick = (bgStyle: string) => {
     setSelectedStyle(bgStyle);
+    setFormData((prev) => ({
+      ...prev,
+      backgroundStyle: bgStyle,
+    }));
   };
 
   //Display Voucher Preview handler
@@ -97,64 +105,66 @@ const Page = () => {
     setShowVoucherDraftsModal(false);
   };
 
-  //Display Voucher Saved Draft modal handler
   const handleDraftsViewClick = () => {
     getAllDraftsByUser();
     setShowVoucherDraftsModal(true);
   };
 
-  const handleCreateVoucherDraft = useCallback(async (e: any) => {
-    let bgStyle = selectedStyle;
-    console.log("hi");
-    try {
-      e.preventDefault();
-      setCreateVoucherDraftLoading(true);
+  //create voucher draft handler
+  const handleCreateVoucherDraft = useCallback(
+    async (e: React.MouseEvent) => {
+      try {
+        e.preventDefault();
+        setCreateVoucherDraftLoading(true);
 
-      const data = {
-        userId: user?._id,
-        logo: logoUrl ?? "",
-        title: formData.title,
-        backgroundStyle: bgStyle,
-        voucherKey: formData.voucherKey,
-        description: formData.description,
-        amountPerVoucher: formData.amountPerVoucher,
-        totalNumberOfVouchers: formData.totalNumberOfVouchers,
-      };
+        const data = {
+          userId: user?._id,
+          logo: logoUrl ?? voucherData.logo,
+          title: formData.title,
+          backgroundStyle: selectedStyle ?? formData.backgroundStyle,
+          voucherKey: formData.voucherKey,
+          description: formData.description,
+          amountPerVoucher: formData.amountPerVoucher,
+          expiryDate: formData.expiryDate,
+          totalNumberOfVouchers: formData.totalNumberOfVouchers,
+        };
 
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/voucher/save-draft`,
-        data,
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/utils/voucher/save-draft`,
+          data,
 
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "x-access-token": token,
-          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "x-access-token": token,
+            },
+          }
+        );
+        // setCreateVoucherLoading(false);
+
+        if (response.status === 200) {
+          getOneUser();
+          // getAllVouchersByUser();
+          success("Draft Saved successfully.");
+          setCreateVoucherDraftLoading(false);
+          //   router.push(
+          //     `/dashboard/vouchers/create/recipients/${response.data.data.voucher.specialKey}`
+          //   );
         }
-      );
-      // setCreateVoucherLoading(false);
-
-      if (response.status === 200) {
-        getOneUser();
-        // getAllVouchersByUser();
-        success("Voucher Draft Saved successfully.");
+      } catch (err: any) {
         setCreateVoucherDraftLoading(false);
-        //   router.push(
-        //     `/dashboard/vouchers/create/recipients/${response.data.data.voucher.specialKey}`
-        //   );
+        // console.log("🚀 ~ onSubmit ~ err: ", err);
+        error(
+          err?.response?.data?.message
+            ? err?.response?.data?.message
+            : err?.response?.data?.error || err?.message
+        );
+      } finally {
+        setCreateVoucherDraftLoading(false);
       }
-    } catch (err: any) {
-      setCreateVoucherDraftLoading(false);
-      // console.log("🚀 ~ onSubmit ~ err: ", err);
-      error(
-        err?.response?.data?.message
-          ? err?.response?.data?.message
-          : err?.response?.data?.error || err?.message
-      );
-    } finally {
-      setCreateVoucherDraftLoading(false);
-    }
-  }, []);
+    },
+    [formData, selectedStyle, logoUrl]
+  );
 
   const onSubmit = async (e: any) => {
     let bgStyle = selectedStyle;
@@ -216,6 +226,24 @@ const Page = () => {
     }));
   };
 
+  //Update state incase selected draft changes
+  useEffect(() => {
+    setSelectedStyle(oneVoucherDraft?.backgroundStyle || "");
+    setFormData({
+      title: oneVoucherDraft?.title || "",
+      description: oneVoucherDraft?.description || "",
+      voucherKey: oneVoucherDraft?.voucherKey || "",
+      logo: oneVoucherDraft?.logo || "",
+      backgroundStyle: formData?.backgroundStyle || selectedStyle || "",
+      amountPerVoucher: oneVoucherDraft?.amountPerVoucher || "",
+      totalNumberOfVouchers: oneVoucherDraft?.totalNumberOfVouchers || "",
+      expiryDate:
+        oneVoucherDraft?.expiryDate ||
+        startDate.toISOString().split("T")[0] ||
+        "",
+    });
+  }, [oneVoucherDraft]);
+
   useEffect(() => {
     if (formData.amountPerVoucher) {
       if (
@@ -276,11 +304,29 @@ const Page = () => {
         >
           <div className="flex items-center justify-center flex-row flex-grow sm:flex-col md:gap-4 w-full bg-gray-100">
             <VoucherPreviewCard
-              formData={formData}
+              formData={{
+                ...voucherData,
+                ...Object.fromEntries(
+                  Object.entries(formData).filter(
+                    ([key]) => formData[key as keyof typeof formData] !== ""
+                  )
+                ),
+                backgroundStyle: selectedStyle,
+                logo: logoUrl,
+              }}
               frontCardView="rotate-y-180"
             />
             <VoucherPreviewCard
-              formData={formData}
+              formData={{
+                ...voucherData,
+                ...Object.fromEntries(
+                  Object.entries(formData).filter(
+                    ([key]) => formData[key as keyof typeof formData] !== ""
+                  )
+                ),
+                backgroundStyle: selectedStyle,
+                logo: logoUrl,
+              }}
               backCardView="rotate-y-180"
             />
           </div>
@@ -351,11 +397,11 @@ const Page = () => {
                 </span>
               </div>
               <div className="flex flex-col justify-start gap-1.5">
-                <div className="">
+                <div className="flex flex-col justify-normal">
                   <span className="font-medium text-sm text-brand-grayish pl-2">
                     Select Voucher Templates
                   </span>
-                  {/* <VoucherTemplates setFormData={setFormData} /> */}
+                  <VoucherTemplates setFormData={setFormData} />
                 </div>
                 <div className="flex flex-col gap-3">
                   <span className="font-medium text-sm text-brand-grayish pl-2">
@@ -461,8 +507,8 @@ const Page = () => {
                       name="title"
                       id="title"
                       maxLength={23}
-                      value={formData.title || oneVoucherDraft?.title || ""}
-                      defaultValue={oneVoucherDraft?.title}
+                      value={formData.title}
+                      // defaultValue={oneVoucherDraft?.title}
                       placeholder="Enter voucher title"
                       onChange={onchangeHandler}
                       className="sm:w-auto h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
@@ -476,11 +522,7 @@ const Page = () => {
                     <textarea
                       name="description"
                       id="description"
-                      value={
-                        formData.description ||
-                        oneVoucherDraft?.description ||
-                        ""
-                      }
+                      value={formData.description}
                       placeholder="Enter a brief description"
                       onChange={onchangeHandler}
                       rows={3}
@@ -495,9 +537,7 @@ const Page = () => {
                       type="text"
                       name="voucherKey"
                       id="voucherKey"
-                      value={
-                        formData.voucherKey || oneVoucherDraft?.voucherKey || ""
-                      }
+                      value={formData.voucherKey}
                       placeholder="Enter voucher key (5 characters max)"
                       onChange={onchangeHandler}
                       maxLength={5} // Limit input to 5 characters
@@ -529,11 +569,7 @@ const Page = () => {
                     type="number"
                     name="amountPerVoucher"
                     id="amountPerVoucher"
-                    value={
-                      formData.amountPerVoucher ||
-                      oneVoucherDraft?.amountPerVoucher ||
-                      ""
-                    }
+                    value={formData.amountPerVoucher}
                     placeholder="Enter voucher amount"
                     onChange={onchangeHandler}
                     className="w-auto h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
@@ -547,18 +583,28 @@ const Page = () => {
                     type="number"
                     name="totalNumberOfVouchers"
                     id="totalNumberOfVouchers"
-                    value={
-                      formData.totalNumberOfVouchers ||
-                      oneVoucherDraft?.totalNumberOfVouchers ||
-                      ""
-                    }
+                    value={formData.totalNumberOfVouchers}
                     placeholder="Enter Number of Vouchers (max 20)"
                     onChange={onchangeHandler}
                     max={20} // Limit input to 20 vouchers
                     className="w-auto h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
-
+                <div className="flex flex-col justify-start">
+                  <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
+                    Voucher Expiry Date <span className="text-red-400">*</span>
+                  </span>
+                  <input
+                    type="date"
+                    name="expiryDate"
+                    id="expiryDate"
+                    min={startDate.toISOString().split("T")[0]}
+                    value={formData.expiryDate}
+                    onChange={onchangeHandler}
+                    placeholder="Select Voucher expiry date"
+                    className="w-auto h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                  />
+                </div>
                 <div className="flex flex-col justify-start">
                   <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
                     Upload Logo
@@ -570,7 +616,7 @@ const Page = () => {
                     logo={logo}
                     setLogo={setLogo}
                     setLogoUrl={setLogoUrl}
-                    logoUrl={(logoUrl || oneVoucherDraft?.logo) ?? ""}
+                    logoUrl={logoUrl || formData.logo}
                     onUploadSuccess={handleUploadSuccess}
                   />
                 </div>
