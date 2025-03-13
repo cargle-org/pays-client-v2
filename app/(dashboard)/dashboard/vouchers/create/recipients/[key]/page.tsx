@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import logo from "@/assets/imgs/auth/pays_logo.png";
 import login1 from "@/assets/imgs/auth/pays_login_1.png";
@@ -18,16 +19,23 @@ const Recipients = ({ params }: { params: { key: string } }) => {
   // console.log("🚀 ~ Recipients ~ params:", params);
   const {
     token,
-    oneVoucherId,
+    oneVoucher,
     setOneVoucherId,
     createVoucherLoading,
     setVoucherSpecialKey,
     setCreateVoucherLoading,
   }: any = useGeneralContext();
+  const router = useRouter();
   const [display, setDisplay] = useState("");
 
   useEffect(() => {
     params?.key && setVoucherSpecialKey(params?.key);
+  }, []);
+
+  useEffect(() => {
+    if (oneVoucher?.recipients?.length > 0) {
+      router.push(`/dashboard/vouchers/${oneVoucher?._id}`);
+    }
   }, []);
 
   return (
