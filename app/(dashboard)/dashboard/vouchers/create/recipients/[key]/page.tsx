@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import logo from "@/assets/imgs/auth/pays_logo.png";
 import login1 from "@/assets/imgs/auth/pays_login_1.png";
@@ -9,6 +10,8 @@ import Spinner from "@/components/spinner/Spinner";
 import { useGeneralContext } from "@/context/GenralContext";
 import Manual from "./Manual";
 import Bulk from "./Bulk";
+import { Timer } from "lucide-react";
+import ScheduleDelivery from "./ScheduleDelivery";
 // import IndividualLogin from "./individual/page";
 // import CompanyLogin from "./company/page";
 
@@ -16,16 +19,23 @@ const Recipients = ({ params }: { params: { key: string } }) => {
   // console.log("🚀 ~ Recipients ~ params:", params);
   const {
     token,
-    oneVoucherId,
+    oneVoucher,
     setOneVoucherId,
     createVoucherLoading,
     setVoucherSpecialKey,
     setCreateVoucherLoading,
   }: any = useGeneralContext();
+  const router = useRouter();
   const [display, setDisplay] = useState("");
 
   useEffect(() => {
     params?.key && setVoucherSpecialKey(params?.key);
+  }, []);
+
+  useEffect(() => {
+    if (oneVoucher?.recipients?.length > 0) {
+      router.push(`/dashboard/vouchers/${oneVoucher?._id}`);
+    }
   }, []);
 
   return (
@@ -60,6 +70,9 @@ const Recipients = ({ params }: { params: { key: string } }) => {
         )}
         {display === "bulk" && (
           <Bulk setDisplay={setDisplay} key={params?.key} />
+        )}
+        {display === "schedule" && (
+          <ScheduleDelivery setDisplay={setDisplay} key={params?.key} />
         )}
         {display === "" && (
           <div className="flex gap-2 items-start justify-between">
@@ -130,6 +143,18 @@ const Recipients = ({ params }: { params: { key: string } }) => {
                     </span>
                     <div className="font-normal text-xs text-brand-grayish font-geistsans">
                       Add recipients in bulk from an excel file
+                    </div>
+                  </div>
+                  <div
+                    onClick={() => setDisplay("schedule")}
+                    className="transition-fx group max-w-[240px] h-[188px] p-4 flex flex-col justify-start gap-2 border-[0.1px] border-brand-grayish rounded-lg cursor-pointer hover:text-brand-white hover:bg-brand-main"
+                  >
+                    <Timer className="size-[58px] group-hover:bg-white stroke-[#1F0047] p-2 border-[1.5px] border-[#D9D9D9] rounded-lg" />
+                    <span className="font-bold text-2xl gont-geistsans">
+                      Schedule Delivery
+                    </span>
+                    <div className="font-normal text-xs text-brand-grayish font-geistsans">
+                      Schedule Voucher delivery time.
                     </div>
                   </div>
                 </div>
