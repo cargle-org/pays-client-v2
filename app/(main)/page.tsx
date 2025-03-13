@@ -88,8 +88,8 @@ const Page = () => {
     <>
       <div className='w-full pt-12 pb-10 lg:pt-32'>
         <Hero />
-        <Brand />
-        <Metrics />
+        {/* <Brand /> */}
+        {/* <Metrics /> */}
         <Template />
         <Find />
         <FAQ />
