@@ -7,11 +7,11 @@ interface VoucherTemplatesProps {
       title: string;
       description: string;
       voucherKey: string;
-      expiryDate?: Date | number | string;
-      logo?: string | null;
-      amountPerVoucher?: string;
-      totalNumberOfVouchers?: string;
-      backgroundStyle?: string;
+      expiryDate: Date | number | string;
+      logo: string | null;
+      amountPerVoucher: string;
+      totalNumberOfVouchers: string;
+      backgroundStyle: string;
     }>
   >;
 }

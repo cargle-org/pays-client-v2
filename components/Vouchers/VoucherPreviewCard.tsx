@@ -19,7 +19,6 @@ interface VoucherFormDataProps {
 }
 
 interface VoucherPreviewCardProps {
-  voucherDraft: VoucherFormDataProps;
   formData: VoucherFormDataProps;
   frontCardView?: string;
   backCardView?: string;
@@ -29,11 +28,9 @@ function VoucherPreviewCard({
   formData,
   frontCardView,
   backCardView,
-  voucherDraft,
 }: VoucherPreviewCardProps) {
   const [flipped, setFlipped] = useState(false);
-  const voucherData = formData;
-  console.log(formData);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setFlipped((prev) => !prev);
@@ -66,10 +63,6 @@ function VoucherPreviewCard({
             }}
             className={`absolute w-full h-full bg-white shadow-lg rounded-lg flex items-center justify-center backface-hidden ${backCardView}`}
           >
-            {/* <div
-              className="absolute inset-0 bg-white"
-              style={{ opacity: 1, zIndex: 1 }}
-            /> */}
             {formData && (
               <>
                 {formData && (
