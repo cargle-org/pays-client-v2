@@ -1061,11 +1061,6 @@ const GeneralProvider = (props: any) => {
     console.log("__3d1k4N.init");
     const cachedUserId = localStorage.getItem("userId");
     const cachedToken = localStorage.getItem("auth_token");
-    if (!cachedUserId || !cachedToken) {
-      localStorage.removeItem("auth_token");
-      localStorage.removeItem("userId");
-      router.push("/auth/login");
-    }
     if (cachedUserId) setUserId(cachedUserId);
     if (cachedToken) setToken(cachedToken);
     getAllBanks();
