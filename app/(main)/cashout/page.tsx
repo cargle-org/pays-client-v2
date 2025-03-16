@@ -2,20 +2,32 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import right from "@/assets/imgs/redeem/redeem_img.png";
 import bg from "@/assets/imgs/redeem/bg.png";
 import { useGeneralContext } from "@/context/GenralContext";
 import Spinner from "@/components/spinner/Spinner";
 import SelectRedeemType from "./[id]/page";
+import { formatVoucherKey } from "@/helpers/formatVoucherKey";
 
 const Page = () => {
   const { getVoucherByKey, fetchVouchersLoading }: any = useGeneralContext();
 
   const [voucherCode, setVoucherCode] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Get raw input (unformatted)
+    const rawValue = e.target.value.replace(/-/g, "").replace(/\s+/g, "");
+    const formatted = formatVoucherKey(rawValue);
+    setVoucherCode(formatted);
+  };
 
   const onchangeHandler = (e: any) => {
-    setVoucherCode(e.target.value);
+    // Format the input while removing any whitespace and auto-inserting hyphens.
+    const formatted = formatVoucherKey(e.target.value);
+    setVoucherCode(formatted);
+    console.log(formatted);
   };
 
   const handleSubmit = async (e: any) => {
@@ -54,9 +66,10 @@ const Page = () => {
                 <input
                   type="text"
                   name="voucherCode"
+                  value={voucherCode}
                   id="voucherCode"
                   placeholder="Enter Voucher Code"
-                  onChange={onchangeHandler}
+                  onChange={handleChange}
                   className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-grayish bg-transparent"
                 />
               </div>
