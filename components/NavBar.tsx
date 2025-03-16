@@ -5,6 +5,7 @@ import { User, Wallet, Menu } from "lucide-react";
 
 import MobileSideNavBar from "./MobileSideBar";
 import { useGeneralContext } from "@/context/GenralContext";
+import UserAvatar from "./UserAvatar";
 
 const NavBar = () => {
   const { user }: any = useGeneralContext();
@@ -25,7 +26,6 @@ const NavBar = () => {
       setIsOpen(false);
     }
   };
-
   //to handle Click Outside the sidebar
   useEffect(() => {
     const handleDocumentClick = (event: MouseEvent | MouseEventInit) => {
@@ -78,13 +78,18 @@ const NavBar = () => {
             {user?.name}
           </h1> */}
         </div>
-        <div className="flex items-center gap-1.5 sm:gap-3">
-          <div className="flex gap-2 items-end p-1 sm:p-2 px-2.5 sm:px-4 font-geistsans font-normal text-base rounded-3xl bg-brand-white text-brand-main">
-            <Wallet />₦{(user?.walletBalance || 0).toLocaleString("en-NG")}
+        <div className="flex items-center gap-2.5 sm:gap-2">
+          <div className="flex gap-2 items-end p-1 sm:p-1.5 px-2.5 sm:px-3 font-geistsans rounded-3xl bg-brand-white text-brand-main">
+            <Wallet className="size-5 md:size-6" />
+            <span className="text-sm font-normal md:text-base">
+              ₦{(user?.walletBalance || 0).toLocaleString("en-NG")}
+            </span>
           </div>
-          <div className="flex gap-2 items-end p-1 sm:p-2 px-2.5 sm:px-4 font-geistsans font-normal text-base rounded-3xl bg-brand-white text-brand-main">
-            <User />
-            <span className="hidden sm:flex">{user?.name.split(" ")[0]}</span>
+          <div className="flex gap-1 md:gap-2 items-end p-1 sm:p-1.5 px-2.5 sm:px-3 font-geistsans rounded-3xl bg-brand-white text-brand-main cursor-pointer">
+            <UserAvatar userData={user} />
+            <span className="hidden sm:flex text-sm font-normal md:text-base">
+              {user?.name.split(" ")[0]}
+            </span>
           </div>
           {/* <div className="flex flex-col items-end">
             <h1 className="font-semibold">{user?.email}</h1>
