@@ -65,7 +65,7 @@ const Redeem = ({ params }: { params: { id: string } }) => {
                     id="name"
                     placeholder="Enter your name"
                     onChange={onchangeHandler}
-                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    className="w-full sm:w-auto h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
                 <div className="flex flex-col justify-start">
@@ -78,7 +78,20 @@ const Redeem = ({ params }: { params: { id: string } }) => {
                     id="email"
                     placeholder="Enter Email Address"
                     onChange={onchangeHandler}
-                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    className="w-full sm:w-auto h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                  />
+                </div>
+                <div className="flex flex-col justify-start">
+                  <span className="font-medium text-sm text-gray-500 font-geistsans mb-2">
+                   Amount
+                  </span>
+                  <input
+                    type="number"
+                    name="amount"
+                    id="amount"
+                    placeholder="Enter Amount"
+                    onChange={onchangeHandler}
+                    className="w-full sm:w-auto h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
                 {/* <div className="flex flex-col justify-start">
