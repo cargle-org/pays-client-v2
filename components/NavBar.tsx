@@ -6,6 +6,7 @@ import { User, Wallet, Menu } from "lucide-react";
 import MobileSideNavBar from "./MobileSideBar";
 import { useGeneralContext } from "@/context/GenralContext";
 import UserAvatar from "./UserAvatar";
+import Link from "next/link";
 
 const NavBar = () => {
   const { user }: any = useGeneralContext();
@@ -79,12 +80,15 @@ const NavBar = () => {
           </h1> */}
         </div>
         <div className="flex items-center gap-2.5 sm:gap-2">
-          <div className="flex gap-2 items-end p-1 sm:p-1.5 px-2.5 sm:px-3 font-geistsans rounded-3xl bg-brand-white text-brand-main">
+          <Link
+            href={"/dashboard/transactions/new"}
+            className="flex gap-2 items-end p-1 sm:p-1.5 px-2.5 sm:px-3 font-geistsans rounded-3xl bg-brand-white text-brand-main"
+          >
             <Wallet className="size-5 md:size-6" />
             <span className="text-sm font-normal md:text-base">
               ₦{(user?.walletBalance || 0).toLocaleString("en-NG")}
             </span>
-          </div>
+          </Link>
           <div className="flex gap-1 md:gap-2 items-end p-1 sm:p-1.5 px-2.5 sm:px-3 font-geistsans rounded-3xl bg-brand-white text-brand-main cursor-pointer">
             <UserAvatar userData={user} />
             <span className="hidden sm:flex text-sm font-normal md:text-base">
