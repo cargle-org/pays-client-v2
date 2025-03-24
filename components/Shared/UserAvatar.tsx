@@ -70,7 +70,7 @@ const UserAvatar = ({
               </p>
             </div>
             <Link
-              href="/change-password"
+              href="/auth/reset"
               className="block mt-3 text-blue-600 text-xs hover:underline"
             >
               Change Password
