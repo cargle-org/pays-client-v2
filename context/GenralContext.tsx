@@ -747,6 +747,47 @@ const GeneralProvider = (props: any) => {
     }
   };
 
+  const handleGuestFundWallet = async (email: string) => {
+    setCreateTransactionLoading(true);
+    // console.log("🚀 ~ handleFundWal ~ amount:", amount);
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/guest/fund/${oneVoucherId}`,
+        {
+          email: email,
+          portal: process.env.NEXT_PUBLIC_PAYMENT_PORTAL || "monnify",
+        },
+        {
+          headers: {
+            "content-type": "application/json",
+            "x-access-token": token,
+          },
+        }
+      );
+      // console.log("🚀 ~ handleFundWal ~ response:", response);
+      setCreateTransactionLoading(false);
+      if (response.status === 200) {
+        info("Funding wallet...");
+        const newWindow = window.open(
+          response.data.data.response,
+          "_blank",
+          "noopener,noreferrer"
+        );
+        if (newWindow) newWindow.opener = null;
+        getAllTransactionsByUser();
+        router.push(`/guest/transactions`);
+      }
+    } catch (err: any) {
+      setCreateTransactionLoading(false);
+      console.log("🚀 ~ handleFundWal ~ err:", err);
+      error(
+        err?.response?.data?.message
+          ? err?.response?.data?.message
+          : err?.response?.data?.error || err?.message
+      );
+    }
+  };
+
   const handleFundWallet = async (amount: any) => {
     setCreateTransactionLoading(true);
     // console.log("🚀 ~ handleFundWal ~ amount:", amount);
@@ -937,7 +978,7 @@ const GeneralProvider = (props: any) => {
     try {
       setFetchPaymentLinksLoading(true);
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/links/one?id=${paymentLInkId}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/links/${paymentLInkId}`,
         {
           headers: {
             "content-type": "application/json",
@@ -948,7 +989,7 @@ const GeneralProvider = (props: any) => {
       console.log("🚀 ~ getOnePaymentLink ~ response:", response);
       setFetchPaymentLinksLoading(false);
       if (response.status === 200) {
-        // setOnePaymentLink(response.data.categories);
+        setOnePaymentLink(response.data.link);
       }
     } catch (err: any) {
       console.log("🚀 ~ getOnePaymentLink ~ err:", err);
@@ -1272,6 +1313,7 @@ const GeneralProvider = (props: any) => {
         selectedTransactionStatus,
         verifyFundWallet,
         handleFundWallet,
+        handleGuestFundWallet,
         setTransactionDetails,
         setAllUserTransactions,
         setTransactionDateRange,
