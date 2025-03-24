@@ -74,6 +74,7 @@ const GeneralProvider = (props: any) => {
 
   // TRANSACTIONS
   const [allUserTransactions, setAllUserTransactions] = useState();
+  const [oneTransactionId, setOneTransactionId] = useState("");
   const [allBanks, setAllBanks] = useState() as any;
   const [createTransactionLoading, setCreateTransactionLoading] =
     useState(false);
@@ -760,7 +761,6 @@ const GeneralProvider = (props: any) => {
         {
           headers: {
             "content-type": "application/json",
-            "x-access-token": token,
           },
         }
       );
@@ -775,7 +775,7 @@ const GeneralProvider = (props: any) => {
         );
         if (newWindow) newWindow.opener = null;
         getAllTransactionsByUser();
-        router.push(`/guest/transactions`);
+        router.push(`/guest/voucher/recipient/${oneVoucherId}`);
       }
     } catch (err: any) {
       setCreateTransactionLoading(false);
@@ -856,6 +856,36 @@ const GeneralProvider = (props: any) => {
       }
     } catch (err: any) {
       console.log("🚀 ~ verifyFundWal ~ err:", err);
+      setFetchTransactionsLoading(false);
+      error(
+        err.response?.data?.message
+          ? err?.response?.data?.message
+          : err.response?.data?.error
+      );
+    }
+  };
+
+  const verifyGuestFundPayment = async () => {
+    console.log(
+      "🚀 ~ verifyGuestFundPyt ~ transactionDetails: ",
+      transactionDetails
+    );
+    try {
+      setFetchTransactionsLoading(true);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/guest/verify-fund?tId=${oneTransactionId}`,
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
+      // console.log("🚀 ~ verifyGuestFundPyt ~ response:", response);
+      setFetchTransactionsLoading(false);
+      if (response.status === 200) {
+      }
+    } catch (err: any) {
+      console.log("🚀 ~ verifyGuestFundPyt ~ err:", err);
       setFetchTransactionsLoading(false);
       error(
         err.response?.data?.message
@@ -1107,6 +1137,7 @@ const GeneralProvider = (props: any) => {
     getAllBanks();
     getHomepageStats();
     getAirtimeBillers();
+    verifyGuestFundPayment();
   }, []);
 
   useEffect(() => {
@@ -1304,6 +1335,8 @@ const GeneralProvider = (props: any) => {
 
         // Transactions
         transactionDetails,
+        oneTransactionId,
+        setOneTransactionId,
         allUserTransactions,
         transactionDateRange,
         transactionPriceRange,
@@ -1313,6 +1346,7 @@ const GeneralProvider = (props: any) => {
         selectedTransactionStatus,
         verifyFundWallet,
         handleFundWallet,
+        verifyGuestFundPayment,
         handleGuestFundWallet,
         setTransactionDetails,
         setAllUserTransactions,
