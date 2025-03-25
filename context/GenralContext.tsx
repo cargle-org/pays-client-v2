@@ -551,7 +551,7 @@ const GeneralProvider = (props: any) => {
         // return response;
       }
     } catch (err: any) {
-      console.log("🚀 ~ getVoucherById ~ err:", err);
+      // console.log("🚀 ~ getVoucherById ~ err:", err);
       // error(
       //   err.response?.data?.message
       //     ? err?.response?.data?.message
@@ -571,7 +571,7 @@ const GeneralProvider = (props: any) => {
           },
         }
       );
-      console.log("🚀 ~ getTransactionById ~ response:", response.data);
+      // console.log("🚀 ~ getTransactionById ~ response:", response.data);
       if (response.status === 200) {
         setOneTransaction(response.data.data.transaction);
         // setOneTransactionId(response.data.data.voucher.transactionId);
@@ -670,6 +670,42 @@ const GeneralProvider = (props: any) => {
     } catch (err: any) {
       setCreateVoucherLoading(false);
       console.log("🚀 ~ updateVoucherRecipients ~ err: ", err);
+      // error(
+      //   err.response?.data?.message
+      //     ? err?.response?.data?.message
+      //     : err.response?.data?.error
+      // );
+    }
+  };
+
+  //Update Guest Voucher Recipients
+  const updateGuestVoucherRecipients = async () => {
+    try {
+      setCreateVoucherLoading(true);
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/guest/voucher/update/${oneGuestVoucherId}`,
+        { recipients: recipients },
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
+      console.log(
+        "🚀 ~ updateGuestVoucherRecipients ~ response:",
+        response,
+        voucherSpecialKey
+      );
+      setCreateVoucherLoading(false);
+      if (response.status === 200) {
+        setOneVoucher(response.data.data.voucher);
+        setRecipients([]);
+        success("Recipient(s) added Successfully.");
+        router.push(`/guest/vouchers/${response.data.data.voucher._id}`);
+      }
+    } catch (err: any) {
+      setCreateVoucherLoading(false);
+      console.log("🚀 ~ updateGuestVoucherRecipients ~ err: ", err);
       // error(
       //   err.response?.data?.message
       //     ? err?.response?.data?.message
@@ -926,10 +962,10 @@ const GeneralProvider = (props: any) => {
   };
 
   const verifyGuestFundPayment = async () => {
-    console.log(
-      "🚀 ~ verifyGuestFundPyt ~ transactionDetails: ",
-      transactionDetails
-    );
+    // console.log(
+    //   "🚀 ~ verifyGuestFundPyt ~ transactionDetails: ",
+    //   transactionDetails
+    // );
     try {
       setFetchTransactionsLoading(true);
       const response = await axios.get(
@@ -948,11 +984,11 @@ const GeneralProvider = (props: any) => {
     } catch (err: any) {
       console.log("🚀 ~ verifyGuestFundPyt ~ err:", err);
       setFetchTransactionsLoading(false);
-      error(
-        err.response?.data?.message
-          ? err?.response?.data?.message
-          : err.response?.data?.error
-      );
+      // error(
+      //   err.response?.data?.message
+      //     ? err?.response?.data?.message
+      //     : err.response?.data?.error
+      // );
     }
   };
 
@@ -1401,6 +1437,7 @@ const GeneralProvider = (props: any) => {
         setVoucherSpecialKey,
         getAllVouchersByUser,
         updateVoucherRecipients,
+        updateGuestVoucherRecipients,
         setCreateVoucherLoading,
         setFetchVouchersLoading,
         setSelectedVoucherStatus,
