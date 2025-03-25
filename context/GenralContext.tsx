@@ -55,6 +55,7 @@ const GeneralProvider = (props: any) => {
   // VOUCHERS
   const [allUserVouchers, setAllUserVouchers] = useState();
   const [oneVoucherId, setOneVoucherId] = useState();
+  const [oneGuestVoucherId, setOneGuestVoucherId] = useState("");
   const [oneVoucher, setOneVoucher] = useState();
   const [oneVoucherStatus, setOneVoucherStatus] = useState("");
   const [createVoucherLoading, setCreateVoucherLoading] = useState(false);
@@ -75,6 +76,7 @@ const GeneralProvider = (props: any) => {
   // TRANSACTIONS
   const [allUserTransactions, setAllUserTransactions] = useState();
   const [oneTransactionId, setOneTransactionId] = useState("");
+  const [oneTransaction, setOneTransaction] = useState({});
   const [allBanks, setAllBanks] = useState() as any;
   const [createTransactionLoading, setCreateTransactionLoading] =
     useState(false);
@@ -531,6 +533,60 @@ const GeneralProvider = (props: any) => {
     }
   };
 
+  // GET Guest voucher
+  const getGuestVoucherById = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/guest/voucher/one/${oneGuestVoucherId}`,
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
+      // console.log("🚀 ~ getVoucherById ~ response:", response);
+      if (response.status === 200) {
+        setOneVoucher(response.data.data.voucher);
+        // setOneTransactionId(response.data.data.voucher.transactionId);
+        // return response;
+      }
+    } catch (err: any) {
+      console.log("🚀 ~ getVoucherById ~ err:", err);
+      // error(
+      //   err.response?.data?.message
+      //     ? err?.response?.data?.message
+      //     : err.response?.data?.error
+      // );
+    }
+  };
+
+  // GET one Guest transaction details
+  const getGuestTransactionById = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/guest/transaction/${oneTransactionId}`,
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
+      console.log("🚀 ~ getTransactionById ~ response:", response.data);
+      if (response.status === 200) {
+        setOneTransaction(response.data.data.transaction);
+        // setOneTransactionId(response.data.data.voucher.transactionId);
+        // return response;
+      }
+    } catch (err: any) {
+      console.log("🚀 ~ getTransactionById ~ err:", err);
+      // error(
+      //   err.response?.data?.message
+      //     ? err?.response?.data?.message
+      //     : err.response?.data?.error
+      // );
+    }
+  };
+
   const getVoucherDraftById = async () => {
     try {
       const response = await axios.get(
@@ -753,7 +809,7 @@ const GeneralProvider = (props: any) => {
     // console.log("🚀 ~ handleFundWal ~ amount:", amount);
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/guest/fund/${oneVoucherId}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/guest/fund/${oneGuestVoucherId}`,
         {
           email: email,
           portal: process.env.NEXT_PUBLIC_PAYMENT_PORTAL || "monnify",
@@ -766,6 +822,7 @@ const GeneralProvider = (props: any) => {
       );
       // console.log("🚀 ~ handleFundWal ~ response:", response);
       setCreateTransactionLoading(false);
+      // getGuestVoucherById();
       if (response.status === 200) {
         info("Funding wallet...");
         const newWindow = window.open(
@@ -774,12 +831,15 @@ const GeneralProvider = (props: any) => {
           "noopener,noreferrer"
         );
         if (newWindow) newWindow.opener = null;
-        getAllTransactionsByUser();
-        router.push(`/guest/voucher/recipient/${oneVoucherId}`);
+        console.log(oneTransactionId);
+        // if (oneTransactionId) {
+        //   verifyGuestFundPayment();
+        // }
+        router.push(`/guest/confirm-payment/${oneGuestVoucherId}`);
       }
     } catch (err: any) {
       setCreateTransactionLoading(false);
-      console.log("🚀 ~ handleFundWal ~ err:", err);
+      console.log("🚀 ~ handleGuestFundWal ~ err:", err);
       error(
         err?.response?.data?.message
           ? err?.response?.data?.message
@@ -883,6 +943,7 @@ const GeneralProvider = (props: any) => {
       // console.log("🚀 ~ verifyGuestFundPyt ~ response:", response);
       setFetchTransactionsLoading(false);
       if (response.status === 200) {
+        console.log(response);
       }
     } catch (err: any) {
       console.log("🚀 ~ verifyGuestFundPyt ~ err:", err);
@@ -1157,6 +1218,17 @@ const GeneralProvider = (props: any) => {
   }, [oneVoucherId]);
 
   useEffect(() => {
+    getGuestVoucherById();
+    console.log("one", oneGuestVoucherId, oneTransactionId);
+    if (oneGuestVoucherId || oneTransactionId) {
+      if (oneGuestVoucherId) getGuestVoucherById();
+      if (oneTransactionId) verifyGuestFundPayment();
+    }
+  }, [oneGuestVoucherId, oneTransactionId]);
+  // useEffect(() => {
+  // }, [oneTransactionId]);
+
+  useEffect(() => {
     if (paymentLInkId) getOnePaymentLink();
   }, [paymentLInkId]);
 
@@ -1306,6 +1378,7 @@ const GeneralProvider = (props: any) => {
         oneVoucher,
         recipients,
         oneVoucherId,
+        oneGuestVoucherId,
         allUserVouchers,
         oneVoucherStatus,
         voucherDateRange,
@@ -1318,7 +1391,9 @@ const GeneralProvider = (props: any) => {
         setOneVoucher,
         setRecipients,
         getVoucherById,
+        getGuestVoucherById,
         setOneVoucherId,
+        setOneGuestVoucherId,
         getVoucherByKey,
         setVoucherDateRange,
         setOneVoucherStatus,
@@ -1336,7 +1411,9 @@ const GeneralProvider = (props: any) => {
         // Transactions
         transactionDetails,
         oneTransactionId,
+        oneTransaction,
         setOneTransactionId,
+        setOneTransaction,
         allUserTransactions,
         transactionDateRange,
         transactionPriceRange,
@@ -1357,6 +1434,7 @@ const GeneralProvider = (props: any) => {
         setCreateTransactionLoading,
         setFetchTransactionsLoading,
         setSelectedTransactionStatus,
+        getGuestTransactionById,
 
         // Payment Links
         paymentLInkId,
