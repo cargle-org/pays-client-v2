@@ -34,7 +34,13 @@ const Recipients = ({ params }: { params: { key: string } }) => {
 
   useEffect(() => {
     if (oneVoucher?.recipients?.length > 0) {
-      router.push(`/dashboard/vouchers/${oneVoucher?._id}`);
+      if (oneVoucher?.userId) {
+        router.push(`/dashboard/vouchers/${oneVoucher?._id}`);
+      } else {
+        setTimeout(() => {
+          router.push(`/guest/voucher/${oneVoucher?._id}`);
+        }, 3000);
+      }
     }
   }, []);
 
@@ -160,14 +166,16 @@ const Recipients = ({ params }: { params: { key: string } }) => {
                 </div>
 
                 {/* bottom buttons */}
-                <div className="rounded-b-xl bg-brand-white p-4 flex justify-between items-center border border-brand-grayish/15 mt-auto">
-                  <Link
-                    href={"/dashboard/vouchers"}
-                    className="py-1.5 sm:py-3 px-6 sm:px-8 bg-transparent text-[#DE2626] border-[0.3px] border-[#DE2626] font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-[#DE2626] hover:text-brand-white"
-                  >
-                    Back
-                  </Link>
-                </div>
+                {oneVoucher?.userId && (
+                  <div className="rounded-b-xl bg-brand-white p-4 flex justify-between items-center border border-brand-grayish/15 mt-auto">
+                    <Link
+                      href={"/dashboard/vouchers"}
+                      className="py-1.5 sm:py-3 px-6 sm:px-8 bg-transparent text-[#DE2626] border-[0.3px] border-[#DE2626] font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-[#DE2626] hover:text-brand-white"
+                    >
+                      Back
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>
