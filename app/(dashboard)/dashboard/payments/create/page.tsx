@@ -126,12 +126,12 @@ const Page = () => {
                     id="title"
                     placeholder="Enter Payment Title"
                     onChange={onchangeHandler}
-                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    className="sm:w-full w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
                 <div className="flex flex-col justify-start">
                   <span className="font-medium text-xs text-gray-500 font-geistsans mb-2">
-                    Amount <span className="text-red-400">*</span>
+                    Amount <span className="text-green-400">(optional)</span>
                   </span>
                   <input
                     type="number"
@@ -139,7 +139,7 @@ const Page = () => {
                     id="amount"
                     placeholder="Enter Amount"
                     onChange={onchangeHandler}
-                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    className="sm:w-full w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
                 <div className="flex flex-col justify-start">
@@ -150,7 +150,7 @@ const Page = () => {
                     name="category"
                     id="category"
                     onChange={onchangeHandler}
-                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    className="sm:w-full w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   >
                     <option value="">Select a category</option>
                     {paymentLinkCategories?.length > 0 &&
@@ -175,9 +175,10 @@ const Page = () => {
                     type="date"
                     name="linkExpiry"
                     id="linkExpiry"
+                    min={new Date().toISOString().split("T")[0]}
                     placeholder="Enter voucher expiry date"
                     onChange={onchangeHandler}
-                    className="w-full sm:w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    className="sm:w-full w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
                 <div className="flex flex-col justify-start">
@@ -190,7 +191,7 @@ const Page = () => {
                     placeholder="Enter a brief description"
                     onChange={onchangeHandler}
                     rows={3}
-                    className="w-full sm:w-[353px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    className="sm:w-full w-[353px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   ></textarea>
                 </div>
               </div>
