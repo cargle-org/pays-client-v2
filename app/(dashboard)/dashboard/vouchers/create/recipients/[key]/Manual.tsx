@@ -4,7 +4,13 @@ import Spinner from "@/components/spinner/Spinner";
 import { useGeneralContext } from "@/context/GenralContext";
 import React, { useState } from "react";
 
-const Manual = ({ setDisplay }: any) => {
+const Manual = ({
+  setDisplay,
+  isGuest,
+}: {
+  setDisplay: any;
+  isGuest?: boolean;
+}) => {
   const {
     token,
     oneVoucher,
@@ -59,7 +65,7 @@ const Manual = ({ setDisplay }: any) => {
 
   //handle Submit function
   const handleUpdateRecipients = () => {
-    if (oneVoucher?.userId) {
+    if (!isGuest) {
       updateVoucherRecipients();
     } else {
       updateGuestVoucherRecipients();

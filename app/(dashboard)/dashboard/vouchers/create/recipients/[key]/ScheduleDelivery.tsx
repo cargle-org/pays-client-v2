@@ -5,17 +5,21 @@ import Spinner from "@/components/spinner/Spinner";
 
 const ScheduleDelivery = ({
   setDisplay,
+  isGuest,
 }: {
   setDisplay: (display: string) => void;
+  isGuest?: boolean;
 }) => {
   const {
     token,
     recipients,
+    oneVoucher,
     setRecipients,
     createVoucherLoading,
     updateVoucherRecipients,
+    updateGuestVoucherRecipients,
   }: any = useGeneralContext();
-  console.log(recipients);
+
   const [newRecipient, setNewRecipient] = useState({
     schedule_date: "",
     recipient_email: "",
@@ -91,6 +95,15 @@ const ScheduleDelivery = ({
       time_zone: "",
     });
     setScheduled(false);
+  };
+
+  //handle Submit function
+  const handleUpdateRecipients = () => {
+    if (!isGuest) {
+      updateVoucherRecipients();
+    } else {
+      updateGuestVoucherRecipients();
+    }
   };
 
   return (
@@ -261,7 +274,7 @@ const ScheduleDelivery = ({
                 recipients?.length > 0 && (
                   <button
                     type="submit"
-                    onClick={() => updateVoucherRecipients()}
+                    onClick={handleUpdateRecipients}
                     className="p-1.5 sm:p-3 px-6 sm:px-4 bg-brand-main text-brand-white font-normal text-sm md:text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-brand-main/25"
                   >
                     Continue
