@@ -27,7 +27,7 @@ const page = () => {
 
   return (
     <div className="flex items-center justify-center md:h-screen mt-2 md:mt-0">
-      <Recipients params={oneVoucher?.specialKey} />
+      <Recipients params={oneVoucher?.specialKey} isGuest={true} />
     </div>
   );
 };
