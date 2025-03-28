@@ -60,6 +60,8 @@ const GeneralProvider = (props: any) => {
   const [oneVoucherStatus, setOneVoucherStatus] = useState("");
   const [createVoucherLoading, setCreateVoucherLoading] = useState(false);
   const [cashoutVoucherLoading, setCashoutVoucherLoading] = useState(false);
+  const [showVoucherSuccessAnimation, setShowVoucherSuccessAnimation] =
+    useState(false);
   const [fetchVouchersLoading, setFetchVouchersLoading] = useState(false);
   const [recipients, setRecipients] = useState([]);
   const [voucherSpecialKey, setVoucherSpecialKey] = useState();
@@ -143,7 +145,6 @@ const GeneralProvider = (props: any) => {
           },
         }
       );
-      // console.log("🚀 ~ getAllBanks ~ response:", response);
       // setFetchVouchersLoading(false);
       if (response.status === 200) {
         setAllBanks(response.data.data.banks);
@@ -732,6 +733,8 @@ const GeneralProvider = (props: any) => {
       setCashoutVoucherLoading(false);
       if (response.status === 200) {
         success("Cashed Out Voucher Successfully");
+        setOneVoucher(response.data.data.voucher);
+        setShowVoucherSuccessAnimation(true);
         router.push(`/cashout`);
       }
     } catch (err: any) {
@@ -1424,6 +1427,7 @@ const GeneralProvider = (props: any) => {
         createVoucherLoading,
         selectedVoucherStatus,
         cashoutVoucherLoading,
+        showVoucherSuccessAnimation,
         setOneVoucher,
         setRecipients,
         getVoucherById,
@@ -1444,6 +1448,7 @@ const GeneralProvider = (props: any) => {
         setCashoutVoucherLoading,
         handleRedeemVoucherAsCash,
         handleRedeemVoucherAsAirtime,
+        setShowVoucherSuccessAnimation,
 
         // Transactions
         transactionDetails,
