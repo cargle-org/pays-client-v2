@@ -451,7 +451,7 @@ const Page = () => {
                           <td className="hidden md:block py-3 pl-4 capitalize text-start font-semibold">
                             {item.title}
                           </td>
-                          <td className="py-3 capitalize">
+                          <td className="py-3">
                             {" "}
                             <Link
                               href={item.link}

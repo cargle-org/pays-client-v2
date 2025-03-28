@@ -1,6 +1,6 @@
 import "@/app/globals.css";
-import NavBar from "@/components/NavBar";
-import SideNavBar from "@/components/SideNavBar";
+import NavBar from "@/components/Shared/NavBar";
+import SideNavBar from "@/components/Shared/SideNavBar";
 
 export default async function DashboardLayout({ children }: any) {
   return (
