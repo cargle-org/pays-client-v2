@@ -9,6 +9,10 @@ import Spinner from "@/components/spinner/Spinner";
 const Redeem = ({ params }: { params: { id: string } }) => {
   console.log("🚀 ~ Redeem ~ params:", params);
   const {
+    getOnePaymentLink,
+    onePaymentLInk,
+    setPaymentLinkId,
+    payToLinkDetails,
     handlePayToLink,
     setPayToLinkDetails,
     createPaymentLinkLoading,
@@ -23,11 +27,16 @@ const Redeem = ({ params }: { params: { id: string } }) => {
   };
 
   useEffect(() => {
-    if (params?.id)
+    if (params?.id) {
+      getOnePaymentLink;
+
+      setPaymentLinkId(params?.id);
+
       setPayToLinkDetails((payToLinkDetails: any) => ({
         ...payToLinkDetails,
         link: `https://www.usepays.co/pay/${params?.id}`,
       }));
+    }
   }, [params?.id]);
 
   return (
@@ -83,30 +92,21 @@ const Redeem = ({ params }: { params: { id: string } }) => {
                 </div>
                 <div className="flex flex-col justify-start">
                   <span className="font-medium text-sm text-gray-500 font-geistsans mb-2">
-                   Amount
+                    Amount
                   </span>
                   <input
                     type="number"
                     name="amount"
                     id="amount"
+                    defaultValue={onePaymentLInk?.amount ?? ""}
+                    disabled={onePaymentLInk?.amount}
                     placeholder="Enter Amount"
                     onChange={onchangeHandler}
-                    className="w-full sm:w-auto h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
+                    className={`w-full sm:w-auto h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs ${
+                      onePaymentLInk?.amount && "bg-slate-300 text-base"
+                    }`}
                   />
                 </div>
-                {/* <div className="flex flex-col justify-start">
-                  <span className="font-medium text-sm text-gray-500 font-geistsans mb-2">
-                    Enter Amount
-                  </span>
-                  <input
-                    type="text"
-                    name="amount"
-                    id="amount"
-                    placeholder="Enter Amount"
-                    onChange={onchangeHandler}
-                    className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-grayish bg-transparent"
-                  />
-                </div> */}
               </div>
               {/* left bottom */}
               <div className="flex flex-col gap-4 pt-auto justify-start">
