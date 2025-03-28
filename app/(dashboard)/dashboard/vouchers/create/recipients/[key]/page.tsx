@@ -15,7 +15,13 @@ import ScheduleDelivery from "./ScheduleDelivery";
 // import IndividualLogin from "./individual/page";
 // import CompanyLogin from "./company/page";
 
-const Recipients = ({ params }: { params: { key: string } }) => {
+const Recipients = ({
+  params,
+  isGuest,
+}: {
+  isGuest?: boolean;
+  params: { key: string };
+}) => {
   // console.log("🚀 ~ Recipients ~ params:", params);
   const {
     token,
@@ -72,13 +78,17 @@ const Recipients = ({ params }: { params: { key: string } }) => {
           Voucher Creation
         </div>
         {display === "manual" && (
-          <Manual setDisplay={setDisplay} key={params?.key} />
+          <Manual setDisplay={setDisplay} key={params?.key} isGuest={isGuest} />
         )}
         {display === "bulk" && (
           <Bulk setDisplay={setDisplay} key={params?.key} />
         )}
         {display === "schedule" && (
-          <ScheduleDelivery setDisplay={setDisplay} key={params?.key} />
+          <ScheduleDelivery
+            setDisplay={setDisplay}
+            key={params?.key}
+            isGuest={isGuest}
+          />
         )}
         {display === "" && (
           <div className="flex gap-2 items-start justify-between">
