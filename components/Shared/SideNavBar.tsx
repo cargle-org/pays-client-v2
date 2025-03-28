@@ -77,11 +77,6 @@ export const navItemsGuest = [
     link: "/guest/create-vouchers",
     icon: <TicketPercent />,
   },
-  {
-    title: "Fund Payment",
-    link: "/guest/payments",
-    icon: <LinkIcon />,
-  },
 ];
 
 const SideNavBar = ({ isGuest }: { isGuest?: boolean }) => {
