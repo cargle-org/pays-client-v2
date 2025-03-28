@@ -81,7 +81,7 @@ function VoucherPreviewCard({
                   </div>
                 )}
 
-                {formData?.logo !== null && formData?.logo !== "" && (
+                {formData?.logo !== undefined && formData?.logo !== "" && (
                   <div className="absolute flex left-5 sm:left-4 bottom-5 sm:bottom-2">
                     <img
                       src={formData?.logo ?? ""}
@@ -139,16 +139,18 @@ function VoucherPreviewCard({
                         width={48.97}
                       />
                     </div>
-                    <div className="flex flex-col items-center justify-center">
-                      Expires on {format(formData.expiryDate, "MM-dd-yyyy")}
-                    </div>
+                    {formData.expiryDate && (
+                      <div className="flex flex-col items-center justify-center">
+                        Expires on {format(formData.expiryDate, "MM-dd-yyyy")}
+                      </div>
+                    )}
                     <div className="absolute flex items-center justify-center left-7 sm:left-4 bottom-10">
                       <span className="sm:text-sm md:text-lg font-semibold px-0.5 tracking-wider">
                         &#8358;{formData.amountPerVoucher}
                       </span>
                     </div>
 
-                    {formData.logo !== null && formData.logo !== "" && (
+                    {formData.logo !== undefined && formData.logo !== "" && (
                       <div className="absolute flex left-7 sm:left-4 bottom-6 sm:bottom-4">
                         <img
                           src={formData?.logo ?? ""}
