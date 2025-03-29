@@ -8,7 +8,9 @@ const page = () => {
 
   return (
     <div className="flex items-center justify-center flex-col gap-3 mt-10">
-      <p className="text-3xl font-semibold">Hello Guest, Welcome to UsePays</p>
+      <p className="text-3xl font-semibold">
+        Hello Guest🙂, Welcome to UsePays
+      </p>
       <p className="text-base font-semibold">
         Click the button below to create a Gift Voucher.
       </p>
