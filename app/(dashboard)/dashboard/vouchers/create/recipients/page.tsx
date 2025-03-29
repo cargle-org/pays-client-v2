@@ -25,7 +25,7 @@ const Recipients = () => {
         {/* breadcumb */}
         <div className="flex items-center gap-2 font-geistsans font-normal text-[10px] text-brand-grayish">
           <Link
-            href={"/dashboaard/vouchers"}
+            href={"/dashboard/vouchers"}
             className="transition-fx cursor-pointer hover:text-brand-main"
           >
             Voucher

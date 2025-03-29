@@ -74,7 +74,7 @@ export const navItemsMdaAdmin = [
 export const navItemsGuest = [
   {
     title: "Vouchers",
-    link: "/guest/create-vouchers",
+    link: "/guest/create-voucher",
     icon: <TicketPercent />,
   },
 ];
