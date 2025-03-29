@@ -20,6 +20,8 @@ const page = () => {
   }: any = useGeneralContext();
 
   useEffect(() => {
+    if (!oneGuestVoucherId) return;
+
     getGuestTransactionById();
     setOneGuestVoucherId(key);
     setOneTransactionId(oneVoucher?.transactionId);
