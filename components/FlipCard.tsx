@@ -4,19 +4,28 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { QRCodeSVG } from "qrcode.react";
 
+import { Download } from "lucide-react";
+
 import voucher_preview_one from "@/assets/imgs/vouchers/voucher_preview_one.jpg";
 import voucher_preview_two from "@/assets/imgs/vouchers/voucher_preview_two.jpg";
 
 const FlipCard = ({
+  handleDownloadImage,
   voucherDetails,
+  couponCode,
+  amount,
+  voucherCoupon,
 }: {
+  voucherCoupon?: string;
+  handleDownloadImage: () => void;
   voucherDetails: {
     logo: string;
     title: string;
     backgroundStyle: string;
-    amountPerVoucher: string;
-    voucherCoupons: Array<{ couponCode: string }>;
+    amountPerVoucher?: string;
   };
+  couponCode?: string | undefined;
+  amount?: string;
 }) => {
   const [flipped, setFlipped] = useState(false);
 
@@ -74,7 +83,7 @@ const FlipCard = ({
 
                     <div className="absolute flex items-center justify-center left-7 bottom-10 md:bottom-14">
                       <span className="text-lg font-semibold px-0.5 tracking-wider">
-                        &#8358;{voucherDetails.amountPerVoucher}
+                        &#8358;{voucherDetails.amountPerVoucher ?? amount}
                       </span>
                     </div>
 
@@ -121,14 +130,13 @@ const FlipCard = ({
                   </div>
                 )}
 
-                {voucherDetails &&
-                  voucherDetails?.voucherCoupons.length > 0 && (
-                    <div className="absolute flex items-center justify-center bottom-[60px] md:bottom-[89px]">
-                      <span className="text-[10px] sm:text-sm md:text-base text-center font-normal px-0.5 tracking-tight">
-                        {voucherDetails.voucherCoupons[0].couponCode}
-                      </span>
-                    </div>
-                  )}
+                {voucherDetails && (
+                  <div className="absolute flex items-center justify-center bottom-[60px] md:bottom-[89px]">
+                    <span className="text-[10px] sm:text-sm md:text-base text-center font-normal px-0.5 tracking-tight">
+                      {voucherCoupon ?? couponCode}
+                    </span>
+                  </div>
+                )}
                 {voucherDetails?.backgroundStyle && (
                   <div className="absolute flex left-7 bottom-6 sm:bottom-[14px]">
                     {voucherDetails?.logo !== "null" &&
@@ -144,7 +152,7 @@ const FlipCard = ({
                 {voucherDetails && (
                   <div className="absolute flex items-center justify-center right-7 bottom-4 sm:bottom-4 md:bottom-7">
                     <span className="text-lg font-semibold px-0.5 tracking-wider">
-                      &#8358;{voucherDetails.amountPerVoucher}
+                      &#8358;{voucherDetails.amountPerVoucher ?? amount}
                     </span>
                   </div>
                 )}
@@ -162,6 +170,15 @@ const FlipCard = ({
             </div>
           </div>
         </div>
+      </div>
+      {/* Buttons for Download */}
+      <div className="flex absolute">
+        <button
+          onClick={handleDownloadImage}
+          className="px-4 py-2 bg-blue-600 text-white rounded"
+        >
+          <Download />
+        </button>
       </div>
     </div>
   );

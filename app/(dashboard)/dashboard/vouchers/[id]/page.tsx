@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-import FlipCard from "@/components/FlipCard";
 import { useGeneralContext } from "@/context/GenralContext";
-import { useRouter } from "next/navigation";
+import FlippingVoucherPreview from "@/components/FlippingVoucherPreview";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
@@ -130,7 +130,10 @@ const Page = ({ params }: { params: { id: string } }) => {
             <div className="rounded-t-xl bg-brand-white p-4 flex flex-col gap-4 justify-between items-center">
               <div className="flex flex-col gap-4 w-full justify-between items-start xl:flex-row">
                 <div className="max-w-sm sm:max-w-full lg:max-w-xl relative w-full h-[250px] md:h-[400px]">
-                  <FlipCard voucherDetails={oneVoucher} />
+                  <FlippingVoucherPreview
+                    voucherDetails={oneVoucher}
+                    voucherCoupon={oneVoucher?.voucherCoupons[0].couponCode}
+                  />
                 </div>
                 <div className="flex flex-col w-full my-4">
                   <div className="rounded-xl bg-brand-white flex flex-col gap-4 justify-start">

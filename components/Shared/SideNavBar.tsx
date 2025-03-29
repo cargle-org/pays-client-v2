@@ -71,7 +71,15 @@ export const navItemsMdaAdmin = [
   // },
 ];
 
-const SideNavBar = () => {
+export const navItemsGuest = [
+  {
+    title: "Vouchers",
+    link: "/guest/create-voucher",
+    icon: <TicketPercent />,
+  },
+];
+
+const SideNavBar = ({ isGuest }: { isGuest?: boolean }) => {
   const { push } = useRouter();
   const pathname = usePathname();
   const { user }: any = useGeneralContext();
@@ -85,7 +93,8 @@ const SideNavBar = () => {
     // window.location.reload();
   };
 
-  const navBar = user?.role === "super" ? navItemsSuperAdmin : navItemsMdaAdmin;
+  const navBar = isGuest ? navItemsGuest : navItemsMdaAdmin;
+  // const navBar = user?.role === "super" ? navItemsSuperAdmin : navItemsMdaAdmin;
 
   return (
     <div className="hidden md:block sticky inset-y-0 w-[240px]  h-full border-r-[1px] ">
@@ -120,14 +129,15 @@ const SideNavBar = () => {
             </svg>
           </Link>
           <div className="flex flex-col h-full w-full py-4 gap-4">
-            {navBar.map((nav, index) => (
-              <SideBarItem
-                key={index}
-                title={nav.title}
-                link={nav.link}
-                icon={nav.icon}
-              />
-            ))}
+            {navBar &&
+              navItemsGuest.map((nav, index) => (
+                <SideBarItem
+                  key={index}
+                  title={nav.title}
+                  link={nav.link}
+                  icon={nav.icon}
+                />
+              ))}
           </div>
         </div>
         <span

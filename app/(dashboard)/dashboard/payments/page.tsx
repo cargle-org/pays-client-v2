@@ -9,6 +9,7 @@ import { useGeneralContext } from "@/context/GenralContext";
 import Link from "next/link";
 import Spinner from "@/components/spinner/Spinner";
 import { DeleteIcon, EyeIcon, Trash2Icon } from "lucide-react";
+import { info } from "@/helpers/Alert";
 
 const Page = () => {
   const {
@@ -150,7 +151,7 @@ const Page = () => {
               </svg>
             </div>
           </div> */}
-          <div className="flex flex-col sm:flex-row items-end gap-1 sm:gap-4">
+          <div className="flex flex-col md:flex-row items-end gap-1 sm:gap-4">
             {/* Amount Dropdown */}
             <div className="relative">
               <button
@@ -283,58 +284,90 @@ const Page = () => {
               <thead className="divide-y divide-gray-200 font-bold text-sm text-brand-grayish py-2 px-4 mb-2">
                 <tr className="rounded-lg">
                   <th className="py-2">S/N</th>
-                  <th className="py-2 hidden sm:table-cell">Title</th>
-                  <th className="py-2 hidden lg:table-cell">Description</th>
-                  <th className="py-2">Corresponding Link</th>
+                  <th className="py-2 text-start pl-4">Title</th>
+                  <th className="py-2 pl-4 hidden xl:table-cell text-start">
+                    Description
+                  </th>
+                  <th className="py-2 tracking-[-0.47px] md:tracking-normal">
+                    Payment Link
+                  </th>
                   <th className="py-2 hidden lg:table-cell">Category</th>
-                  <th className="py-2 hidden sm:table-cell">Status</th>
-                  <th className="py-2 hidden sm:table-cell">Amount</th>
+                  <th className="py-2 sm:hidden">Status</th>
+                  <th className="py-2 ">Amount</th>
                   <th className="py-2"></th>
                 </tr>
               </thead>
               <tbody className="font-normal text-sm text-brand-grayish/80">
-                {paymentLInksByUser.map((item: any, i: number) => (
-                  <tr key={i} className="mb-4 rounded-lg">
-                    <td className="py-3">{i + 1}</td>
-                    <td className="hidden sm:table-cell py-3 pl-4 capitalize text-start xl:text-center font-semibold">
-                      {item.title}
-                    </td>
-                    <td className="hidden lg:table-cell py-3 capitalize pl-4 text-start xl:text-center">
-                      {item.description.slice(0, 20)}
-                      {item.description.length > 20 && "..."}
-                    </td>
-                    <td className="py-3">
-                      <Link href={item.link} className="hover:text-brand-main">
-                        {item.link.slice(0, 30)}
-                        {item.link.length > 30 && "..."}
-                      </Link>
-                    </td>
-                    <td className="py-3 capitalize hidden lg:table-cell">
-                      {item.category}
-                    </td>
-                    <td className="hidden sm:table-cell py-3 capitalize">
-                      {new Date(item.linkExpiry) < new Date() ? (
-                        <span className="p-1 lg:p-2 rounded-lg text-red-500 bg-red-200/80">
-                          expired
-                        </span>
-                      ) : (
-                        <span className="p-1 lg:p-2 rounded-lg text-green-500 bg-green-200/80">
-                          active
-                        </span>
-                      )}
-                    </td>
-                    <td className="hidden sm:table-cell py-3 capitalize">
-                      {item.amount} {item.currency}
-                    </td>
-                    <td className="py-3 capitalize flex items-center gap-4">
-                      {/* <EyeIcon className="cursor-pointer hover:text-brand-main" /> */}
-                      <Trash2Icon
-                        onClick={() => deleteOnePaymentLink(item._id)}
-                        className="cursor-pointer hover:text-red-500"
-                      />
-                    </td>
-                  </tr>
-                ))}
+                {paymentLInksByUser.map(
+                  (
+                    item: {
+                      _id: string;
+                      title: string;
+                      description: string;
+                      link: string;
+                      category: string;
+                      amount: string;
+                      linkExpiry: Date;
+                    },
+                    i: number
+                  ) => {
+                    const handleCopyLink = () => {
+                      navigator.clipboard.writeText(item.link);
+                      info("Copied to clipboard");
+                      setTimeout(() => {
+                        router.push(`/${item.link}`);
+                      }, 2000);
+                    };
+
+                    return (
+                      <tr key={i} className="mb-4 rounded-lg">
+                        <td className="py-3  flex-grow">{i + 1}</td>
+                        <td className="table-cell py-3 pl-4 capitalize text-start font-semibold tracking-tight md:tracking-normal">
+                          {item.title}
+                        </td>
+                        <td className="hidden xl:table-cell py-3 capitalize pl-4 text-start">
+                          {item.description.slice(0, 20)}
+                          {item.description.length > 20 && "..."}
+                        </td>
+                        <td className="py-3">
+                          <button
+                            type="button"
+                            onClick={handleCopyLink}
+                            className="hover:text-brand-main hover:bg-slate-400 text-xs md:text-sm font-semibold border-[0.5px] border-slate-400 p-1 md:p-1.5 rounded-lg"
+                          >
+                            {/* {item.link.slice(0, 30)}
+                        {item.link.length > 30 && "..."} */}
+                            Copy Link
+                          </button>
+                        </td>
+                        <td className="py-3 capitalize hidden lg:table-cell">
+                          {item.category}
+                        </td>
+                        <td className="sm:hidden py-3 capitalize">
+                          {new Date(item.linkExpiry) < new Date() ? (
+                            <span className="p-1 lg:p-2 rounded-lg text-red-500 bg-red-200/80">
+                              expired
+                            </span>
+                          ) : (
+                            <span className="p-1 lg:p-2 rounded-lg text-green-500 bg-green-200/80">
+                              active
+                            </span>
+                          )}
+                        </td>
+                        <td className="py-3 capitalize tracking-tighter md:tracking-normal">
+                          ₦{item.amount}
+                        </td>
+                        <td className="py-3 capitalize flex items-center gap-4">
+                          {/* <EyeIcon className="cursor-pointer hover:text-brand-main" /> */}
+                          <Trash2Icon
+                            onClick={() => deleteOnePaymentLink(item._id)}
+                            className="cursor-pointer hover:text-red-500 size-[18px] md:size-6"
+                          />
+                        </td>
+                      </tr>
+                    );
+                  }
+                )}
               </tbody>
             </table>
           ) : (

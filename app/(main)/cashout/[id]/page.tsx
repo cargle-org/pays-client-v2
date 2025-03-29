@@ -9,6 +9,7 @@ import Airtime from "./airtime/Airtime";
 import Cash from "./cash/Cash";
 import { Coins, Phone } from "lucide-react";
 import { useGeneralContext } from "@/context/GenralContext";
+import FlippingVoucherPreview from "@/components/FlippingVoucherPreview";
 
 const Redeem = ({ params }: { params: { id: string } }) => {
   const [display, setDisplay] = useState("");
@@ -26,7 +27,7 @@ const Redeem = ({ params }: { params: { id: string } }) => {
       {display === "" && (
         <div className="max-w-md lg:max-w-[2560px] mx-auto w-full min-h-screen flex items-center justify-center py-16 lg:pt-32">
           {/* content */}
-          <div className="min-h-[60%] w-[80%] flex flex-col items-center lg:min-h-[80%]">
+          <div className="min-h-[60%] w-[85%] flex flex-col items-center lg:min-h-[80%]">
             {/* divider */}
             <div className="w-[95%] h-[0.1px] mb-8 bg-brand-grayish/30"></div>
             <div className="w-full flex flex-col-reverse justify-between items-start gap-6 h-[100%] lg:flex-row lg:space-x-5">
@@ -57,7 +58,7 @@ const Redeem = ({ params }: { params: { id: string } }) => {
                     </span>
                   </div>
                   {/* input fields */}
-                  <div className="flex flex-col items-center justify-start gap-6 lg:flex-row">
+                  <div className="flex flex-col items-center justify-start gap-5 md:flex-row">
                     <div
                       onClick={() => setDisplay("cash")}
                       className="transition-fx group w-full max-w-[240px] p-4 flex flex-col justify-start gap-2 border-[0.1px] border-brand-grayish rounded-lg cursor-pointer hover:text-brand-white hover:bg-brand-main"
@@ -117,10 +118,15 @@ const Redeem = ({ params }: { params: { id: string } }) => {
               {/* right */}
               <div className="flex w-full justify-end gap-4 lg:h-[600px] lg:w-[50%]">
                 <div className="w-full relative rounded-lg lg:w-[508px] lg:h-[600px]">
-                  <Image src={right_img} alt="Redeem" priority />
+                  <FlippingVoucherPreview
+                    voucherDetails={oneVoucher}
+                    couponCode={oneVoucher?.coupon.couponCode}
+                    amount={oneVoucher?.amount}
+                  />
+                  {/* <Image src={right_img} alt="Redeem" priority />
                   <div className="glass-fx hidden absolute w-[90%] bottom-6 left-6 rounded-lg p-4 font-medium text-xl font-geistsans lg:block">
                     Claim your vouchers fast and easily with pays.
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

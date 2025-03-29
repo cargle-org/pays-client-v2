@@ -4,13 +4,21 @@ import Spinner from "@/components/spinner/Spinner";
 import { useGeneralContext } from "@/context/GenralContext";
 import React, { useState } from "react";
 
-const Manual = ({ setDisplay }: any) => {
+const Manual = ({
+  setDisplay,
+  isGuest,
+}: {
+  setDisplay: any;
+  isGuest?: boolean;
+}) => {
   const {
     token,
+    oneVoucher,
     recipients,
     setRecipients,
     createVoucherLoading,
     updateVoucherRecipients,
+    updateGuestVoucherRecipients,
   }: any = useGeneralContext();
 
   const [newRecipient, setNewRecipient] = useState({
@@ -53,6 +61,15 @@ const Manual = ({ setDisplay }: any) => {
 
   const handleBack = () => {
     setDisplay("");
+  };
+
+  //handle Submit function
+  const handleUpdateRecipients = () => {
+    if (!isGuest) {
+      updateVoucherRecipients();
+    } else {
+      updateGuestVoucherRecipients();
+    }
   };
 
   return (
@@ -195,7 +212,7 @@ const Manual = ({ setDisplay }: any) => {
                 recipients?.length > 0 && (
                   <button
                     type="submit"
-                    onClick={() => updateVoucherRecipients()}
+                    onClick={handleUpdateRecipients}
                     className="p-1.5 sm:p-3 px-6 sm:px-8 bg-brand-main text-brand-white font-normal text-base w-max font-geistsans rounded-3xl uppercase cursor-pointer hover:bg-brand-main/25"
                   >
                     Continue

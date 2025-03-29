@@ -7,8 +7,8 @@ interface VoucherTemplatesProps {
       title: string;
       description: string;
       voucherKey: string;
-      expiryDate: Date | number | string;
-      logo: string | null;
+      expiryDate: string;
+      logo: string;
       amountPerVoucher: string;
       totalNumberOfVouchers: string;
       backgroundStyle: string;

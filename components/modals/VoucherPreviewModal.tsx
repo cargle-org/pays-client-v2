@@ -2,8 +2,10 @@ import React, { ReactNode, useRef } from "react";
 import { Loader, NotebookPen, Plus } from "lucide-react";
 
 interface VoucherPreviewModalProps {
-  modalTitle: string;
+  isGuest?: boolean;
+  modalTitle?: string;
   children: ReactNode;
+  isSavingDraft?: boolean;
   closeModal: () => void;
   handleSaveToDraft?: (e: React.MouseEvent) => void;
   createVoucherDraftLoading?: boolean;
@@ -13,6 +15,7 @@ interface VoucherPreviewModalProps {
 const VoucherPreviewModal: React.FC<VoucherPreviewModalProps> = ({
   children,
   modalTitle,
+  isSavingDraft,
   closeModal,
   handleSaveToDraft,
   createVoucherDraftLoading,
@@ -44,7 +47,7 @@ const VoucherPreviewModal: React.FC<VoucherPreviewModalProps> = ({
           </button>
         </div>
         {children}
-        {!fetchVoucherDraftsLoading && (
+        {isSavingDraft && (
           <div className="flex items-center justify-end mt-1">
             <button
               type="button"
