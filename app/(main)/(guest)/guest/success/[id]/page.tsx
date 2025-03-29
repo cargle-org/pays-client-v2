@@ -2,7 +2,7 @@ import { Plus } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-const page = () => {
+const Page = () => {
   return (
     <div className="flex flex-col items-center justify-center gap-3 h-screen">
       <div className="font-medium text-xl">Success! 👍</div>
@@ -25,4 +25,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

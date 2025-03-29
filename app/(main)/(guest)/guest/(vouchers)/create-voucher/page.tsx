@@ -9,7 +9,7 @@ import { useGeneralContext } from "@/context/GenralContext";
 
 import CreateVoucher from "@/components/Vouchers/CreateVoucher";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -101,4 +101,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

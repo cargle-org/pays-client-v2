@@ -7,7 +7,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useGeneralContext } from "@/context/GenralContext";
 import { ArrowBigLeft, Dot, Loader, Router, TriangleAlert } from "lucide-react";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
 
   // extract params from url
@@ -161,4 +161,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
