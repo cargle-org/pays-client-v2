@@ -15,13 +15,12 @@ import ScheduleDelivery from "./ScheduleDelivery";
 // import IndividualLogin from "./individual/page";
 // import CompanyLogin from "./company/page";
 
-const Recipients = ({
-  params,
-  isGuest,
-}: {
+interface RecipientProps {
   isGuest?: boolean;
   params: { key: string };
-}) => {
+}
+
+const Recipients: React.FC<RecipientProps> = ({ params, isGuest }) => {
   // console.log("🚀 ~ Recipients ~ params:", params);
   const {
     token,
