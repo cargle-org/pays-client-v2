@@ -870,10 +870,7 @@ const GeneralProvider = (props: any) => {
           "noopener,noreferrer"
         );
         if (newWindow) newWindow.opener = null;
-        console.log(oneTransactionId);
-        // if (oneTransactionId) {
-        //   verifyGuestFundPayment();
-        // }
+        getGuestVoucherById();
         router.push(`/guest/confirm-payment/${oneGuestVoucherId}`);
       }
     } catch (err: any) {
@@ -1237,7 +1234,7 @@ const GeneralProvider = (props: any) => {
     getAllBanks();
     getHomepageStats();
     getAirtimeBillers();
-    verifyGuestFundPayment();
+    // verifyGuestFundPayment();
   }, []);
 
   useEffect(() => {
@@ -1255,17 +1252,6 @@ const GeneralProvider = (props: any) => {
     console.log("🚀 ~ useEffect ~ oneVoucherStatus:", oneVoucherStatus);
     if (oneVoucherId) getVoucherById();
   }, [oneVoucherId]);
-
-  useEffect(() => {
-    getGuestVoucherById();
-    console.log("one", oneGuestVoucherId, oneTransactionId);
-    if (oneGuestVoucherId || oneTransactionId) {
-      if (oneGuestVoucherId) getGuestVoucherById();
-      if (oneTransactionId) verifyGuestFundPayment();
-    }
-  }, [oneGuestVoucherId, oneTransactionId]);
-  // useEffect(() => {
-  // }, [oneTransactionId]);
 
   useEffect(() => {
     if (paymentLInkId) getOnePaymentLink();
