@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 
@@ -13,7 +13,7 @@ const page = () => {
   // extract params from url
   const params = useParams();
   const { id } = params;
-
+  
   const {
     oneTransaction,
     oneTransactionId,
@@ -30,26 +30,55 @@ const page = () => {
   //Get transaction status
   const { status } = oneTransaction;
 
-  //always verify transaction if transacton status is not paid, successful or expired
+  const [isStatusChecking, setIsStatusChecking] = useState(true); //transaction status
+
   useEffect(() => {
-    if (status !== "PAID" || status !== "successful" || status !== "EXPIRED") {
-      verifyGuestFundPayment();
+    let timeout: NodeJS.Timeout;
+
+    // Ensure IDs are available before making API calls
+    if (!id || oneGuestVoucherId) return;
+
+    // Set IDs once on mount
+    setOneTransactionId(oneVoucher?.transactionId);
+
+    const fetchData = () => {
+      if (!oneTransactionId) return;
+
+      getGuestTransactionById();
+      verifyGuestFundPayment(); // Only call when oneTransactionId is set
+    };
+
+    //refetch based on transaction status
+    if (isStatusChecking) {
+      timeout = setTimeout(fetchData, 15000); // Refresh every 5 seconds
     }
-  }, [status]);
+    fetchData();
+
+    return () => clearInterval(timeout); // Cleanup on unmount
+  }, [id, oneTransactionId, oneVoucher]); // Re-run when `id` or `oneTransactionId` changes
 
   //redirect to recipient page on transaction success
+  //changes setIstatusChecking to false to end polling
   useEffect(() => {
     if (status === "PAID" || status === "successful") {
+      setIsStatusChecking(false);
       router.push(`/guest/voucher/recipient/${oneGuestVoucherId}`);
     }
   }, [status, oneGuestVoucherId]);
 
-  //ensuring that proper ids are passed
+  //changes setIstatusChecking to false to end polling
   useEffect(() => {
-    getGuestTransactionById();
+    if (status === "EXPIRED" || status === "FAILED") {
+      setIsStatusChecking(false);
+    }
+  }, [status, oneGuestVoucherId]);
+
+  useEffect(() => {
+    if (!id) return;
+
     setOneGuestVoucherId(id);
-    setOneTransactionId(oneVoucher?.transactionId);
-  }, [id, oneGuestVoucherId, oneVoucher]);
+    getGuestVoucherById();
+  }, [id, oneGuestVoucherId]); // Run when oneGuestVoucherId changes
 
   return (
     <div className="flex items-center justify-center h-screen">
@@ -65,7 +94,7 @@ const page = () => {
             </span>
             or
             <Link
-              href={`${`/guest/voucher/fund-voucher/${id}`}`}
+              href={`${`/guest/fund-voucher/${id}`}`}
               className="flex items-center gap-0.5 text-brand-main underline text-base font-semibold"
             >
               <span className="">Go Back</span>
@@ -117,7 +146,10 @@ const page = () => {
             )}
             <button
               type="button"
-              onClick={() => window.location.reload()}
+              onClick={() => {
+                window.location.reload();
+                setTimeout(verifyGuestFundPayment, 0);
+              }}
               className="w-auto rounded-md text-white bg-brand-main text-base font-semibold p-2"
             >
               Confirm Payment
