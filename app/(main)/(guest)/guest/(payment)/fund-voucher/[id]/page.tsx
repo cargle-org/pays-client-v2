@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import { useGeneralContext } from "@/context/GenralContext";
 import Spinner from "@/components/spinner/Spinner";
 
-const page = () => {
+const Page = () => {
   //extract params from url
   const params = useParams();
   const { id } = params;
@@ -115,4 +115,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

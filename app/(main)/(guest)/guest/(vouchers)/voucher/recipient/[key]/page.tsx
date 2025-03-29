@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import { useGeneralContext } from "@/context/GenralContext";
 import Recipients from "@/app/(dashboard)/dashboard/vouchers/create/recipients/[key]/page";
 
-const page = () => {
+const Page = () => {
   // extract params from url
   const params = useParams();
   const { key } = params;
@@ -34,4 +34,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
