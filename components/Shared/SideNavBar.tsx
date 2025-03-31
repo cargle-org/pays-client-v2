@@ -129,26 +129,27 @@ const SideNavBar = ({ isGuest }: { isGuest?: boolean }) => {
             </svg>
           </Link>
           <div className="flex flex-col h-full w-full py-4 gap-4">
-            {navBar &&
-              navItemsGuest.map((nav, index) => (
-                <SideBarItem
-                  key={index}
-                  title={nav.title}
-                  link={nav.link}
-                  icon={nav.icon}
-                />
-              ))}
+            {navBar.map((nav, index) => (
+              <SideBarItem
+                key={index}
+                title={nav.title}
+                link={nav.link}
+                icon={nav.icon}
+              />
+            ))}
           </div>
         </div>
-        <span
-          className="transition-fx flex items-center w-full p-2 py-4 pl-4 gap-3 cursor-pointer font-geistsans font-normal text-sm  border-r-4 border-red-500 hover:bg-red-100 hover:pl-8"
-          onClick={() => handleLogout()}
-        >
-          <span className="text-red-500">
-            <LogOut />
+        {!isGuest && (
+          <span
+            className="transition-fx flex items-center w-full p-2 py-4 pl-4 gap-3 cursor-pointer font-geistsans font-normal text-sm  border-r-4 border-red-500 hover:bg-red-100 hover:pl-8"
+            onClick={() => handleLogout()}
+          >
+            <span className="text-red-500">
+              <LogOut />
+            </span>
+            Logout
           </span>
-          Logout
-        </span>
+        )}
       </div>
     </div>
   );
