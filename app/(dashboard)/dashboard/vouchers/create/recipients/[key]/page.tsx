@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import logo from "@/assets/imgs/auth/pays_logo.png";
 import login1 from "@/assets/imgs/auth/pays_login_1.png";
@@ -16,10 +16,9 @@ import Recipients from "./Recipients";
 // import IndividualLogin from "./individual/page";
 // import CompanyLogin from "./company/page";
 
-interface RecipientProps {
-  params: { key: string };
-}
+export default function Page() {
+  const params = useParams();
+  const { key } = params;
 
-export default function Page({ params }: RecipientProps) {
-  return <Recipients params={params?.key} />;
+  return <Recipients params={key} />;
 }
