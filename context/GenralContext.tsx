@@ -702,7 +702,9 @@ const GeneralProvider = (props: any) => {
         setOneVoucher(response.data.data.voucher);
         setRecipients([]);
         success("Recipient(s) added Successfully.");
-        router.push(`/guest/vouchers/${response.data.data.voucher._id}`);
+        setTimeout(() => {
+          router.push(`/guest/success/${response.data.data.voucher._id}`);
+        }, 3000);
       }
     } catch (err: any) {
       setCreateVoucherLoading(false);
