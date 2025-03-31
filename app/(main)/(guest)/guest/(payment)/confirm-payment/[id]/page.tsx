@@ -13,7 +13,7 @@ const Page = () => {
   // extract params from url
   const params = useParams();
   const { id } = params;
-  
+
   const {
     oneTransaction,
     oneTransactionId,
@@ -36,10 +36,11 @@ const Page = () => {
     let timeout: NodeJS.Timeout;
 
     // Ensure IDs are available before making API calls
-    if (!id || oneGuestVoucherId) return;
+    if (!id) return;
 
     // Set IDs once on mount
     setOneTransactionId(oneVoucher?.transactionId);
+    // verifyGuestFundPayment();
 
     const fetchData = () => {
       if (!oneTransactionId) return;

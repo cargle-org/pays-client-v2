@@ -7,7 +7,7 @@ const ScheduleDelivery = ({
   setDisplay,
   isGuest,
 }: {
-  setDisplay: (display: string) => void;
+  setDisplay: any;
   isGuest?: boolean;
 }) => {
   const {
