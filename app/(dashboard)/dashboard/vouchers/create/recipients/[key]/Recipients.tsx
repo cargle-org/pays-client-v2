@@ -16,7 +16,7 @@ import ScheduleDelivery from "./ScheduleDelivery";
 // import CompanyLogin from "./company/page";
 
 interface RecipientProps {
-  params: string;
+  params: any;
   isGuest?: boolean; // if you want to make isGuest optional
 }
 
