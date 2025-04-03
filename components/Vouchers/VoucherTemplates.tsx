@@ -1,5 +1,6 @@
 import React from "react";
 import { voucherTemplates } from "@/constants/voucherTemplates";
+import { useGeneralContext } from "@/context/GenralContext";
 
 interface VoucherTemplatesProps {
   setFormData: React.Dispatch<
@@ -17,6 +18,11 @@ interface VoucherTemplatesProps {
 }
 
 const VoucherTemplates: React.FC<VoucherTemplatesProps> = ({ setFormData }) => {
+  const { user }: any = useGeneralContext();
+
+  //Check user account type
+  const userType = user?.isCompany ? "company" : "individual";
+
   // Functions to prefill voucher fields.
   const handleTemplateClick = (template: {
     title: string;
@@ -34,7 +40,7 @@ const VoucherTemplates: React.FC<VoucherTemplatesProps> = ({ setFormData }) => {
   return (
     <div className="flex items-center justify-center bg-[#CCC] p-2 flex-col px-2 max-w-auto">
       <div className="bg-brand-white p-1 rounded-md space-x-1 w-auto">
-        {voucherTemplates.map(
+        {voucherTemplates[userType].map(
           (
             template: {
               scenario: string;
