@@ -8,6 +8,7 @@ const UserAvatar = ({
   userData,
 }: {
   userData: {
+    _id: string;
     email: string;
     name: string;
     isCompany: boolean;
@@ -15,7 +16,7 @@ const UserAvatar = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
+  // console.log(userData);
   const openDropdown = () => {
     // If a close timeout is set, cancel it
     if (closeTimeoutRef.current) {
@@ -70,7 +71,7 @@ const UserAvatar = ({
               </p>
             </div>
             <Link
-              href="/auth/reset"
+              href={`/auth/change-password?userId=${userData._id}`}
               className="block mt-3 text-blue-600 text-xs hover:underline"
             >
               Change Password
