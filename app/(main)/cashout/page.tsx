@@ -28,13 +28,17 @@ const Page = () => {
     // Get raw input (unformatted)
     const rawValue = e.target.value.replace(/-/g, "").replace(/\s+/g, "");
     const formatted = formatVoucherKey(rawValue);
-    setVoucherCode(formatted);
+    setVoucherCode(e.target.value);
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      router.refresh();
-    }, 5000);
+    if (showVoucherSuccessAnimation) {
+      const timeoutId = setTimeout(() => {
+        window.location.reload();
+      }, 5000);
+      //cleanup function
+      return () => clearTimeout(timeoutId);
+    }
   }, []);
 
   const handleSubmit = async (e: any) => {
