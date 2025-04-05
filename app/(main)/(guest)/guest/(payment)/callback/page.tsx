@@ -3,7 +3,7 @@
 import { Dot, Loader } from "lucide-react";
 import React, { useEffect } from "react";
 
-const page = () => {
+const Page = () => {
   //Close window on redirect
   useEffect(() => {
     window.close();
@@ -27,4 +27,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
