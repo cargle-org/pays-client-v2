@@ -73,7 +73,7 @@ export default function VoucherSuccessAnimation({
         { y: 100 },
         {
           // x: 200,
-          y: -200,
+          y: -170,
           duration: 1,
           ease: "wiggleEase",
         }
@@ -132,7 +132,7 @@ export default function VoucherSuccessAnimation({
   return (
     <div
       ref={wrapperRef}
-      className="w-56 h-36 md:w-[300px] md:h-[200px] bg-[#3760C9] relative top-12 md:top-24 xl:top-48 mx-auto z-0 rounded-lg shadow-lg shadow-slate-600"
+      className="w-56 h-36 md:w-[300px] md:h-[200px] bg-[#3760C9] relative top-12 md:top-24 xl:top-[170px] mx-auto z-0 rounded-lg shadow-lg shadow-slate-600"
     >
       <div
         ref={lidOneRef}
