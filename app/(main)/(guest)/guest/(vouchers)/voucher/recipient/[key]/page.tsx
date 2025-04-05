@@ -1,14 +1,12 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 
 import { useGeneralContext } from "@/context/GenralContext";
 import Recipients from "@/app/(dashboard)/dashboard/vouchers/create/recipients/[key]/Recipients";
 
 const Page = () => {
-  const router = useRouter();
-
   // extract params from url
   const params = useParams();
   const { key } = params;
@@ -16,17 +14,11 @@ const Page = () => {
   const {
     oneGuestVoucherId,
     oneVoucher,
-    oneTransaction,
     getGuestVoucherById,
     getGuestTransactionById,
     setOneGuestVoucherId,
     setOneTransactionId,
   }: any = useGeneralContext();
-
-  // console.log(oneTransaction);
-
-  //Get transaction status
-  const { status } = oneTransaction;
 
   useEffect(() => {
     if (!oneGuestVoucherId) return;
@@ -34,13 +26,6 @@ const Page = () => {
     getGuestTransactionById();
     setOneTransactionId(oneVoucher?.transactionId);
   }, [key, oneGuestVoucherId, oneVoucher]);
-
-  //ensure transaction is paid before you can add a recipient
-  useEffect(() => {
-    if (status !== "PAID" || status !== "successful") {
-      router.push(`/guest/confirm-payment/${oneGuestVoucherId}`);
-    }
-  }, [status, oneGuestVoucherId]);
 
   useEffect(() => {
     if (!key) return;
