@@ -98,8 +98,6 @@ const Redeem = ({ params }: { params: { id: string } }) => {
                     type="number"
                     name="amount"
                     id="amount"
-                    defaultValue={onePaymentLInk?.amount ?? ""}
-                    disabled={onePaymentLInk?.amount}
                     placeholder="Enter Amount"
                     onChange={onchangeHandler}
                     className={`w-full sm:w-auto h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs ${

@@ -314,9 +314,6 @@ const Page = () => {
                     const handleCopyLink = () => {
                       navigator.clipboard.writeText(item.link);
                       info("Copied to clipboard");
-                      setTimeout(() => {
-                        router.push(`/${item.link}`);
-                      }, 2000);
                     };
 
                     return (

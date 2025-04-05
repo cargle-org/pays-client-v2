@@ -21,7 +21,7 @@ interface RecipientProps {
 }
 
 const Recipients = ({ params, isGuest }: RecipientProps) => {
-  console.log("🚀 ~ Recipients ~ params:", params);
+  // console.log("🚀 ~ Recipients ~ params:", params);
   const {
     token,
     oneVoucher,

@@ -11,11 +11,12 @@ import {
   ArrowRightLeft,
   LogOut,
   TicketPercent,
+  LucideIcon,
 } from "lucide-react";
 import { useGeneralContext } from "@/context/GenralContext";
 import Link from "next/link";
 
-export const navItemsSuperAdmin = [
+export const navItemsIndividual = [
   {
     title: "Dashboard",
     link: "/dashboard",
@@ -25,11 +26,6 @@ export const navItemsSuperAdmin = [
     title: "Vouchers",
     link: "/dashboard/vouchers",
     icon: <TicketPercent />,
-  },
-  {
-    title: "Payment Links",
-    link: "/dashboard/payments",
-    icon: <LinkIcon />,
   },
   {
     title: "Transactions",
@@ -43,7 +39,7 @@ export const navItemsSuperAdmin = [
   // },
 ];
 
-export const navItemsMdaAdmin = [
+export const navItemsCompany = [
   {
     title: "Dashboard",
     link: "/dashboard",
@@ -84,6 +80,9 @@ const SideNavBar = ({ isGuest }: { isGuest?: boolean }) => {
   const pathname = usePathname();
   const { user }: any = useGeneralContext();
 
+  //check user account type
+  const isCompany = user?.isCompany;
+
   const handleLogout = () => {
     // deleteCookie("auth_token");
     push("/");
@@ -93,7 +92,11 @@ const SideNavBar = ({ isGuest }: { isGuest?: boolean }) => {
     // window.location.reload();
   };
 
-  const navBar = isGuest ? navItemsGuest : navItemsMdaAdmin;
+  const navBar = isGuest
+    ? navItemsGuest
+    : isCompany
+    ? navItemsCompany
+    : navItemsIndividual;
   // const navBar = user?.role === "super" ? navItemsSuperAdmin : navItemsMdaAdmin;
 
   return (
@@ -129,14 +132,23 @@ const SideNavBar = ({ isGuest }: { isGuest?: boolean }) => {
             </svg>
           </Link>
           <div className="flex flex-col h-full w-full py-4 gap-4">
-            {navBar.map((nav, index) => (
-              <SideBarItem
-                key={index}
-                title={nav.title}
-                link={nav.link}
-                icon={nav.icon}
-              />
-            ))}
+            {navBar.map(
+              (
+                nav: {
+                  title: string;
+                  link: string;
+                  icon: React.ReactNode;
+                },
+                index: React.Key | null | undefined
+              ) => (
+                <SideBarItem
+                  key={index}
+                  title={nav.title}
+                  link={nav.link}
+                  icon={nav.icon}
+                />
+              )
+            )}
           </div>
         </div>
         {!isGuest && (

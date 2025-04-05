@@ -33,6 +33,7 @@ const Page = () => {
     setOneGuestVoucherId(key);
     getGuestVoucherById();
   }, [key, oneGuestVoucherId]);
+
   return (
     <div className="flex items-center justify-center md:h-screen mt-2 md:mt-0">
       <Recipients params={oneVoucher?.specialKey} isGuest={true} />

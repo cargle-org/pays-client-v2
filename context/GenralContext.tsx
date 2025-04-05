@@ -43,6 +43,12 @@ const GeneralProvider = (props: any) => {
     newPassword: "",
     confirmPassword: "",
   });
+  const [changePasswordDetails, setChangePasswordDetails] = useState({
+    // id: "",
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
 
   // VOUCHERS DRAFTS
   const [draftId, setDraftId] = useState("");
@@ -399,6 +405,36 @@ const GeneralProvider = (props: any) => {
       }
     } catch (err: any) {
       console.log("🚀 ~ handleResetPassword ~ err:", err);
+      setAuthLoading(false);
+      error(
+        err?.response?.data?.message
+          ? err?.response?.data?.message
+          : err?.response?.data?.error || err?.message
+      );
+      // error(err.message);
+    }
+  };
+
+  const handleChangePassword = async (e: any) => {
+    setAuthLoading(true);
+    // console.log("changePasswordDetails", changePasswordDetails);
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/change-password?userId=${resetPasswordDetails.id}`,
+        changePasswordDetails,
+        {
+          headers: { "content-type": "application/json" },
+        }
+      );
+      // console.log("🚀 ~ handleChangePassword ~ response:", response);
+      setAuthLoading(false);
+      if (response.status === 200) {
+        success("Password changed successfully.");
+        router.push(`/dashboard`);
+      }
+    } catch (err: any) {
+      console.log("🚀 ~ handleChangePassword ~ err:", err);
       setAuthLoading(false);
       error(
         err?.response?.data?.message
@@ -1390,6 +1426,7 @@ const GeneralProvider = (props: any) => {
         signupDetails,
         verifyEmailDetails,
         resetPasswordDetails,
+        changePasswordDetails,
         handleLogin,
         handleSignup,
         setAuthLoading,
@@ -1398,8 +1435,10 @@ const GeneralProvider = (props: any) => {
         handleVerifyEmail,
         handleResetPassword,
         handleForgotPassword,
+        handleChangePassword,
         setVerifyEmailDetails,
         setResetPasswordDetails,
+        setChangePasswordDetails,
 
         // Vouchers
         oneVoucher,
