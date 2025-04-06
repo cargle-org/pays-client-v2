@@ -118,11 +118,13 @@ const Redeem = ({ params }: { params: { id: string } }) => {
               {/* right */}
               <div className="flex w-full justify-end gap-4 lg:h-[600px] lg:w-[50%]">
                 <div className="w-full relative rounded-lg lg:w-[508px] lg:h-[600px]">
-                  <FlippingVoucherPreview
-                    voucherDetails={oneVoucher}
-                    couponCode={oneVoucher?.coupon.couponCode}
-                    amount={oneVoucher?.amount}
-                  />
+                  {oneVoucher && (
+                    <FlippingVoucherPreview
+                      voucherDetails={oneVoucher}
+                      couponCode={oneVoucher?.coupon.couponCode}
+                      amount={oneVoucher?.amount}
+                    />
+                  )}
                   {/* <Image src={right_img} alt="Redeem" priority />
                   <div className="glass-fx hidden absolute w-[90%] bottom-6 left-6 rounded-lg p-4 font-medium text-xl font-geistsans lg:block">
                     Claim your vouchers fast and easily with pays.
