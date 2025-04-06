@@ -36,6 +36,7 @@ const UserAvatar = ({
     <div
       className="relative inline-block text-left"
       onMouseEnter={openDropdown}
+      onClick={openDropdown}
       onMouseLeave={closeDropdown}
     >
       {/* Avatar Icon */}
