@@ -90,7 +90,7 @@ const Redeem = ({ params }: { params: { id: string } }) => {
                     className="w-full sm:w-auto h-[40px] px-2 py-[12px] border border-brand-grayish/15 rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   />
                 </div>
-                <div className="flex flex-col justify-start">
+                {/* <div className="flex flex-col justify-start">
                   <span className="font-medium text-sm text-gray-500 font-geistsans mb-2">
                     Amount
                   </span>
@@ -104,7 +104,7 @@ const Redeem = ({ params }: { params: { id: string } }) => {
                       onePaymentLInk?.amount && "bg-slate-300 text-base"
                     }`}
                   />
-                </div>
+                </div> */}
               </div>
               {/* left bottom */}
               <div className="flex flex-col gap-4 pt-auto justify-start">

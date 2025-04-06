@@ -421,7 +421,7 @@ const GeneralProvider = (props: any) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/change-password?userId=${resetPasswordDetails.id}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/change-password?userId=${userId}`,
         changePasswordDetails,
         {
           headers: { "content-type": "application/json" },

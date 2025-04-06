@@ -7,13 +7,19 @@ import { useGeneralContext } from "@/context/GenralContext";
 import Spinner from "@/components/spinner/Spinner";
 import getAccountBanks from "@/components/getBanks";
 import { error } from "@/helpers/Alert";
+import FlippingVoucherPreview from "@/components/FlippingVoucherPreview";
 
 const Cash = ({ setDisplay, voucherCode }: any) => {
   const [suggestedBanks, setSuggestedBanks] = useState<any>([]);
   const [showOtherBanks, setShowOtherBanks] = useState(false);
 
-  const { allBanks, cashoutVoucherLoading, handleRedeemVoucherAsCash }: any =
-    useGeneralContext();
+  const {
+    allBanks,
+    oneVoucher,
+    cashoutVoucherLoading,
+    setShowVoucherSuccessAnimation,
+    handleRedeemVoucherAsCash,
+  }: any = useGeneralContext();
 
   const [newTransaction, setNewTransaction] = useState({
     bankCode: "",
@@ -240,11 +246,18 @@ const Cash = ({ setDisplay, voucherCode }: any) => {
             </form>
             {/* right */}
             <div className="hidden w-[50%]  justify-end gap-4 lg:h-[600px] lg:flex">
-              <div className="relative rounded-lg w-[508px] h-[600px]">
-                <Image src={right_img} alt="Login" priority />
-                <div className="glass-fx absolute w-[90%] bottom-6 left-6 rounded-lg p-4 font-medium text-xl font-geistsans">
-                  Claim your vouchers fast and easily with pays. Pays
-                </div>
+              <div className="w-full relative rounded-lg lg:w-[508px] lg:h-[600px]">
+                {oneVoucher && (
+                  <FlippingVoucherPreview
+                    voucherDetails={oneVoucher}
+                    couponCode={oneVoucher?.coupon?.couponCode}
+                    amount={oneVoucher?.amount}
+                  />
+                )}
+                {/* <Image src={right_img} alt="Redeem" priority />
+                  <div className="glass-fx hidden absolute w-[90%] bottom-6 left-6 rounded-lg p-4 font-medium text-xl font-geistsans lg:block">
+                    Claim your vouchers fast and easily with pays.
+                  </div> */}
               </div>
             </div>
           </div>
