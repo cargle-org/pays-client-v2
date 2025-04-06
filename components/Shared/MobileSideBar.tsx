@@ -16,21 +16,31 @@ import {
   TicketPercent,
   X,
 } from "lucide-react";
+import {
+  navItemsCompany,
+  navItemsGuest,
+  navItemsIndividual,
+} from "./SideNavBar";
 
 interface MobileSideNavBarProps {
   isSidebarOpen: boolean;
   onClose: () => void;
   closeSidebar: () => void;
+  isGuest?: boolean;
 }
 
 const MobileSideNavBar = ({
   onClose,
   isSidebarOpen,
   closeSidebar,
+  isGuest,
 }: MobileSideNavBarProps) => {
   const { push } = useRouter();
   const pathname = usePathname();
   const { user }: any = useGeneralContext();
+
+  //check user account type
+  const isCompany = user?.isCompany;
 
   const handleLogout = () => {
     // deleteCookie("auth_token");
@@ -41,7 +51,13 @@ const MobileSideNavBar = ({
     // window.location.reload();
   };
 
-  const navBar = user?.role === "super" ? navItemsSuperAdmin : navItemsMdaAdmin;
+  const navBar = isGuest
+    ? navItemsGuest
+    : isCompany
+    ? navItemsCompany
+    : navItemsIndividual;
+
+  // const navBar = user?.role === "super" ? navItemsSuperAdmin : navItemsMdaAdmin;
 
   return (
     <div
