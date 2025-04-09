@@ -24,11 +24,14 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <html lang='en' className={`${manrope.variable}`}>
+      <html lang="en" className={`${manrope.variable}`}>
         <head>
-          <Script async src={`https://www.googletagmanager.com/gtag/js?id=G-636938PFTH`} />
+          <Script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=G-636938PFTH`}
+          />
 
-          <Script id='google-analytics' strategy='afterInteractive'>
+          <Script id="google-analytics" strategy="afterInteractive">
             {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -37,10 +40,10 @@ export default function RootLayout({
           `}
           </Script>
         </head>
-        <body className='font-manrope'>
+        <body className="font-manrope">
           <GeneralProvider>
             <ToastContainer
-              position='top-right'
+              position="top-right"
               autoClose={5000}
               hideProgressBar={false}
               newestOnTop={false}

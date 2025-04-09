@@ -14,6 +14,8 @@ const Cash = ({ setDisplay, voucherCode }: any) => {
   const [showOtherBanks, setShowOtherBanks] = useState(false);
 
   const {
+    bankInfo,
+    getOneBankInfo,
     allBanks,
     oneVoucher,
     cashoutVoucherLoading,
@@ -28,6 +30,8 @@ const Cash = ({ setDisplay, voucherCode }: any) => {
     email: "",
     voucherCode: voucherCode,
   });
+
+  const [bankName, setBankName] = useState("");
 
   const onchangeHandler = async (e: any) => {
     e.persist();
@@ -64,16 +68,22 @@ const Cash = ({ setDisplay, voucherCode }: any) => {
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { value, name } = event.target;
-
     if (value === "other") {
       setShowOtherBanks(true);
     } else {
       setShowOtherBanks(false);
+
       setNewTransaction((prev) => ({
         ...prev,
-        [name]: value,
+        [name]: value, // bankCode
+        bank: selectedBank?.name || "", // add this line
       }));
     }
+    // Find selected bank name
+    const banksList = showOtherBanks ? allBanks : suggestedBanks;
+    const selectedBank = banksList.find((bank: any) => bank.code === value);
+
+    setBankName(selectedBank?.name || "");
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -91,6 +101,11 @@ const Cash = ({ setDisplay, voucherCode }: any) => {
     // Handle the withdrawal logic here
     handleRedeemVoucherAsCash(newTransaction);
   };
+
+  //generate account info
+  useEffect(() => {
+    getOneBankInfo(newTransaction.accountNumber, newTransaction.bankCode);
+  }, [newTransaction.accountNumber, newTransaction.bankCode]);
 
   return (
     <>
@@ -166,9 +181,13 @@ const Cash = ({ setDisplay, voucherCode }: any) => {
                     name="bankCode"
                     id="bankCode"
                     onChange={handleSelectChange}
+                    value={newTransaction.bankCode}
                     className="w-[353px] h-[40px] px-2 py-[12px] border border-brand-grayish rounded-lg text-brand-grayish bg-transparent outline-brand-main/40 font-geistsans font-normal text-xs"
                   >
-                    <option value="">Select a bank</option>
+                    <option value="" disabled hidden>
+                      Select a bank
+                    </option>
+                    {/* <option value="">Select a bank</option> */}
                     {!showOtherBanks &&
                       suggestedBanks?.length > 0 &&
                       suggestedBanks.map((bank: any, index: number) => (
@@ -177,7 +196,7 @@ const Cash = ({ setDisplay, voucherCode }: any) => {
                           value={bank?.code}
                           key={index}
                         >
-                          {bank?.name}
+                          {bank.name}
                         </option>
                       ))}
                     {suggestedBanks?.length > 0 && (
@@ -193,13 +212,29 @@ const Cash = ({ setDisplay, voucherCode }: any) => {
                               value={bank?.code}
                               key={index}
                             >
-                              {bank?.name}
+                              {bank.name}
                             </option>
                           ))}
                       </>
                     )}
                   </select>
                 </div>
+                {bankInfo && (
+                  <div className="flex flex-col justify-start">
+                    <span className="font-medium text-sm text-gray-500 font-geistsans mb-2">
+                      Account Name{" "}
+                      <span className="text-green-400 font-medium">
+                        {bankInfo.accountName}
+                      </span>
+                    </span>
+                    <span className="font-medium text-sm text-gray-500 font-geistsans mb-2">
+                      Bank Name{" "}
+                      <span className="text-green-400 font-medium">
+                        {bankName}
+                      </span>
+                    </span>
+                  </div>
+                )}
               </div>
               {/* left bottom */}
               <div className="flex flex-col gap-4 pt-auto justify-start">

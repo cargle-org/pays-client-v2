@@ -13,6 +13,7 @@ const GeneralProvider = (props: any) => {
   const [name, setName] = useState<String>("EDDY");
   const [token, setToken] = useState() as any;
   const [airtimeBillers, setAirtimeBillers] = useState();
+  const [bankInfo, setBankInfo] = useState("");
   const [homepageStats, setHomepageStats] = useState();
 
   // USER
@@ -158,6 +159,33 @@ const GeneralProvider = (props: any) => {
     } catch (err: any) {
       setFetchVouchersLoading(false);
       console.log("🚀 ~ getAllBanks ~ err:", err);
+      error(
+        err.response?.data?.message
+          ? err?.response?.data?.message
+          : err.response?.data?.error
+      );
+    }
+  };
+
+  const getOneBankInfo = async (accountNumber: string, bankCode: string) => {
+    try {
+      // setFetchVouchersLoading(true);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/utils/bank/one?accountNumber=${accountNumber}&bankCode=${bankCode}`,
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
+      // setFetchVouchersLoading(false);
+      if (response.status === 200) {
+        console.log(response);
+        setBankInfo(response.data.data);
+      }
+    } catch (err: any) {
+      setFetchVouchersLoading(false);
+      console.log("🚀 ~ getBankInfo ~ err:", err);
       error(
         err.response?.data?.message
           ? err?.response?.data?.message
@@ -1409,6 +1437,8 @@ const GeneralProvider = (props: any) => {
         name,
         user,
         token,
+        bankInfo,
+        setBankInfo,
         allBanks,
         setAllBanks,
         homepageStats,
@@ -1418,6 +1448,7 @@ const GeneralProvider = (props: any) => {
         getOneUser,
         setHomepageStats,
         setAirtimeBillers,
+        getOneBankInfo,
         getAirtimeBillerInfo,
 
         // Auth
