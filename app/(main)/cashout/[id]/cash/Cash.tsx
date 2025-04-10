@@ -70,20 +70,24 @@ const Cash = ({ setDisplay, voucherCode }: any) => {
     const { value, name } = event.target;
     if (value === "other") {
       setShowOtherBanks(true);
+      return;
     } else {
       setShowOtherBanks(false);
-
-      setNewTransaction((prev) => ({
-        ...prev,
-        [name]: value, // bankCode
-        bank: selectedBank?.name || "", // add this line
-      }));
     }
-    // Find selected bank name
-    const banksList = showOtherBanks ? allBanks : suggestedBanks;
-    const selectedBank = banksList.find((bank: any) => bank.code === value);
 
-    setBankName(selectedBank?.name || "");
+    let selectedBank = suggestedBanks?.find((bank: any) => bank.code === value);
+    if (!selectedBank) {
+      selectedBank = allBanks?.find((bank: any) => bank.code === value);
+    }
+
+    // Update your transaction state with the bank code.
+    setNewTransaction((prev) => ({
+      ...prev,
+      [name]: value, 
+    }));
+
+    // Update the bank name.
+    setBankName(selectedBank?.name);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
