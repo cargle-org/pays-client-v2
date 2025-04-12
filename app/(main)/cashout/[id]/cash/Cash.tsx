@@ -83,7 +83,7 @@ const Cash = ({ setDisplay, voucherCode }: any) => {
     // Update your transaction state with the bank code.
     setNewTransaction((prev) => ({
       ...prev,
-      [name]: value, 
+      [name]: value,
     }));
 
     // Update the bank name.
@@ -108,6 +108,8 @@ const Cash = ({ setDisplay, voucherCode }: any) => {
 
   //generate account info
   useEffect(() => {
+    if (!newTransaction.accountNumber || !newTransaction.bankCode) return;
+
     getOneBankInfo(newTransaction.accountNumber, newTransaction.bankCode);
   }, [newTransaction.accountNumber, newTransaction.bankCode]);
 
